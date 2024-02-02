@@ -18,12 +18,14 @@ library(glmmTMB)
 
 #set home directory
 #homewd= "/Users/carabrook/Developer/git-transit-time"
-homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
+#homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
+homewd <- "/Users/emilyruhs/Desktop/UChi_Brook_Lab/GitHub_repos/git-transit-time/"
+
 
 #load the GIT transit data:
 #dat <- read.csv(file = paste0(homewd, "/data/final-GIT-transit-database-april-2021.csv"), header = T, stringsAsFactors = F )
 dat <- read.csv(file = paste0(homewd, "/data/McFerrin_database.csv"), header = T, stringsAsFactors = F )
-View(dat)
+#View(dat)
 
 length(unique(dat$Retention.Citation)) #107 unique papers
 length(unique(dat$Genus.species)) #112 unique species
@@ -34,8 +36,9 @@ unique(dat$Genus.species)
 #original code: dat <- dplyr::select(dat, can_fly, Class, Order, Family, Genus.species, Common.Name, Typical.Diet, Mass..mean.median.from.study., Feeding.Trial.Food.Cat, N_measured, N_trials, Minimum..min., Median..min., Mean..min.,Maximum..min.)
 dat <- dplyr::select(dat, can_fly, Class, Order, Family, Genus.species, Common.Name, Typical.Diet, Mass.g..mean.median.from.study., Feeding.Trial.Food.Cat, N_individuals, N_trials, Minimum..min., Median..min., Mean..min.,Maximum..min.)
 head(dat)
+#rename columns
 names(dat) <- c("fly", "class", "order", "family", "genus.species", "common.name", "typical.diet", "mass", "food.cat", "N_individuals", "N_trials", "min", "median", "mean", "max")
-View(dat)
+#View(dat)
 
 
 #choose one mean/median to report
@@ -126,12 +129,34 @@ dat.sum.tot$food.cat = factor(dat.sum.tot$food.cat, levels= c("label-solution", 
 
 m1 <- lmer(log10(transit_hrs)~ re_class + (1|food.cat), data=dat.sum.tot, REML = F)
 summary(m1)
+# Fixed effects:
+#                         Estimate  Std. Error       df     t value     Pr(>|t|)    
+# (Intercept)            0.5473     0.1353      40.5218     4.045     0.000228 ***
+# re_classFlying Birds  -0.5873     0.1492      139.7038    -3.936    0.000130 ***
+# re_classBats          -0.4273     0.1387      135.8771    -3.080    0.002505 ** 
+# re_classCarnivores     0.4952     0.1635      133.0883     3.028    0.002955 ** 
+# re_classPrimates       0.8392     0.1435      139.8450    5.849     3.34e-08 ***
+# re_classUngulates      1.0173     0.1487      139.5672    6.840     2.29e-10 ***
+# re_classReptiles       1.4621     0.1488      139.9711    9.827     < 2e-16 ***
 rand(m1) 
-
+# Model:
+#   log10(transit_hrs) ~ re_class + (1 | food.cat)
+# npar  logLik    AIC    LRT Df Pr(>Chisq)  
+# <none>            9 -48.649 115.30                       
+# (1 | food.cat)    8 -51.205 118.41 5.1113  1    0.02377 *
 
 #for plotting later
 m1b <- lme4::lmer(log10(transit_hrs)~ re_class + (1|food.cat), data=dat.sum.tot, REML = F)
 summary(m1b)
+# Fixed effects:
+# Estimate Std. Error t value
+# (Intercept)            0.5473     0.1353   4.045
+# re_classFlying Birds  -0.5873     0.1492  -3.936
+# re_classBats          -0.4273     0.1387  -3.080
+# re_classCarnivores     0.4952     0.1635   3.028
+# re_classPrimates       0.8392     0.1435   5.849
+# re_classUngulates      1.0173     0.1487   6.840
+# re_classReptiles       1.4621     0.1488   9.827
 
 
 #and here plot the raw partial effects of taxonomic grouping for Figure S2:
@@ -155,8 +180,22 @@ ggsave(file = paste0(homewd,"/figures/FigS2_Taxon_effects.png"),
 
 m2 <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class), data=dat.sum.tot, REML = F)
 summary(m2)
+# Fixed effects:
+# Estimate Std. Error        df t value Pr(>|t|)    
+# (Intercept)                           0.89115    0.25511   7.13648   3.493  0.00978 ** 
+# log10(mass_kg):re_classFlying Birds   0.50171    0.08364 136.43675   5.998 1.69e-08 ***
+# log10(mass_kg):re_classBats          -0.16267    0.08661 139.23271  -1.878  0.06244 . 
+# log10(mass_kg):re_classRodents        0.27406    0.11004 133.81241   2.491  0.01397 *  
+# log10(mass_kg):re_classCarnivores     0.48411    0.19952 139.91864   2.426  0.01652 *  
+# log10(mass_kg):re_classPrimates       0.29365    0.13470 137.56043   2.180  0.03095 *  
+# log10(mass_kg):re_classUngulates      0.03099    0.09638 135.84425   0.322  0.74826    
+# log10(mass_kg):re_classReptiles       0.12151    0.06620 132.74398   1.836  0.06865 .
 rand(m2) 
-
+# Model:
+# log10(transit_hrs) ~ (1 | re_class) + log10(mass_kg):re_class
+# npar   logLik    AIC    LRT Df Pr(>Chisq)    
+# <none>           10  -44.803 109.61                         
+# (1 | re_class)    9 -108.287 234.57 126.97  1  < 2.2e-16 ***
 
 dat.sum.tot$predicted_transit[!is.na(dat.sum.tot$transit_hrs) & !is.na(dat.sum.tot$mass_kg) & !is.na(dat.sum.tot$re_class)]   <- 10^(predict(m2))
 
@@ -184,23 +223,23 @@ pA <- ggplot(data=dat.sum.tot)+ geom_boxplot(aes(x=re_class, y=log10(transit_hrs
         axis.text.y = element_text(size=13), axis.text.x = element_text(size=13), axis.title.y = element_text(size=16),
         plot.margin = unit(c(.2,.2,.8,.2), "cm")) + scale_fill_manual(values=colz) + 
   geom_point(aes(x=re_class, y=log10(transit_hrs),shape=food.cat), position = position_jitterdodge(jitter.width = 0), size=3) +  
-  scale_shape_manual(values=shapez, name="food type") +  ylab("GIT transit time, hrs") +
+  scale_shape_manual(values=shapez, name="Food type") +  ylab("GIT transit time, hrs") +
   geom_hline(aes(yintercept=log10(quantile(subset(dat.sum.tot, re_class=="Rodents")$transit_hrs)["50%"])), linetype=2) +
   scale_y_continuous(breaks=c(0,1,2), labels = c("1", "10", "100")) +
   coord_cartesian(ylim=c(-.8,2.95)) + geom_label(data=label.dat, aes(x=re_class, y=2.9, label=label), label.size = NA,size=5)
 print(pA)
 
-pA_poster <- ggplot(data=dat.sum.tot)+ geom_boxplot(aes(x=re_class, y=log10(transit_hrs), fill=re_class), show.legend = F) + theme_bw() + 
-  theme(axis.title.x = element_blank(), panel.grid = element_blank(), legend.position = c(.85,.15), 
-        legend.title = element_text(size=23), legend.text = element_text(size=20),legend.background = element_rect(color="black"),
-        axis.text.y = element_text(size=25), axis.text.x = element_text(size=25), axis.title.y = element_text(size=28),
-        plot.margin = unit(c(.2,.2,.8,.2), "cm")) + scale_fill_manual(values=colz) + 
-  geom_point(aes(x=re_class, y=log10(transit_hrs),shape=food.cat), position = position_jitterdodge(jitter.width = 0), size=4) +  
-  scale_shape_manual(values=shapez, name="Food Type") +  ylab("GIT Transit Time (hrs)") +
-  geom_hline(aes(yintercept=log10(quantile(subset(dat.sum.tot, re_class=="Rodents")$transit_hrs)["50%"])), linetype=2) +
-  scale_y_continuous(breaks=c(0,1,2), labels = c("1", "10", "100")) +
-  coord_cartesian(ylim=c(-.8,2.95)) + geom_label(data=label.dat, aes(x=re_class, y=2.9, label=label), label.size = NA,size=8)
-print(pA_poster)
+# pA_poster <- ggplot(data=dat.sum.tot)+ geom_boxplot(aes(x=re_class, y=log10(transit_hrs), fill=re_class), show.legend = F) + theme_bw() + 
+#   theme(axis.title.x = element_blank(), panel.grid = element_blank(), legend.position = c(.85,.15), 
+#         legend.title = element_text(size=23), legend.text = element_text(size=20),legend.background = element_rect(color="black"),
+#         axis.text.y = element_text(size=25), axis.text.x = element_text(size=25), axis.title.y = element_text(size=28),
+#         plot.margin = unit(c(.2,.2,.8,.2), "cm")) + scale_fill_manual(values=colz) + 
+#   geom_point(aes(x=re_class, y=log10(transit_hrs),shape=food.cat), position = position_jitterdodge(jitter.width = 0), size=4) +  
+#   scale_shape_manual(values=shapez, name="Food Type") +  ylab("GIT Transit Time (hrs)") +
+#   geom_hline(aes(yintercept=log10(quantile(subset(dat.sum.tot, re_class=="Rodents")$transit_hrs)["50%"])), linetype=2) +
+#   scale_y_continuous(breaks=c(0,1,2), labels = c("1", "10", "100")) +
+#   coord_cartesian(ylim=c(-.8,2.95)) + geom_label(data=label.dat, aes(x=re_class, y=2.9, label=label), label.size = NA,size=8)
+# print(pA_poster)
 
 ggsave(file = paste0(homewd,"/figures/Fig_transit_tax_poster.png"),
        units="mm",  
@@ -234,24 +273,24 @@ pB <- ggplot(data=dat.sum.tot, aes(x=log10(mass_kg), y=log10(transit_hrs))) +
   guides(color = "none", fill="none")
 print(pB)
 
-pB_poster <- ggplot(data=dat.sum.tot, aes(x=log10(mass_kg), y=log10(transit_hrs))) + 
-  geom_mark_ellipse(expand=0,radius=0,aes(fill=re_class, color=re_class), size=.1)+
-  geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit), color=re_class), alpha=.6, size=.7) +
-  #geom_ribbon(aes(x=log10(mass_kg), ymin=predicted_transit_lci, ymax=predicted_transit_uci, fill=re_class), alpha=.1) +
-  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= re_class, shape=food.cat), size=5, show.legend = F) + 
-  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= re_class, color= re_class, shape=food.cat), size=4, show.legend = F) + 
-  ylab("GIT Transit Time (hrs)") + xlab("Mass (kg)") + scale_shape_manual(name = "Food Type", values=shapez) + 
-  scale_fill_manual(name= "taxonomic\nclass", values=colz) +
-  scale_color_manual(name= "taxonomic\nclass", values=colz) +
-  theme_bw() + theme(panel.grid = element_blank(), legend.position = c(.85,.2),
-                     axis.text = element_text(size=25), axis.title = element_text(size=28),
-                     legend.title = element_text(size=23), legend.text = element_text(size=20),
-                     plot.margin = unit(c(.4,.4,.4,.4), "cm")) +
-  scale_y_continuous(breaks = c(0,1,2), labels= c("1", "10", "100")) +
-  scale_x_continuous(breaks = c(-2,-1,0,1,2,3), labels = c(".01", ".1", "1", "10", "100", "1000")) +
-  coord_cartesian(ylim=c(-.8,2.9)) +
-  guides(color = "none", fill="none")
-print(pB_poster)
+# pB_poster <- ggplot(data=dat.sum.tot, aes(x=log10(mass_kg), y=log10(transit_hrs))) + 
+#   geom_mark_ellipse(expand=0,radius=0,aes(fill=re_class, color=re_class), size=.1)+
+#   geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit), color=re_class), alpha=.6, size=.7) +
+#   #geom_ribbon(aes(x=log10(mass_kg), ymin=predicted_transit_lci, ymax=predicted_transit_uci, fill=re_class), alpha=.1) +
+#   geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= re_class, shape=food.cat), size=5, show.legend = F) + 
+#   geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= re_class, color= re_class, shape=food.cat), size=4, show.legend = F) + 
+#   ylab("GIT Transit Time (hrs)") + xlab("Mass (kg)") + scale_shape_manual(name = "Food Type", values=shapez) + 
+#   scale_fill_manual(name= "taxonomic\nclass", values=colz) +
+#   scale_color_manual(name= "taxonomic\nclass", values=colz) +
+#   theme_bw() + theme(panel.grid = element_blank(), legend.position = c(.85,.2),
+#                      axis.text = element_text(size=25), axis.title = element_text(size=28),
+#                      legend.title = element_text(size=23), legend.text = element_text(size=20),
+#                      plot.margin = unit(c(.4,.4,.4,.4), "cm")) +
+#   scale_y_continuous(breaks = c(0,1,2), labels= c("1", "10", "100")) +
+#   scale_x_continuous(breaks = c(-2,-1,0,1,2,3), labels = c(".01", ".1", "1", "10", "100", "1000")) +
+#   coord_cartesian(ylim=c(-.8,2.9)) +
+#   guides(color = "none", fill="none")
+#print(pB_poster)
 
 ggsave(file = paste0(homewd,"/figures/Fig_transit_mass_tax_poster.png"),
        units="mm",  
@@ -260,16 +299,7 @@ ggsave(file = paste0(homewd,"/figures/Fig_transit_mass_tax_poster.png"),
        scale=3, 
        dpi=300)
 
-out.plot <- cowplot::plot_grid(pA, pB, nrow=1, ncol=2, labels=c("(a)", "(b)"))
 
-print(out.plot)
-
-ggsave(file = paste0(homewd,"/figures/Fig4_TwoPanel.jpeg"),
-       units="mm",  
-       width=130, 
-       height=60, 
-       scale=3, 
-       dpi=300)
 
 
 #and the supplementary figures
@@ -286,6 +316,21 @@ ggsave(file = paste0(homewd,"/figures/FigS3_Random_Effects.png"),
        height=40, 
        scale=3, 
        dpi=300)
+
+
+#combine partial effects into a two panel plot
+out.plot <- cowplot::plot_grid(pS2,pS3, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1,1))
+
+print(out.plot)
+
+
+ggsave(file = paste0(homewd,"/figures/Fig2_TwoPanel.jpeg"),
+       units="mm",  
+       width=120, 
+       height=50, 
+       scale=3, 
+       dpi=300)
+
 
 fam.col = c("Molossidae" = "firebrick", "Mormoopidae" = "navy", "Phyllostomidae" = "darkmagenta", "Pteropodidae" = "forestgreen", "Vespertilionidae" = "lightcoral")
 
@@ -311,24 +356,35 @@ ggsave(file = paste0(homewd,"/figures/FigS4_bat_only.png"),
        scale=3, 
        dpi=300)
 
-pS4_poster <- ggplot(data=subset(dat.sum.tot, re_class=="Bats")) + 
-  geom_point(aes(x=log10(mass), y=log10(transit), fill= family, shape=food.cat), size=5, show.legend = F) + 
-  geom_point(aes(x=log10(mass), y=log10(transit), fill= family, color= family, shape=food.cat), size=4) + 
-  ylab("GIT Transit Time (min)") + xlab("Mass (g)") + coord_cartesian(xlim=c(.5,3), ylim=c(.5,3))+
-  theme_bw() + theme(panel.grid = element_blank(),
-                     axis.text = element_text(size=25), axis.title = element_text(size=28), 
-                     legend.title = element_text(size=23), legend.text = element_text(size=20)) +
-  scale_shape_manual(values=shapez, name= "Food Type") + 
-  scale_y_continuous(breaks = c(1,2,3), labels= c("10", "100", "1000")) + 
-  scale_fill_manual(name="Bat Family", values=fam.col) + scale_color_manual(name="Bat Family", values=fam.col) +
-  scale_x_continuous(breaks = c(1,2,3), labels = c("10", "100", "1000"))
-
-print(pS4_poster)
+# pS4_poster <- ggplot(data=subset(dat.sum.tot, re_class=="Bats")) + 
+#   geom_point(aes(x=log10(mass), y=log10(transit), fill= family, shape=food.cat), size=5, show.legend = F) + 
+#   geom_point(aes(x=log10(mass), y=log10(transit), fill= family, color= family, shape=food.cat), size=4) + 
+#   ylab("GIT Transit Time (min)") + xlab("Mass (g)") + coord_cartesian(xlim=c(.5,3), ylim=c(.5,3))+
+#   theme_bw() + theme(panel.grid = element_blank(),
+#                      axis.text = element_text(size=25), axis.title = element_text(size=28), 
+#                      legend.title = element_text(size=23), legend.text = element_text(size=20)) +
+#   scale_shape_manual(values=shapez, name= "Food Type") + 
+#   scale_y_continuous(breaks = c(1,2,3), labels= c("10", "100", "1000")) + 
+#   scale_fill_manual(name="Bat Family", values=fam.col) + scale_color_manual(name="Bat Family", values=fam.col) +
+#   scale_x_continuous(breaks = c(1,2,3), labels = c("10", "100", "1000"))
+# 
+# print(pS4_poster)
 
 ggsave(file = paste0(homewd,"/figures/FigS4_bat_only_poster.png"),
        units="mm",  
        width=100, 
        height=80, 
+       scale=3, 
+       dpi=300)
+
+out.plot2 <- cowplot::plot_grid(pA, pB,pS4, nrow=1, ncol=3, labels=c("(a)", "(b)", "(c)"), rel_widths = c(1,1, 1.2))
+
+print(out.plot2)
+
+ggsave(file = paste0(homewd,"/figures/Fig1_ThreePanel.jpeg"),
+       units="mm",  
+       width=180, 
+       height=60, 
        scale=3, 
        dpi=300)
 
