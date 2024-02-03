@@ -177,7 +177,17 @@ ggsave(file = paste0(homewd,"/figures/FigS2_Taxon_effects.png"),
        scale=3, 
        dpi=300)
 
-
+m2 <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class) +(1|food.cat), data=dat.sum.tot, REML = F)
+# Fixed effects:
+# Estimate Std. Error        df t value Pr(>|t|)    
+# (Intercept)                           0.89560    0.25182   7.31854   3.557  0.00861 ** 
+# log10(mass_kg):re_classRodents        0.25758    0.11039 133.56186   2.333  0.02112 *  
+# log10(mass_kg):re_classFlying Birds   0.48209    0.08776  81.20270   5.493 4.42e-07 ***
+# log10(mass_kg):re_classBats          -0.12193    0.09147  88.65304  -1.333  0.18594    
+# log10(mass_kg):re_classCarnivores     0.49250    0.19771 136.26238   2.491  0.01394 *  
+# log10(mass_kg):re_classPrimates       0.28920    0.13624 133.33183   2.123  0.03563 *  
+# log10(mass_kg):re_classUngulates      0.04259    0.09621 135.44017   0.443  0.65867    
+# log10(mass_kg):re_classReptiles       0.13418    0.06606 132.48521   2.031  0.04423 *  
 m2 <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class), data=dat.sum.tot, REML = F)
 summary(m2)
 # Fixed effects:
@@ -196,6 +206,71 @@ rand(m2)
 # npar   logLik    AIC    LRT Df Pr(>Chisq)    
 # <none>           10  -44.803 109.61                         
 # (1 | re_class)    9 -108.287 234.57 126.97  1  < 2.2e-16 ***
+
+m2b <- lme4::lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class)+(1|food.cat), data=dat.sum.tot, REML = F)
+summary(m2b)
+
+pSm2 <- plot_model(m2b, type="est", vline.color = "black",
+                   axis.labels = rev(c("Rodents", "Flying Birds", "Bats", "Carnivores", "Primates", "Ungulates", "Reptiles")),
+                   title = "Effects of mass on GIT transit") + theme_bw() + 
+  theme(panel.grid = element_blank(), axis.text = element_text(size=14), axis.title.x = element_blank()) 
+print(pSm2)
+
+library(gridExtra)
+pSm2b <- plot_model(m2b, type="re", vline.color = "black", facet.grid=FALSE) + theme_bw() + 
+  theme(panel.grid = element_blank(), axis.text = element_text(size=14)) 
+grid.arrange(pSm2b[[1]], pSm2b[[2]])
+
+mass.mod.plot <- cowplot::plot_grid(pSm2,pSm2b, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1,1))
+print(mass.mod.plot)
+
+
+
+
+m3 <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|food.cat), data=dat.sum.tot, REML = F)
+summary(m3)
+# Fixed effects:
+# Estimate Std. Error        df t value Pr(>|t|)    
+# (Intercept)                           1.13781    0.12686   6.41860   8.969 7.29e-05 ***
+# log10(mass_kg):re_classRodents        0.36725    0.16867 137.36160   2.177  0.03117 *  
+# log10(mass_kg):re_classFlying Birds   0.78490    0.10169 139.80400   7.718 2.03e-12 ***
+# log10(mass_kg):re_classBats           0.61208    0.06877 138.23840   8.900 2.80e-15 ***
+# log10(mass_kg):re_classCarnivores    -0.19167    0.18480 139.78473  -1.037  0.30145    
+# log10(mass_kg):re_classPrimates       0.40018    0.14368 139.98917   2.785  0.00609 ** 
+# log10(mass_kg):re_classUngulates      0.19175    0.06816 135.12359   2.813  0.00564 ** 
+# log10(mass_kg):re_classReptiles       0.30837    0.10756 136.36347   2.867  0.00480 ** 
+rand(m3)
+# Model:
+# log10(transit_hrs) ~ (1 | food.cat) + log10(mass_kg):re_class
+# npar  logLik    AIC    LRT Df Pr(>Chisq)    
+# <none>           10 -101.93 223.87                         
+# (1 | food.cat)    9 -108.29 234.57 12.709  1  0.0003639 ***
+
+m3b <- lme4::lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|food.cat), data=dat.sum.tot, REML = F)
+summary(m3b)
+
+pSm3 <- plot_model(m3b, type="est", vline.color = "black",
+                  axis.labels = rev(c("Rodents", "Flying Birds", "Bats", "Carnivores", "Primates", "Ungulates", "Reptiles")),
+                  title = "Effects of mass on GIT transit") + theme_bw() + 
+  theme(panel.grid = element_blank(), axis.text = element_text(size=14), axis.title.x = element_blank()) 
+print(pSm3)
+
+pSm3b <- plot_model(m3b, type="re", vline.color = "black") + theme_bw() + 
+  theme(panel.grid = element_blank(), axis.text = element_text(size=14)) 
+print(pSm3b)
+
+mass.mod.plot <- cowplot::plot_grid(pSm3,pSm3b, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1,1))
+print(mass.mod.plot)
+
+ggsave(file = paste0(homewd,"/figures/Fig3_Randomeffects.png"),
+       units="mm",  
+       width=120, 
+       height=50, 
+       scale=3, 
+       dpi=300)
+
+
+
 
 dat.sum.tot$predicted_transit[!is.na(dat.sum.tot$transit_hrs) & !is.na(dat.sum.tot$mass_kg) & !is.na(dat.sum.tot$re_class)]   <- 10^(predict(m2))
 
