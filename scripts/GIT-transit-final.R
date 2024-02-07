@@ -73,6 +73,8 @@ head(dat.sum.tot)
 dat.sum.tot$transit <- dat.sum.tot$total_transit/dat.sum.tot$N_tot
 subset(dat.sum.tot, is.na(transit)) #0
 
+paper.dat <- ddply(dat.sum.tot, .(re_class), summarise, N_species = length(unique(genus.species)))
+
 #now categorize -- vertebrates are signified by class but mammals by order
 dat.sum.tot$re_class <- dat.sum.tot$class
 dat.sum.tot$re_class[dat.sum.tot$re_class=="Mammalia"] <- dat.sum.tot$order[dat.sum.tot$re_class=="Mammalia"]
@@ -120,7 +122,7 @@ dat.sum.tot$mass_kg = as.numeric(dat.sum.tot$mass)/1000
 #reclass.colz =  c("Rodents and Lagomorphs" = "black", "Bats"= "black", "Flying Birds"= "black", "Reptiles"= "black",  "Ungulates"= "black", "Carnivores"= "black", "Primates"= "black")
 #reclass.colz =  c("Rodents" = "black", "Bats"= "black", "Flying Birds"= "black", "Reptiles"= "black",  "Ungulates"= "black", "Carnivores"= "black", "Primates"= "black")
 #and replot the mass by transit with categories
-dat.sum.tot$re_class <- factor(dat.sum.tot$re_class, levels = c( "Flying Birds","Bats", "Rodents", "Carnivores", "Primates", "Ungulates",   "Reptiles"))
+dat.sum.tot$re_class <- factor(dat.sum.tot$re_class, levels = c( "Flying Birds","Bats", "Rodents", "Carnivores", "Primates", "Ungulates", "Reptiles"))
 
 
 #now some stats
@@ -170,14 +172,16 @@ pS2 <- plot_model(m1b, type="est", vline.color = "black",
 
 print(pS2)
 
-ggsave(file = paste0(homewd,"/figures/FigS2_Taxon_effects.png"),
-       units="mm",  
-       width=50, 
-       height=40, 
-       scale=3, 
-       dpi=300)
+pS2b <- plot_model(m1b, type="re", vline.color = "black", facet.grid=FALSE) + theme_bw() + 
+  theme(panel.grid = element_blank(), axis.text = element_text(size=14)) 
+print(pS2b)
 
-m2 <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class) +(1|food.cat), data=dat.sum.tot, REML = F)
+taxon.mod.plot <- cowplot::plot_grid(pS2,pS2b, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1,1))
+
+
+
+# m2 <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class) +(1|food.cat), data=dat.sum.tot, REML = F)
+# summary(m2)
 # Fixed effects:
 # Estimate Std. Error        df t value Pr(>|t|)    
 # (Intercept)                           0.89560    0.25182   7.31854   3.557  0.00861 ** 
@@ -188,6 +192,25 @@ m2 <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class) +(1|food.c
 # log10(mass_kg):re_classPrimates       0.28920    0.13624 133.33183   2.123  0.03563 *  
 # log10(mass_kg):re_classUngulates      0.04259    0.09621 135.44017   0.443  0.65867    
 # log10(mass_kg):re_classReptiles       0.13418    0.06606 132.48521   2.031  0.04423 *  
+# rand(m2)
+# Model:
+# log10(transit_hrs) ~ (1 | re_class) + (1 | food.cat) + log10(mass_kg):re_class
+# npar   logLik    AIC     LRT Df Pr(>Chisq)    
+# <none>           11  -44.524 111.05                          
+# (1 | re_class)   10 -101.933 223.87 114.817  1     <2e-16 ***
+# (1 | food.cat)   10  -44.803 109.61   0.558  1     0.4551  
+
+# m2 <- lmer(log10(transit_hrs)~ log10(mass_kg) + (1|re_class), data=dat.sum.tot, REML = F)
+# summary(m2)
+# Fixed effects:
+# Estimate Std. Error       df t value Pr(>|t|)    
+# (Intercept)      0.9092     0.2197   6.8209   4.138  0.00461 ** 
+# log10(mass_kg)   0.1756     0.0404 139.9728   4.346 2.64e-05 ***
+# rand(m2)
+# npar   logLik    AIC    LRT Df Pr(>Chisq)    
+# <none>            4  -61.032 130.06                         
+# (1 | re_class)    3 -122.301 250.60 122.54  1  < 2.2e-16 ***
+  
 m2 <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class), data=dat.sum.tot, REML = F)
 summary(m2)
 # Fixed effects:
@@ -200,35 +223,28 @@ summary(m2)
 # log10(mass_kg):re_classPrimates       0.29365    0.13470 137.56043   2.180  0.03095 *  
 # log10(mass_kg):re_classUngulates      0.03099    0.09638 135.84425   0.322  0.74826    
 # log10(mass_kg):re_classReptiles       0.12151    0.06620 132.74398   1.836  0.06865 .
-rand(m2) 
+rand(m2)
 # Model:
 # log10(transit_hrs) ~ (1 | re_class) + log10(mass_kg):re_class
 # npar   logLik    AIC    LRT Df Pr(>Chisq)    
 # <none>           10  -44.803 109.61                         
 # (1 | re_class)    9 -108.287 234.57 126.97  1  < 2.2e-16 ***
 
-m2b <- lme4::lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class)+(1|food.cat), data=dat.sum.tot, REML = F)
-summary(m2b)
+# m2 <- lm(log10(transit_hrs)~ log10(mass_kg):re_class, data=dat.sum.tot)
+# summary(m2)
+# Coefficients:
+# Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)                           1.14802    0.08126  14.128  < 2e-16 ***
+# log10(mass_kg):re_classFlying\nBirds  0.85689    0.10683   8.021 4.98e-13 ***
+# log10(mass_kg):re_classBats           0.62532    0.06879   9.090 1.29e-15 ***
+# log10(mass_kg):re_classRodents        0.45863    0.18464   2.484   0.0142 *  
+# log10(mass_kg):re_classCarnivores     0.02873    0.18803   0.153   0.8788    
+# log10(mass_kg):re_classUngulates      0.15186    0.06696   2.268   0.0250 *  
+# log10(mass_kg):re_classPrimates       0.19922    0.14742   1.351   0.1789    
+# log10(mass_kg):re_classReptiles       0.26714    0.11869   2.251   0.0261 * 
 
-pSm2 <- plot_model(m2b, type="est", vline.color = "black",
-                   axis.labels = rev(c("Rodents", "Flying Birds", "Bats", "Carnivores", "Primates", "Ungulates", "Reptiles")),
-                   title = "Effects of mass on GIT transit") + theme_bw() + 
-  theme(panel.grid = element_blank(), axis.text = element_text(size=14), axis.title.x = element_blank()) 
-print(pSm2)
-
-library(gridExtra)
-pSm2b <- plot_model(m2b, type="re", vline.color = "black", facet.grid=FALSE) + theme_bw() + 
-  theme(panel.grid = element_blank(), axis.text = element_text(size=14)) 
-grid.arrange(pSm2b[[1]], pSm2b[[2]])
-
-mass.mod.plot <- cowplot::plot_grid(pSm2,pSm2b, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1,1))
-print(mass.mod.plot)
-
-
-
-
-m3 <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|food.cat), data=dat.sum.tot, REML = F)
-summary(m3)
+# m2 <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|food.cat), data=dat.sum.tot, REML = F)
+# summary(m2)
 # Fixed effects:
 # Estimate Std. Error        df t value Pr(>|t|)    
 # (Intercept)                           1.13781    0.12686   6.41860   8.969 7.29e-05 ***
@@ -239,42 +255,54 @@ summary(m3)
 # log10(mass_kg):re_classPrimates       0.40018    0.14368 139.98917   2.785  0.00609 ** 
 # log10(mass_kg):re_classUngulates      0.19175    0.06816 135.12359   2.813  0.00564 ** 
 # log10(mass_kg):re_classReptiles       0.30837    0.10756 136.36347   2.867  0.00480 ** 
-rand(m3)
+#rand(m2)
 # Model:
 # log10(transit_hrs) ~ (1 | food.cat) + log10(mass_kg):re_class
 # npar  logLik    AIC    LRT Df Pr(>Chisq)    
 # <none>           10 -101.93 223.87                         
 # (1 | food.cat)    9 -108.29 234.57 12.709  1  0.0003639 ***
 
-m3b <- lme4::lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|food.cat), data=dat.sum.tot, REML = F)
-summary(m3b)
 
-pSm3 <- plot_model(m3b, type="est", vline.color = "black",
-                  axis.labels = rev(c("Rodents", "Flying Birds", "Bats", "Carnivores", "Primates", "Ungulates", "Reptiles")),
-                  title = "Effects of mass on GIT transit") + theme_bw() + 
+m2b <- lme4::lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class), data=dat.sum.tot, REML = F)
+summary(m2b)
+
+
+pSm2 <- plot_model(m2b, type="est", vline.color = "black",
+                   axis.labels = rev(c("Rodents", "Flying Birds", "Bats","Carnivores","Primates", "Ungulates", "Reptiles")),
+                   title = "Effects of mass on GIT transit") + theme_bw() + 
   theme(panel.grid = element_blank(), axis.text = element_text(size=14), axis.title.x = element_blank()) 
-print(pSm3)
+print(pSm2)
 
-pSm3b <- plot_model(m3b, type="re", vline.color = "black") + theme_bw() + 
-  theme(panel.grid = element_blank(), axis.text = element_text(size=14)) 
-print(pSm3b)
+library(gridExtra)
+pSm2b <- plot_model(m2b, type="re", vline.color = "black", facet.grid=FALSE) + theme_bw() + 
+   theme(panel.grid = element_blank(), axis.text = element_text(size=14)) 
+print(pSm2b)
 
-mass.mod.plot <- cowplot::plot_grid(pSm3,pSm3b, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1,1))
+mass.mod.plot <- cowplot::plot_grid(pSm2,pSm2b, nrow=1, ncol=2, labels=c("(c)", "(d)"), rel_widths = c(1,1))
 print(mass.mod.plot)
 
-ggsave(file = paste0(homewd,"/figures/Fig3_Randomeffects.png"),
+
+figure2 <- cowplot::plot_grid(taxon.mod.plot,mass.mod.plot, nrow=2, ncol=1)
+print(figure2)
+
+
+ggsave(file = paste0(homewd,"/figures/Fig2_modelresults.png"),
        units="mm",  
        width=120, 
-       height=50, 
+       height=80, 
        scale=3, 
        dpi=300)
 
 
 
 
+
+
+
+
+###FIGURE 1
+#Figure 1A
 dat.sum.tot$predicted_transit[!is.na(dat.sum.tot$transit_hrs) & !is.na(dat.sum.tot$mass_kg) & !is.na(dat.sum.tot$re_class)]   <- 10^(predict(m2))
-
-
 
 #and reshape order
 dat.sum.tot$re_class <- as.character(dat.sum.tot$re_class)
@@ -316,7 +344,7 @@ print(pA)
 #   coord_cartesian(ylim=c(-.8,2.95)) + geom_label(data=label.dat, aes(x=re_class, y=2.9, label=label), label.size = NA,size=8)
 # print(pA_poster)
 
-ggsave(file = paste0(homewd,"/figures/Fig_transit_tax_poster.png"),
+ggsave(file = paste0(homewd,"/figures/Fig_1A.png"),
        units="mm",  
        width=120, 
        height=80, 
@@ -324,15 +352,15 @@ ggsave(file = paste0(homewd,"/figures/Fig_transit_tax_poster.png"),
        dpi=300)
 
 
-
+#figure 1b
 #now plot with mass
 #bats are the only taxon for which the mass slope from model 2 is negative (and significantly so)
-
+#the above isn't true with the new model
 head(dat.sum.tot)
 
 pB <- ggplot(data=dat.sum.tot, aes(x=log10(mass_kg), y=log10(transit_hrs))) + 
   geom_mark_ellipse(expand=0,radius=0,aes(fill=re_class, color=re_class), size=.1)+
-  geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit), color=re_class), alpha=.6, size=.7) +
+  geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit), color=re_class), alpha=.6, linewidth=.7) +
   #geom_ribbon(aes(x=log10(mass_kg), ymin=predicted_transit_lci, ymax=predicted_transit_uci, fill=re_class), alpha=.1) +
   geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= re_class, shape=food.cat), size=4, show.legend = F) + 
   geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= re_class, color= re_class, shape=food.cat), size=3, show.legend = F) + 
@@ -367,99 +395,148 @@ print(pB)
 #   guides(color = "none", fill="none")
 #print(pB_poster)
 
-ggsave(file = paste0(homewd,"/figures/Fig_transit_mass_tax_poster.png"),
+out.plot2 <- cowplot::plot_grid(pA, pB, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1.2,1.2))
+
+print(out.plot2)
+
+ggsave(file = paste0(homewd,"/figures/Fig1_TwoPanel.jpeg"),
        units="mm",  
-       width=120, 
-       height=80, 
+       width=150, 
+       height=60, 
+       scale=3, 
+       dpi=300)
+
+# out.plot2 <- cowplot::plot_grid(pA, pB, nrow=1, ncol=3, labels=c("(a)", "(b)"), rel_widths = c(1.2,1.2))
+# 
+# print(out.plot2)
+# 
+# ggsave(file = paste0(homewd,"/figures/Fig1_TwoPanel.jpeg"),
+#        units="mm",  
+#        width=150, 
+#        height=60, 
+#        scale=3, 
+#        dpi=300)
+
+
+out.plot2 <- cowplot::plot_grid(pA, pB, pC, nrow=1, ncol=3, labels=c("(a)", "(b)", "(c)"), rel_widths = c(1.2,1.2, 1.3))
+
+print(out.plot2)
+
+ggsave(file = paste0(homewd,"/figures/Fig1_ThreePanel.jpeg"),
+       units="mm",  
+       width=190, 
+       height=60, 
        scale=3, 
        dpi=300)
 
 
 
 
-#and the supplementary figures
 
-#plot random effects
-pS3 <- plot_model(m1b, type="re", vline.color = "black") + theme_bw() + 
-        theme(panel.grid = element_blank(), axis.text = element_text(size=14)) 
-        
-print(pS3)
+### FIGURE 3  
+bat.sum.tot <- subset(dat.sum.tot, order=="Chiroptera")
+bat.sum.tot$family <- as.factor(bat.sum.tot$family)
 
-ggsave(file = paste0(homewd,"/figures/FigS3_Random_Effects.png"),
-       units="mm",  
-       width=50, 
-       height=40, 
-       scale=3, 
-       dpi=300)
+#Are there actually differences in bat family
+hist(log10(bat.sum.tot$transit_hrs))
+m3 <- lmer(log10(transit_hrs)~ log10(mass_kg):family + (1|family), data=bat.sum.tot, REML = F)
+summary(m3)
+# Fixed effects:
+# Estimate Std. Error        df t value Pr(>|t|)
+# (Intercept)                           -0.113927   0.144640 47.000000  -0.788    0.435
+# log10(mass_kg):familyMolossidae       -0.210572   0.151860 47.000000  -1.387    0.172
+# log10(mass_kg):familyMormoopidae      -0.256465   0.184957 47.000000  -1.387    0.172
+# log10(mass_kg):familyPhyllostomidae   -0.142832   0.096555 47.000000  -1.479    0.146
+# log10(mass_kg):familyPteropodidae      0.002327   0.133973 47.000000   0.017    0.986
+# log10(mass_kg):familyVespertilionidae -0.133453   0.082963 47.000000  -1.609    0.114
+rand(m3)
 
-
-#combine partial effects into a two panel plot
-out.plot <- cowplot::plot_grid(pS2,pS3, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1,1))
-
-print(out.plot)
-
-
-ggsave(file = paste0(homewd,"/figures/Fig2_TwoPanel.jpeg"),
-       units="mm",  
-       width=120, 
-       height=50, 
-       scale=3, 
-       dpi=300)
+bat.sum.tot$predicted_transit2[!is.na(bat.sum.tot$transit_hrs) & !is.na(bat.sum.tot$mass_kg) & !is.na(bat.sum.tot$family)]   <- 10^(predict(m3))
 
 
 fam.col = c("Molossidae" = "firebrick", "Mormoopidae" = "navy", "Phyllostomidae" = "darkmagenta", "Pteropodidae" = "forestgreen", "Vespertilionidae" = "lightcoral")
 
+
 #and look at just bats - reverses the direction
-pS4 <- ggplot(data=subset(dat.sum.tot, re_class=="Bats")) + 
-  geom_point(aes(x=log10(mass), y=log10(transit), fill= family, shape=food.cat), size=4, show.legend = F) + 
-  geom_point(aes(x=log10(mass), y=log10(transit), fill= family, color= family, shape=food.cat), size=3) + 
-  ylab("GIT transit time (min)") + xlab("Mass (g)") + coord_cartesian(xlim=c(.5,3), ylim=c(.5,3))+
+pC <- ggplot(data=subset(bat.sum.tot)) + 
+  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= family, shape=food.cat), size=5, show.legend = F) + 
+  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= family, color=family, shape=food.cat), size=4) + 
+  geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit2), color=family), alpha=.6, size=.7) +
+  ylab("GIT transit time (hrs)") + xlab("Mass (kg)") + #coord_cartesian(xlim=c(.5,3), ylim=c(.5,3))+
   theme_bw() + theme(panel.grid = element_blank(), #legend.position = c(.87,.83), 
                      #legend.background = element_rect(color="black"),
                      axis.text = element_text(size=14), axis.title = element_text(size=18)) +
   scale_shape_manual(values=shapez, name= "food type") + 
-  scale_y_continuous(breaks = c(1,2,3), labels= c("10", "100", "1000")) + 
+  scale_y_continuous(breaks = c(-0.4,0,0.4, 0.8), labels= c("0.4", "1", "2.5", "6.3")) + 
   scale_fill_manual(name="bat family", values=fam.col) + scale_color_manual(name="bat family", values=fam.col) +
-  scale_x_continuous(breaks = c(1,2,3), labels = c("10", "100", "1000")) #+
-  #guides(shape=FALSE)#, nrow=1, colour = guide_legend(nrow = 1))
+  scale_x_continuous(breaks = c(-2.0,-1.5,-1.0,-0.5), labels = c("0.01", "0.032", "0.1", "0.32"))
+#guides(shape=FALSE)#, nrow=1, colour = guide_legend(nrow = 1))
+print(pC)
 
-print(pS4)
-ggsave(file = paste0(homewd,"/figures/FigS4_bat_only.png"),
+
+ggsave(file = paste0(homewd,"/figures/Fig1C_bat_only.png"),
        units="mm",  
        width=80, 
        height=60, 
        scale=3, 
        dpi=300)
 
-# pS4_poster <- ggplot(data=subset(dat.sum.tot, re_class=="Bats")) + 
-#   geom_point(aes(x=log10(mass), y=log10(transit), fill= family, shape=food.cat), size=5, show.legend = F) + 
-#   geom_point(aes(x=log10(mass), y=log10(transit), fill= family, color= family, shape=food.cat), size=4) + 
-#   ylab("GIT Transit Time (min)") + xlab("Mass (g)") + coord_cartesian(xlim=c(.5,3), ylim=c(.5,3))+
-#   theme_bw() + theme(panel.grid = element_blank(),
-#                      axis.text = element_text(size=25), axis.title = element_text(size=28), 
-#                      legend.title = element_text(size=23), legend.text = element_text(size=20)) +
-#   scale_shape_manual(values=shapez, name= "Food Type") + 
-#   scale_y_continuous(breaks = c(1,2,3), labels= c("10", "100", "1000")) + 
-#   scale_fill_manual(name="Bat Family", values=fam.col) + scale_color_manual(name="Bat Family", values=fam.col) +
-#   scale_x_continuous(breaks = c(1,2,3), labels = c("10", "100", "1000"))
-# 
-# print(pS4_poster)
 
-ggsave(file = paste0(homewd,"/figures/FigS4_bat_only_poster.png"),
+
+
+
+
+#now what does this look like for the birds?
+bird.sum.tot <- subset(dat.sum.tot, class=="Aves")
+bird.sum.tot$family <- as.factor(bird.sum.tot$family)
+bird.sum.tot$order <- as.factor(bird.sum.tot$order)
+
+m4 <- lmer(log10(transit_hrs)~ log10(mass_kg):order+ (1|order), data=bird.sum.tot)
+summary(m4)
+# Fixed effects:
+# Estimate Std. Error       df t value Pr(>|t|)
+# (Intercept)                           0.4803     0.2390   1.0043   2.010    0.293
+# log10(mass_kg):orderAccipitriformes -62.9303   103.9605   0.8247  -0.605    0.670
+# log10(mass_kg):orderColumbiformes    -0.3884     0.9587   0.8247  -0.405    0.766
+# log10(mass_kg):orderFalconiformes     4.3771     3.2917   0.8247   1.330    0.443
+# log10(mass_kg):orderGalliformes       0.2971     0.2236   6.0107   1.329    0.232
+# log10(mass_kg):orderPasseriformes     0.4322     0.1658   1.4495   2.607    0.166
+# log10(mass_kg):orderPsittaciformes    0.6420     0.3531   5.6422   1.818    0.122
+# log10(mass_kg):orderStrigiformes      5.0927     4.1700   0.8247   1.221    0.468 
+
+bird.sum.tot$predicted_transit2[!is.na(bird.sum.tot$transit_hrs) & !is.na(bird.sum.tot$mass_kg) & !is.na(bird.sum.tot$order)]   <- 10^(predict(m4))
+
+pSm4 <- plot_model(m4, type="est", vline.color = "black",
+                   #axis.labels = rev(c("Columbiformes", "Falconiformes","Galiformes", "Passeriformes","Psittaciformes",  "Strigiformes")),
+                   title = "Effects of mass on GIT transit") + theme_bw() +
+  theme(panel.grid = element_blank(), axis.text = element_text(size=14), axis.title.x = element_blank())
+print(pSm4)
+
+bird.fam.col = c("Accipitriformes"="gray","Columbiformes" = "lightcoral", "Falconiformes" = "darkseagreen", "Galliformes" = "plum3", "Passeriformes" = "blueviolet", "Psittaciformes" = "goldenrod", "Strigiformes"= "lightblue")
+
+pD <- ggplot(data=subset(bird.sum.tot)) + 
+  #geom_mark_ellipse(expand=0,radius=0,aes(fill=order, color=order), size=.1)+
+  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= order, color=order, shape=food.cat), size=4) + 
+  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= order, shape=food.cat), size=5, show.legend = F) + 
+  geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit2), color=order), alpha=.6, size=.7) +
+  ylab("GIT transit time (hrs)") + xlab("Mass (kg)") + #coord_cartesian(xlim=c(.5,3), ylim=c(.5,3))+
+  theme_bw() + theme(panel.grid = element_blank(), #legend.position = c(.87,.83), 
+                     #legend.background = element_rect(color="black"),
+                     axis.text = element_text(size=14), axis.title = element_text(size=18)) +
+  scale_shape_manual(values=shapez, name= "food type") + 
+  scale_y_continuous(breaks = c(-0.5,0,0.5, 1.0), labels= c("0.32", "1", "3.2", "10")) +
+  scale_fill_manual(name="bird order", values=bird.fam.col) + scale_color_manual(name="bird order", values=bird.fam.col) +
+scale_x_continuous(breaks = c(-2.0,-1.5,-1.0,-0.5, 0, 0.5), labels = c("0.01", "0.032", "0.1", "0.32", "1", "3.2"))
+#guides(shape=FALSE)#, nrow=1, colour = guide_legend(nrow = 1))
+print(pD)
+
+bat.bird.plot <- cowplot::plot_grid(pC, pD, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1.2,1.2))
+
+print(bat.bird.plot)
+
+ggsave(file = paste0(homewd,"/figures/Fig3_TwoPanel.jpeg"),
        units="mm",  
-       width=100, 
-       height=80, 
-       scale=3, 
-       dpi=300)
-
-out.plot2 <- cowplot::plot_grid(pA, pB,pS4, nrow=1, ncol=3, labels=c("(a)", "(b)", "(c)"), rel_widths = c(1,1, 1.2))
-
-print(out.plot2)
-
-ggsave(file = paste0(homewd,"/figures/Fig1_ThreePanel.jpeg"),
-       units="mm",  
-       width=180, 
+       width=150, 
        height=60, 
        scale=3, 
        dpi=300)
-
