@@ -31,13 +31,16 @@ length(unique(dat$Retention.Citation)) #107 unique papers
 length(unique(dat$Genus.species)) #112 unique species
 unique(dat$Genus.species)
 
+#@Emily, Katherine also added the collection of MRT, but never plotted it
+#I'm pulling that out here to include in the actual paper
+
 
 #dat = only the columns we will use for modeling and plotting and renaming columns
 #original code: dat <- dplyr::select(dat, can_fly, Class, Order, Family, Genus.species, Common.Name, Typical.Diet, Mass..mean.median.from.study., Feeding.Trial.Food.Cat, N_measured, N_trials, Minimum..min., Median..min., Mean..min.,Maximum..min.)
-dat <- dplyr::select(dat, can_fly, Class, Order, Family, Genus.species, Common.Name, Typical.Diet, Mass.g..mean.median.from.study., Feeding.Trial.Food.Cat, N_individuals, N_trials, Minimum..min., Median..min., Mean..min.,Maximum..min.)
+dat <- dplyr::select(dat, can_fly, Class, Order, Family, Genus.species, Common.Name, Typical.Diet, Mass.g..mean.median.from.study., Feeding.Trial.Food.Cat, N_individuals, N_trials, Minimum..min., Median..min., Mean..min.,Maximum..min., mrt..min.,mrt_sd, mrt_se)
 head(dat)
 #rename columns
-names(dat) <- c("fly", "class", "order", "family", "genus.species", "common.name", "typical.diet", "mass", "food.cat", "N_individuals", "N_trials", "min", "median", "mean", "max")
+names(dat) <- c("fly", "class", "order", "family", "genus.species", "common.name", "typical.diet", "mass", "food.cat", "N_individuals", "N_trials", "min", "median", "mean", "max", "MRT_min", "MRT_sd", "MRT_se")
 #View(dat)
 
 
@@ -55,6 +58,8 @@ dat.plot$N_individuals[dat.plot$N_individuals=="not reported"] <- 1 #assigning 1
 dat.plot$N_individuals[is.na(dat.plot$N_individuals)] <- 1 #assigning 1 individual if #individuals is NA
 dat.plot$N_individuals = as.numeric(dat.plot$N_individuals)
 dat.plot$total_transit = dat.plot$transit*dat.plot$N_individuals #multiplying transit time x #individuals
+#and also add for MRT
+dat.plot$total_MRT = dat.plot$MRT_min*dat.plot$N_individuals
 unique(dat.plot$food.cat)
 #View(dat.plot)
 
@@ -64,16 +69,19 @@ dat.split <- dlply(dat.plot, .(fly,class,order,family,genus.species, common.name
 #making a function
 summarise.dat <- function(dat1){
   
-  dat2 <- ddply(dat1, .(fly,class,order,family,genus.species, common.name, typical.diet,food.cat), summarise, mass=unique(mass), food=unique(food.cat),  N_tot =sum(N_individuals), total_transit=sum(total_transit))
+  dat2 <- ddply(dat1, .(fly,class,order,family,genus.species, common.name, typical.diet,food.cat), summarise, mass=unique(mass), food=unique(food.cat),  N_tot =sum(N_individuals), total_transit=sum(total_transit), total_MRT = sum(total_MRT))
   return(dat2)
 }
 dat.out <- lapply(dat.split, summarise.dat)
 dat.sum.tot <- data.table::rbindlist(dat.out)
 head(dat.sum.tot)
 dat.sum.tot$transit <- dat.sum.tot$total_transit/dat.sum.tot$N_tot
+dat.sum.tot$MRT <- dat.sum.tot$total_MRT/dat.sum.tot$N_tot
 subset(dat.sum.tot, is.na(transit)) #0
+subset(dat.sum.tot, is.na(total_MRT)) #105
+subset(dat.sum.tot, !is.na(total_MRT)) #46 with MRT values
 
-paper.dat <- ddply(dat.sum.tot, .(re_class), summarise, N_species = length(unique(genus.species)))
+#paper.dat <- ddply(dat.sum.tot, .(re_class), summarise, N_species = length(unique(genus.species)))
 
 #now categorize -- vertebrates are signified by class but mammals by order
 dat.sum.tot$re_class <- dat.sum.tot$class
@@ -108,6 +116,7 @@ unique(dat.sum.tot$re_class)
 
 #convert transit time to hours
 dat.sum.tot$transit_hrs = dat.sum.tot$transit/60
+dat.sum.tot$MRT_hrs = dat.sum.tot$MRT/60
 #convert mass to kg
 dat.sum.tot$mass_kg = as.numeric(dat.sum.tot$mass)/1000
 
@@ -540,3 +549,29 @@ ggsave(file = paste0(homewd,"/figures/Fig3_TwoPanel.jpeg"),
        height=60, 
        scale=3, 
        dpi=300)
+
+
+
+
+
+#and try plotting MRT
+pA2 <- ggplot(data=dat.sum.tot)+ geom_boxplot(aes(x=re_class, y=log10(MRT_hrs), fill=re_class), show.legend = F) + theme_bw() + 
+  theme(axis.title.x = element_blank(), panel.grid = element_blank(), legend.position = c(.85,.15), legend.background = element_rect(color="black"),
+        axis.text.y = element_text(size=13), axis.text.x = element_text(size=13), axis.title.y = element_text(size=16),
+        plot.margin = unit(c(.2,.2,.8,.2), "cm")) + scale_fill_manual(values=colz) + 
+  geom_point(aes(x=re_class, y=log10(transit_hrs),shape=food.cat), position = position_jitterdodge(jitter.width = 0), size=3) +  
+  scale_shape_manual(values=shapez, name="Food type") +  ylab("MRT, hrs") +
+  geom_hline(aes(yintercept=log10(quantile(subset(dat.sum.tot, re_class=="Rodents")$transit_hrs)["50%"])), linetype=2) +
+  scale_y_continuous(breaks=c(0,1,2), labels = c("1", "10", "100")) +
+  coord_cartesian(ylim=c(-.8,2.95)) #+ geom_label(data=label.dat, aes(x=re_class, y=2.9, label=label), label.size = NA,size=5)
+print(pA2)
+
+ggsave(file = paste0(homewd,"/figures/MRT_testplot.jpeg"),
+       units="mm",  
+       width=80, 
+       height=60, 
+       scale=3, 
+       dpi=300)
+
+#it's probably not significant but you could run all the same models using the MRT values instead.
+#likely need to redo the the "cull steps" as to however many taxa were removed
