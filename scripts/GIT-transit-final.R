@@ -31,8 +31,8 @@ length(unique(dat$Retention.Citation)) #107 unique papers
 length(unique(dat$Genus.species)) #112 unique species
 unique(dat$Genus.species)
 
-#@Emily, Katherine also added the collection of MRT, but never plotted it
-#I'm pulling that out here to include in the actual paper
+#We also added the collection of MRT, but never plotted it
+#I'm pulling that out here to include in the actual paper - starts on line 561
 
 
 #dat = only the columns we will use for modeling and plotting and renaming columns
@@ -113,12 +113,15 @@ dat.sum.tot$re_class[dat.sum.tot$re_class=="Lagomorpha" | dat.sum.tot$re_class==
 dat.sum.tot = subset(dat.sum.tot, re_class!="Non-Flying Birds" & re_class!= "Other Mammals")
 #dat.sum.tot = subset(dat.sum.tot,  re_class!= "Other Mammals")
 unique(dat.sum.tot$re_class)
+dat.simp <- ddply(dat.sum.tot, .(re_class), summarize, N=length(re_class))
+dat.simp
 
 #convert transit time to hours
 dat.sum.tot$transit_hrs = dat.sum.tot$transit/60
 dat.sum.tot$MRT_hrs = dat.sum.tot$MRT/60
 #convert mass to kg
 dat.sum.tot$mass_kg = as.numeric(dat.sum.tot$mass)/1000
+#write.csv(dat.sum.tot, "data/R_cleaned_data.csv")
 
 #check how transit time varies by mass
 #generally, we see that transit is longer at higher mass
@@ -178,10 +181,11 @@ pS2 <- plot_model(m1b, type="est", vline.color = "black",
                   axis.labels = rev(c("Flying Birds", "Bats", "Carnivores", "Primates", "Ungulates", "Reptiles")),
                   title = "Effects of taxon on GIT transit") + theme_bw() + 
   theme(panel.grid = element_blank(), axis.text = element_text(size=14), axis.title.x = element_blank()) 
-
 print(pS2)
 
-pS2b <- plot_model(m1b, type="re", vline.color = "black", facet.grid=FALSE) + theme_bw() + 
+pS2b <- plot_model(m1b, type="re", vline.color = "black",  
+                   axis.labels = rev(c("fruit/nectar/\npollen", "fiber/\nfoliage", "protein", "label-\nsolution")),
+                    facet.grid=FALSE) + theme_bw() + 
   theme(panel.grid = element_blank(), axis.text = element_text(size=14)) 
 print(pS2b)
 
@@ -361,10 +365,9 @@ ggsave(file = paste0(homewd,"/figures/Fig_1A.png"),
        dpi=300)
 
 
-#figure 1b
+#Figure 1B
 #now plot with mass
 #bats are the only taxon for which the mass slope from model 2 is negative (and significantly so)
-#the above isn't true with the new model
 head(dat.sum.tot)
 
 pB <- ggplot(data=dat.sum.tot, aes(x=log10(mass_kg), y=log10(transit_hrs))) + 
@@ -427,24 +430,14 @@ ggsave(file = paste0(homewd,"/figures/Fig1_TwoPanel.jpeg"),
 #        dpi=300)
 
 
-out.plot2 <- cowplot::plot_grid(pA, pB, pC, nrow=1, ncol=3, labels=c("(a)", "(b)", "(c)"), rel_widths = c(1.2,1.2, 1.3))
-
-print(out.plot2)
-
-ggsave(file = paste0(homewd,"/figures/Fig1_ThreePanel.jpeg"),
-       units="mm",  
-       width=190, 
-       height=60, 
-       scale=3, 
-       dpi=300)
 
 
 
 
-
-### FIGURE 3  
+### FIGURE 1C  
 bat.sum.tot <- subset(dat.sum.tot, order=="Chiroptera")
 bat.sum.tot$family <- as.factor(bat.sum.tot$family)
+bat.sum.tot <- subset(bat.sum.tot, family=="Phyllostomidae"|family=="Pteropodidae"|family=="Vespertilionidae")
 
 #Are there actually differences in bat family
 hist(log10(bat.sum.tot$transit_hrs))
@@ -458,26 +451,49 @@ summary(m3)
 # log10(mass_kg):familyPhyllostomidae   -0.142832   0.096555 47.000000  -1.479    0.146
 # log10(mass_kg):familyPteropodidae      0.002327   0.133973 47.000000   0.017    0.986
 # log10(mass_kg):familyVespertilionidae -0.133453   0.082963 47.000000  -1.609    0.114
+
+#When we remove the families with only one or two entries
+# Fixed effects:
+# Estimate Std. Error        df t value Pr(>|t|)
+# (Intercept)                           -0.113927   0.147820 45.000000  -0.771    0.445
+# log10(mass_kg):familyPhyllostomidae   -0.142832   0.098677 45.000000  -1.447    0.155
+# log10(mass_kg):familyPteropodidae      0.002327   0.136918 45.000000   0.017    0.987
+# log10(mass_kg):familyVespertilionidae -0.133453   0.084787 45.000000  -1.574    0.122
 rand(m3)
 
 bat.sum.tot$predicted_transit2[!is.na(bat.sum.tot$transit_hrs) & !is.na(bat.sum.tot$mass_kg) & !is.na(bat.sum.tot$family)]   <- 10^(predict(m3))
 
+bat.sum.tot$predicted_transit_lci <- NA
+bat.sum.tot$predicted_transit_uci <- NA
+bat1 <- subset(bat.sum.tot, family=="Phyllostomidae")
+bat1$predicted_transit_lci <- (bat1$predicted_transit2) - (0.1)
+bat1$predicted_transit_uci <- (bat1$predicted_transit2) + (0.1)
+bat2 <- subset(bat.sum.tot, family=="Pteropodidae")
+bat2$predicted_transit_lci <- (bat2$predicted_transit2) - (0.14)
+bat2$predicted_transit_uci <- (bat2$predicted_transit2) + (0.14)
+bat3 <- subset(bat.sum.tot, family=="Vespertilionidae")
+bat3$predicted_transit_lci <- (bat3$predicted_transit2) - (0.08)
+bat3$predicted_transit_uci <- (bat3$predicted_transit2) + (0.08)
 
-fam.col = c("Molossidae" = "firebrick", "Mormoopidae" = "navy", "Phyllostomidae" = "darkmagenta", "Pteropodidae" = "forestgreen", "Vespertilionidae" = "lightcoral")
+bat.sum.tot2 <- rbind(bat1,bat2,bat3)
+
+#fam.col = c("Molossidae" = "firebrick", "Mormoopidae" = "navy", "Phyllostomidae" = "darkmagenta", "Pteropodidae" = "forestgreen", "Vespertilionidae" = "lightcoral")
+fam.col = c("Phyllostomidae" = "darkmagenta", "Pteropodidae" = "forestgreen", "Vespertilionidae" = "lightcoral")
 
 
 #and look at just bats - reverses the direction
-pC <- ggplot(data=subset(bat.sum.tot)) + 
-  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= family, shape=food.cat), size=5, show.legend = F) + 
-  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= family, color=family, shape=food.cat), size=4) + 
-  geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit2), color=family), alpha=.6, size=.7) +
-  ylab("GIT transit time (hrs)") + xlab("Mass (kg)") + #coord_cartesian(xlim=c(.5,3), ylim=c(.5,3))+
-  theme_bw() + theme(panel.grid = element_blank(), #legend.position = c(.87,.83), 
-                     #legend.background = element_rect(color="black"),
+pC <- ggplot(data=subset(bat.sum.tot2)) + 
+  theme_bw() + theme(panel.grid = element_blank(), legend.position = c(.87,.85), 
+                     legend.background = element_rect(color="black"),
                      axis.text = element_text(size=14), axis.title = element_text(size=18)) +
+  geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit2), color=family), size=.7) +
+  geom_ribbon(aes(x=log10(mass_kg), ymin=log10(predicted_transit_lci), ymax=log10(predicted_transit_uci), fill=family), alpha=.1, show.legend = F) +
+  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= family, shape=food.cat), size=5, show.legend = F) + 
+  #geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= family, color=family, shape=food.cat), size=4, show.legend = T) + 
+  ylab("GIT transit time (hrs)") + xlab("Mass (kg)") + #coord_cartesian(xlim=c(.5,3), ylim=c(.5,3))+
   scale_shape_manual(values=shapez, name= "food type") + 
   scale_y_continuous(breaks = c(-0.4,0,0.4, 0.8), labels= c("0.4", "1", "2.5", "6.3")) + 
-  scale_fill_manual(name="bat family", values=fam.col) + scale_color_manual(name="bat family", values=fam.col) +
+  scale_fill_manual(name="bat family", values=fam.col) + scale_color_manual(name="Bat family", values=fam.col) +
   scale_x_continuous(breaks = c(-2.0,-1.5,-1.0,-0.5), labels = c("0.01", "0.032", "0.1", "0.32"))
 #guides(shape=FALSE)#, nrow=1, colour = guide_legend(nrow = 1))
 print(pC)
@@ -489,6 +505,19 @@ ggsave(file = paste0(homewd,"/figures/Fig1C_bat_only.png"),
        height=60, 
        scale=3, 
        dpi=300)
+
+
+out.plot2 <- cowplot::plot_grid(pA, pB, pC, nrow=1, ncol=3, labels=c("(a)", "(b)", "(c)"), rel_widths = c(1.2,1.2, 1.2))
+
+print(out.plot2)
+
+ggsave(file = paste0(homewd,"/figures/Fig1_ThreePanel.jpeg"),
+       units="mm",  
+       width=190, 
+       height=60, 
+       scale=3, 
+       dpi=300)
+
 
 
 
@@ -554,24 +583,220 @@ ggsave(file = paste0(homewd,"/figures/Fig3_TwoPanel.jpeg"),
 
 
 
+
+#### MRT analysis
+length(unique(dat.sum.tot.mrt$genus.species)) #36 unique species
+
+
+dat.sum.tot.mrt <- dat.sum.tot[complete.cases(dat.sum.tot),] #40 cases
+unique(dat.sum.tot.mrt$re_class)
+#now some stats
+dat.sum.tot.mrt$re_class = factor(dat.sum.tot.mrt$re_class, levels= c( "Rodents",  "Bats","Primates", "Ungulates",  "Reptiles"))
+dat.sum.tot.mrt$food.cat = factor(dat.sum.tot.mrt$food.cat, levels= c("label-solution", "protein", "fiber/foliage", "fruit/nectar/pollen"))
+
+
+mrt1 <- lmer(log10(MRT_hrs)~ re_class + (1|food.cat), data=dat.sum.tot.mrt, REML = F)
+summary(mrt1)
+# Fixed effects:
+# Estimate Std. Error      df t value Pr(>|t|)    
+# (Intercept)         1.3255     0.1070 40.0000  12.391 2.83e-15 ***
+# re_classBats       -0.8945     0.1310 40.0000  -6.828 3.26e-08 ***
+# re_classPrimates    0.1038     0.1202 40.0000   0.863   0.3933    
+# re_classUngulates   0.3304     0.1605 40.0000   2.059   0.0461 *  
+# re_classReptiles    0.9274     0.2001 40.0000   4.634 3.77e-05 ***
+rand(mrt1) 
+# Model:
+# log10(MRT_hrs) ~ re_class + (1 | food.cat)
+# npar  logLik    AIC         LRT Df Pr(>Chisq)
+# <none>            7 0.46125 13.078                          
+# (1 | food.cat)    6 0.46125 11.078 -2.6645e-14  1          1
+
+
+#for plotting later
+dat.sum.tot.mrt$re_class = factor(dat.sum.tot.mrt$re_class, levels= c( "Bats",  "Rodents","Primates", "Ungulates",  "Reptiles"))
+mrt1b <- lme4::lmer(log10(MRT_hrs)~ re_class + (1|food.cat), data=dat.sum.tot, REML = F)
+summary(mrt1b)
+
 #and try plotting MRT
-pA2 <- ggplot(data=dat.sum.tot)+ geom_boxplot(aes(x=re_class, y=log10(MRT_hrs), fill=re_class), show.legend = F) + theme_bw() + 
+scales::show_col(scales::hue_pal()(7))
+colz =  c( "Flying\nBirds"= "#F8766D", "Bats" = "#C49A00", "Rodents"= "navy","Carnivores" = "#00C094",  "Primates"= "#00B6EB", "Ungulates"= "#A58AFF",   "Reptiles" = "#FB61D7")
+shapez = c("fiber/foliage" = 21, "fruit/nectar/pollen" = 22, "label-solution" = 23, "protein" = 24)
+
+#this is panel A of Figure S1
+pA2 <- ggplot(data=dat.sum.tot.mrt)+ geom_boxplot(aes(x=re_class, y=log10(MRT_hrs), fill=re_class), show.legend = F) + theme_bw() + 
   theme(axis.title.x = element_blank(), panel.grid = element_blank(), legend.position = c(.85,.15), legend.background = element_rect(color="black"),
         axis.text.y = element_text(size=13), axis.text.x = element_text(size=13), axis.title.y = element_text(size=16),
         plot.margin = unit(c(.2,.2,.8,.2), "cm")) + scale_fill_manual(values=colz) + 
-  geom_point(aes(x=re_class, y=log10(transit_hrs),shape=food.cat), position = position_jitterdodge(jitter.width = 0), size=3) +  
+  geom_point(aes(x=re_class, y=log10(MRT_hrs),shape=food.cat), position = position_jitterdodge(jitter.width = 0), size=3) +  
   scale_shape_manual(values=shapez, name="Food type") +  ylab("MRT, hrs") +
   geom_hline(aes(yintercept=log10(quantile(subset(dat.sum.tot, re_class=="Rodents")$transit_hrs)["50%"])), linetype=2) +
   scale_y_continuous(breaks=c(0,1,2), labels = c("1", "10", "100")) +
   coord_cartesian(ylim=c(-.8,2.95)) #+ geom_label(data=label.dat, aes(x=re_class, y=2.9, label=label), label.size = NA,size=5)
 print(pA2)
 
-ggsave(file = paste0(homewd,"/figures/MRT_testplot.jpeg"),
+ggsave(file = paste0(homewd,"/figures/FigS1a_MRT.jpeg"),
        units="mm",  
        width=80, 
        height=60, 
        scale=3, 
        dpi=300)
 
-#it's probably not significant but you could run all the same models using the MRT values instead.
-#likely need to redo the the "cull steps" as to however many taxa were removed
+#plot fixed effects - this is figure S2a and b
+pS2mrt <- plot_model(mrt1b, type="est", vline.color = "black",
+                  axis.labels = rev(c("Bats", "Primates", "Ungulates", "Reptiles")),
+                  title = "Effects of taxon on GIT transit (MRT)") + theme_bw() + 
+  theme(panel.grid = element_blank(), axis.text = element_text(size=14), axis.title.x = element_blank()) 
+
+print(pS2mrt)
+
+pS2bmrt <- plot_model(mrt1b, type="re", vline.color = "black",  
+                   axis.labels = rev(c("fruit/nectar/\npollen", "fiber/\nfoliage", "protein", "label-\nsolution")),
+                   facet.grid=FALSE) + theme_bw() + 
+  theme(panel.grid = element_blank(), axis.text = element_text(size=14)) 
+print(pS2bmrt)
+
+taxon.mod.plot.mrt <- cowplot::plot_grid(pS2mrt,pS2bmrt, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1,1))
+print(taxon.mod.plot.mrt)
+
+
+
+
+mrt2 <- lmer(log10(MRT_hrs)~ log10(mass_kg):re_class + (1|re_class), data=dat.sum.tot.mrt, REML = F)
+summary(mrt2)
+# Fixed effects:
+# Estimate Std. Error       df t value Pr(>|t|)    
+# (Intercept)                       1.01546    0.35522  4.74137   2.859 0.037701 *  
+# log10(mass_kg):re_classRodents    0.29288    0.06642 33.82986   4.410 9.95e-05 ***
+# log10(mass_kg):re_classBats      -0.37677    0.09300 37.19508  -4.051 0.000249 ***
+# log10(mass_kg):re_classPrimates   0.16980    0.10270 34.37209   1.653 0.107374    
+# log10(mass_kg):re_classUngulates  0.07767    0.34042 22.95493   0.228 0.821534    
+# log10(mass_kg):re_classReptiles   2.05532    1.26003  4.22619   1.631 0.174370  
+
+rand(mrt2)
+# Model:
+# log10(MRT_hrs) ~ (1 | re_class) + log10(mass_kg):re_class
+# npar  logLik    AIC    LRT Df Pr(>Chisq)    
+# <none>            8  2.2703 11.460                         
+# (1 | re_class)    7 -8.4489 30.898 21.438  1  3.654e-06 ***
+
+mrt2b <- lme4::lmer(log10(MRT_hrs)~ log10(mass_kg):re_class + (1|re_class), data=dat.sum.tot, REML = F)
+summary(mrt2b)
+
+
+pSm2mrt <- plot_model(mrt2b, type="est", vline.color = "black",
+                   axis.labels = rev(c("Rodents", "Bats","Primates", "Ungulates", "Reptiles")),
+                   title = "Effects of mass on GIT transit (MRT)") + theme_bw() + 
+  theme(panel.grid = element_blank(), axis.text = element_text(size=14), axis.title.x = element_blank()) 
+print(pSm2mrt)
+
+library(gridExtra)
+pSm2bmrt <- plot_model(mrt2b, type="re", vline.color = "black", facet.grid=FALSE) + theme_bw() + 
+  theme(panel.grid = element_blank(), axis.text = element_text(size=14)) 
+print(pSm2bmrt)
+
+mass.mod.plot.mrt <- cowplot::plot_grid(pSm2mrt,pSm2bmrt, nrow=1, ncol=2, labels=c("(c)", "(d)"), rel_widths = c(1,1))
+print(mass.mod.plot.mrt)
+
+
+figureS2 <- cowplot::plot_grid(taxon.mod.plot.mrt,mass.mod.plot.mrt, nrow=2, ncol=1)
+print(figureS2)
+ggsave(file = paste0(homewd,"/figures/FigS2_MRTmodelresults.png"),
+       units="mm",  
+       width=120, 
+       height=80, 
+       scale=3, 
+       dpi=300)
+
+
+
+
+# now finish figure S1
+#Figure 1B
+#now plot with mass
+#bats are the only taxon for which the mass slope from model 2 is negative (and significantly so)
+head(dat.sum.tot)
+dat.sum.tot.mrt$predicted_transit_mrt[!is.na(dat.sum.tot.mrt$MRT_hrs) & !is.na(dat.sum.tot.mrt$mass_kg) & !is.na(dat.sum.tot.mrt$re_class)]   <- 10^(predict(mrt2))
+
+
+pB2 <- ggplot(data=dat.sum.tot.mrt, aes(x=log10(mass_kg), y=log10(MRT_hrs))) + 
+  geom_mark_ellipse(expand=0,radius=0,aes(fill=re_class, color=re_class), size=.1)+
+  geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit_mrt), color=re_class), alpha=.6, linewidth=.7) +
+  #geom_ribbon(aes(x=log10(mass_kg), ymin=predicted_transit_lci, ymax=predicted_transit_uci, fill=re_class), alpha=.1) +
+  geom_point(aes(x=log10(mass_kg), y=log10(MRT_hrs), fill= re_class, shape=food.cat), size=4, show.legend = F) + 
+  geom_point(aes(x=log10(mass_kg), y=log10(MRT_hrs), fill= re_class, color= re_class, shape=food.cat), size=3, show.legend = F) + 
+  ylab("GIT transit time (hrs)") + xlab("Mass (kg)") + scale_shape_manual(name = "Food Type", values=shapez) + 
+  scale_fill_manual(name= "taxonomic\nclass", values=colz) +
+  scale_color_manual(name= "taxonomic\nclass", values=colz) +
+  theme_bw() + theme(panel.grid = element_blank(), legend.position = c(.85,.2),
+                     axis.text = element_text(size=13), axis.title = element_text(size=16),
+                     plot.margin = unit(c(.2,.2,.2,.2), "cm")) +
+  scale_y_continuous(breaks = c(0,1,2), labels= c("1", "10", "100")) +
+  scale_x_continuous(breaks = c(-2,-1,0,1,2,3), labels = c(".01", ".1", "1", "10", "100", "1000")) +
+  coord_cartesian(ylim=c(-.8,2.9)) +
+  guides(color = "none", fill="none")
+print(pB2)
+ggsave(file = paste0(homewd,"/figures/FigS1B.jpeg"),
+       units="mm",  
+       width=80, 
+       height=60, 
+       scale=3, 
+       dpi=300)
+
+
+out.plot2.mrt <- cowplot::plot_grid(pA2, pB2, nrow=1, ncol=2, labels=c("(a)", "(b)"), rel_widths = c(1.2,1.2))
+print(out.plot2.mrt)
+
+ggsave(file = paste0(homewd,"/figures/FigS1_TwoPanel.jpeg"),
+       units="mm",  
+       width=150, 
+       height=60, 
+       scale=3, 
+       dpi=300)
+
+
+
+
+
+### FIGURE S1C  - not enough data to dive into family level differences
+# bat.sum.tot <- subset(dat.sum.tot, order=="Chiroptera")
+# bat.sum.tot$family <- as.factor(bat.sum.tot$family)
+# 
+# #Are there actually differences in bat family
+# hist(log10(bat.sum.tot$MRT_hrs))
+# mrt3 <- lmer(log10(MRT_hrs)~ log10(mass_kg):family + (1|family), data=bat.sum.tot, REML = F)
+# summary(mrt3)
+# # Fixed effects:
+# # Estimate Std. Error       df t value Pr(>|t|)    
+# # (Intercept)                           -0.29280    0.13681 10.00000  -2.140 0.058009 .  
+# # log10(mass_kg):familyPteropodidae     -0.31273    0.11480 10.00000  -2.724 0.021410 *  
+# # log10(mass_kg):familyVespertilionidae -0.40940    0.07027 10.00000  -5.826 0.000167 ***
+# rand(m3)
+# 
+# bat.sum.tot$predicted_transit3[!is.na(bat.sum.tot$MRT_hrs) & !is.na(bat.sum.tot$mass_kg) & !is.na(bat.sum.tot$family)]   <- 10^(predict(mrt3))
+# 
+# 
+# fam.col = c("Molossidae" = "firebrick", "Mormoopidae" = "navy", "Phyllostomidae" = "darkmagenta", "Pteropodidae" = "forestgreen", "Vespertilionidae" = "lightcoral")
+# 
+# #and look at just bats - reverses the direction
+# pC2 <- ggplot(data=subset(bat.sum.tot)) + 
+#   theme_bw() + theme(panel.grid = element_blank(), legend.position = c(.87,.85), 
+#                      legend.background = element_rect(color="black"),
+#                      axis.text = element_text(size=14), axis.title = element_text(size=18)) +
+#   geom_point(aes(x=log10(mass_kg), y=log10(MRT_hrs), fill= family, shape=food.cat), size=5, show.legend = F) + 
+#   geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit3), color=family), size=.7) +
+#   #geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= family, color=family, shape=food.cat), size=4, show.legend = T) + 
+#   ylab("GIT transit time (hrs)") + xlab("Mass (kg)") + #coord_cartesian(xlim=c(.5,3), ylim=c(.5,3))+
+#   scale_shape_manual(values=shapez, name= "food type") + 
+#   scale_y_continuous(breaks = c(-0.4,0,0.4, 0.8), labels= c("0.4", "1", "2.5", "6.3")) + 
+#   scale_fill_manual(name="bat family", values=fam.col) + scale_color_manual(name="Bat family", values=fam.col) +
+#   scale_x_continuous(breaks = c(-2.0,-1.5,-1.0,-0.5), labels = c("0.01", "0.032", "0.1", "0.32"))
+# #guides(shape=FALSE)#, nrow=1, colour = guide_legend(nrow = 1))
+# print(pC2)
+
+# ggsave(file = paste0(homewd,"/figures/FigS1C_bat_only.png"),
+#        units="mm",  
+#        width=80, 
+#        height=60, 
+#        scale=3, 
+#        dpi=300)
+
