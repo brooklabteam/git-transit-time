@@ -370,23 +370,41 @@ ggsave(file = paste0(homewd,"/figures/Fig_1A.png"),
 #bats are the only taxon for which the mass slope from model 2 is negative (and significantly so)
 head(dat.sum.tot)
 
-pB <- ggplot(data=dat.sum.tot, aes(x=log10(mass_kg), y=log10(transit_hrs))) + 
-  geom_mark_ellipse(expand=0,radius=0,aes(fill=re_class, color=re_class), size=.1)+
-  geom_line(aes(x=log10(mass_kg), y=log10(predicted_transit), color=re_class), alpha=.6, linewidth=.7) +
-  #geom_ribbon(aes(x=log10(mass_kg), ymin=predicted_transit_lci, ymax=predicted_transit_uci, fill=re_class), alpha=.1) +
-  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= re_class, shape=food.cat), size=4, show.legend = F) + 
-  geom_point(aes(x=log10(mass_kg), y=log10(transit_hrs), fill= re_class, color= re_class, shape=food.cat), size=3, show.legend = F) + 
-  ylab("GIT transit time (hrs)") + xlab("Mass (kg)") + scale_shape_manual(name = "Food Type", values=shapez) + 
-  scale_fill_manual(name= "taxonomic\nclass", values=colz) +
-  scale_color_manual(name= "taxonomic\nclass", values=colz) +
-  theme_bw() + theme(panel.grid = element_blank(), legend.position = c(.85,.2),
-                     axis.text = element_text(size=13), axis.title = element_text(size=16),
-                     plot.margin = unit(c(.2,.2,.2,.2), "cm")) +
-  scale_y_continuous(breaks = c(0,1,2), labels= c("1", "10", "100")) +
-  scale_x_continuous(breaks = c(-2,-1,0,1,2,3), labels = c(".01", ".1", "1", "10", "100", "1000")) +
-  coord_cartesian(ylim=c(-.8,2.9)) +
-  guides(color = "none", fill="none")
+
+library(ggplot2)
+
+# Assuming 'dat.sum.tot' is your dataset and 'shapez' and 'colz' are defined elsewhere
+library(ggplot2)
+
+# Assuming 'dat.sum.tot' is your dataset and 'shapez' and 'colz' are defined elsewhere
+
+pB <- ggplot(data = dat.sum.tot, aes(x = log10(mass_kg), y = log10(transit_hrs))) + 
+  geom_mark_ellipse(expand = 0, radius = 0, aes(fill = re_class, color = re_class), size = 0.1) +
+  geom_line(aes(x = log10(mass_kg), y = log10(predicted_transit), color = re_class), 
+            alpha = 0.6, size = 0.7, show.legend = TRUE) +
+  geom_point(aes(x = log10(mass_kg), y = log10(transit_hrs), fill = re_class, shape = food.cat), 
+             size = 4, show.legend = FALSE) + 
+  ylab("GIT transit time (hrs)") + xlab("Mass (kg)") + 
+  scale_shape_manual(name = "Food Type", values = shapez) + 
+  scale_fill_manual(name = "Taxonomic Class", values = colz) +  # Adjusted legend name for re_class
+  scale_color_manual(name = "Taxonomic Class", values = colz) +  # Adjusted legend name for re_class
+  theme_bw() + 
+  theme(panel.grid = element_blank(), 
+        legend.position = c(0.85, 0.2),  # Adjusted legend position if needed
+        legend.background = element_rect(color = "black"),
+        axis.text = element_text(size = 13), 
+        axis.title = element_text(size = 16),
+        plot.margin = unit(c(0.2, 0.2, 0.2, 0.2), "cm")) +
+  scale_y_continuous(breaks = c(0, 1, 2), labels = c("1", "10", "100")) +
+  scale_x_continuous(breaks = c(-2, -1, 0, 1, 2, 3), labels = c(".01", ".1", "1", "10", "100", "1000")) +
+  coord_cartesian(ylim = c(-0.8, 2.9)) +
+  guides(color = guide_legend(title = "Taxonomic Class"),  # Adjusted legend title for re_class
+         fill = guide_legend(title = "Taxonomic Class"),  # Adjusted legend title for re_class
+         shape = "none")  # Remove legend for shape (food.cat)
+
 print(pB)
+
+
 
 # pB_poster <- ggplot(data=dat.sum.tot, aes(x=log10(mass_kg), y=log10(transit_hrs))) + 
 #   geom_mark_ellipse(expand=0,radius=0,aes(fill=re_class, color=re_class), size=.1)+
