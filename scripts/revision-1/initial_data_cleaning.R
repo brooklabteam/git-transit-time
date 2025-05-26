@@ -93,6 +93,9 @@ subset(dat.sum.tot, !is.na(transit)) #129
 subset(dat.sum.tot, !is.na(total_MRT)) #75
 
 
+
+
+
 #now categorize -- vertebrates are signified by class but mammals by order
 dat.sum.tot$re_class <- dat.sum.tot$class
 dat.sum.tot$re_class[dat.sum.tot$re_class=="Mammalia"] <- dat.sum.tot$order[dat.sum.tot$re_class=="Mammalia"]
@@ -103,11 +106,11 @@ unique(dat.sum.tot$re_class)
 #find out how many entries per each "cat"
 # dat.simp.big <- ddply(dat.sum.tot, .(re_class, typical.diet), summarize, N=length(re_class))
 # dat.simp.big
-dat.simp <- ddply(dat.sum.tot, .(re_class), summarize, N=length(re_class))
+dat.simp <- ddply(dat.sum.tot, .(re_class), summarize, N=length(re_class)) #entries count
 dat.simp
 
 paper.dat <- ddply(dat.sum.tot, .(re_class), summarise, N_species = length(unique(genus.species)))
-paper.dat
+paper.dat #species count including both tt and mrt
 
 # re_class N_species
 # 1          Amphibia         1
@@ -179,6 +182,16 @@ dat.sum.tot$transit_hrs = dat.sum.tot$transit/60
 dat.sum.tot$MRT_hrs = dat.sum.tot$MRT/60
 #convert mass to kg
 dat.sum.tot$mass_kg = as.numeric(dat.sum.tot$avg_mass)/1000
+
+
+#pivot table (Table 1 in the manuscript)
+notnatotal_tt <-subset(dat.sum.tot, !is.na(transit))
+(transit.pivot <-ddply(notnatotal_tt, .(re_class), summarise, N_species_transit = length(unique(genus.species))))
+length(unique(notnatotal_tt$genus.species)) #118 unique species for transit time
+notnatotal_MRT <-subset(dat.sum.tot, !is.na(MRT))
+(mrt.pivot <-ddply(notnatotal_MRT, .(re_class), summarise, N_species_mrt = length(unique(genus.species))))
+length(unique(notnatotal_MRT$genus.species)) #63 unique species for mean retention time
+
 
 #write.csv(dat.sum.tot, "data/R_cleaned_data.csv")
 

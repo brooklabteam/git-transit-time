@@ -394,7 +394,7 @@ AIC(pgls_model_GIT_2,pgls_model_GIT_2_reduced)
 # pgls_model_GIT_2_reduced 10 153.1407
 
 
-
+#the trend lines in panel b are based off of this linear mixed effect model (not the PGLS)
 m2c <- lmer(log10(transit_hrs)~ log10(mass_kg):re_class + (1|re_class), data=GIT_pruned)
 
 GIT_pruned$predicted_transit[!is.na(GIT_pruned$transit_hrs) & !is.na(GIT_pruned$mass_kg) & !is.na(GIT_pruned$re_class)]   <- 10^(predict(m2c))
