@@ -18,18 +18,31 @@ library(glmmTMB)
 
 #set home directory
 #homewd= "/Users/carabrook/Developer/git-transit-time"
-#homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
-homewd <- "/Users/emilyruhs/Desktop/UChi_Brook_Lab/GitHub_repos/git-transit-time/"
+homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
+#homewd <- "/Users/emilyruhs/Desktop/UChi_Brook_Lab/GitHub_repos/git-transit-time/"
 
 
 #load the GIT transit data:
-#dat <- read.csv(file = paste0(homewd, "/data/final-GIT-transit-database-april-2021.csv"), header = T, stringsAsFactors = F )
-dat <- read.csv(file = paste0(homewd, "/data/McFerrin_database.csv"), header = T, stringsAsFactors = F )
+#old_dat <- read.csv(file = paste0(homewd, "/data/final-GIT-transit-database-april-2021.csv"), header = T, stringsAsFactors = F )
+pre_review_dat <- read.csv(file = paste0(homewd, "/data/McFerrin_database.csv"), header = T, stringsAsFactors = F )
+newdat <- read.csv(file = paste0(homewd, "/data/database_reviewer2.csv"), header = T, stringsAsFactors = F )
+setdiff(colnames(pre_review_dat),colnames(newdat)) #checking column diffs
+setdiff(colnames(newdat),colnames(pre_review_dat)) #checking column diffs
+dat <- rbind(pre_review_dat, subset(newdat, select=-c(includes.keywords,X))) #removing the "includes.keywords" and "X" columns (X column is NA)
+
 #View(dat)
 
-length(unique(dat$Retention.Citation)) #107 unique papers
-length(unique(dat$Genus.species)) #112 unique species
+#counts for the methods section
+length(unique(dat$Retention.Citation)) #107 unique papers #now, 128 unique papers
+length(unique(dat$Genus.species)) #112 unique species #now, 146 unique species
 unique(dat$Genus.species)
+write.csv(dat, "data/merged_data_precleaned.csv")
+notnatotal_TT_original <-subset(dat, !is.na(Mean..min.)|!is.na(Median..min.))
+length(unique(notnatotal_TT_original$Genus.species)) #133
+notnatotal_MRT_original <-subset(dat, !is.na(mrt..min.))
+length(unique(notnatotal_MRT_original$Genus.species)) 
+
+
 
 #We also added the collection of MRT, but never plotted it
 #I'm pulling that out here to include in the actual paper - starts on line 561
@@ -54,6 +67,9 @@ dat.plot <- dplyr::select(dat.plot, -(min), -(median), -(mean), -(max)) #simplif
 head(dat.plot)
 
 #summarize by species
+dat.plot$N_individuals[dat.plot$N_individuals=="not reported"]
+dat.plot$N_individuals[is.na(dat.plot$N_individuals)] 
+
 dat.plot$N_individuals[dat.plot$N_individuals=="not reported"] <- 1 #assigning 1 individual if total # not reported
 dat.plot$N_individuals[is.na(dat.plot$N_individuals)] <- 1 #assigning 1 individual if #individuals is NA
 dat.plot$N_individuals = as.numeric(dat.plot$N_individuals)
@@ -77,9 +93,9 @@ dat.sum.tot <- data.table::rbindlist(dat.out)
 head(dat.sum.tot)
 dat.sum.tot$transit <- dat.sum.tot$total_transit/dat.sum.tot$N_tot
 dat.sum.tot$MRT <- dat.sum.tot$total_MRT/dat.sum.tot$N_tot
-subset(dat.sum.tot, is.na(transit)) #0
-subset(dat.sum.tot, is.na(total_MRT)) #105
-subset(dat.sum.tot, !is.na(total_MRT)) #46 with MRT values
+subset(dat.sum.tot, is.na(transit)) #0, now 19
+subset(dat.sum.tot, is.na(total_MRT)) #105, now 117
+notnatotal_MRT<-subset(dat.sum.tot, !is.na(total_MRT)) #46 with MRT values, now 83
 
 #paper.dat <- ddply(dat.sum.tot, .(re_class), summarise, N_species = length(unique(genus.species)))
 
@@ -95,23 +111,34 @@ dat.simp.big <- ddply(dat.sum.tot, .(re_class, food.cat), summarize, N=length(re
 dat.simp <- ddply(dat.sum.tot, .(re_class), summarize, N=length(re_class))
 dat.simp
 
+unique(dat.sum.tot$genus.species)
+
+#counts for the reduced dataset
+unique(dat.sum.tot$re_class)
+#find out how many entries per each "cat"
+dat.simp.big <- ddply(dat.sum.tot, .(re_class, food.cat), summarize, N=length(re_class))
+dat.simp <- ddply(dat.sum.tot, .(re_class), summarize, N=length(re_class))
+dat.simp
+
+
 #and group
 #remove any non-mammalian classes and any mammalian orders with < 4 entries
-#Amphibia, Chondrichtythes, Dermoptera, Lagomorpha, Non-Flying Birds 
-#Peramelemorphia, Sirenia
+#Amphibia, Chondrichtythes, Dermoptera (gliding mammals), Lagomorpha, Peramelemorphia, Sirenia
+
+#we can include non-flying birds, lagomorpha, and peramelemorphia now!
 dat.sum.tot = subset(dat.sum.tot, class!="Chondrichthyes" & class !="Amphibia")
 #and write over some of the others
 dat.sum.tot$re_class[dat.sum.tot$re_class=="Reptilia"] <- "Reptiles"
+dat.sum.tot$re_class[dat.sum.tot$re_class=="Lagomorpha"] <- "Lagomorphs" #hares, pikas, rabbits
 #dat.sum.tot$re_class[dat.sum.tot$re_class=="Lagomorpha"] <- "Rodents and Lagomorphs"
 dat.sum.tot$re_class[dat.sum.tot$re_class=="Rodentia"] <- "Rodents"
 dat.sum.tot$re_class[dat.sum.tot$re_class=="Chiroptera"] <- "Bats"
-#dat.sum.tot$re_class[dat.sum.tot$re_class=="Artiodactyla"] <- "Ungulates"
 dat.sum.tot$re_class[dat.sum.tot$re_class=="Carnivora"] <- "Carnivores"
+dat.sum.tot$re_class[dat.sum.tot$re_class=="Diprotodontia"| dat.sum.tot$re_class=="Peramelemorphia"] <- "Marsupials"
 dat.sum.tot$re_class[dat.sum.tot$re_class=="Perissodactyla" | dat.sum.tot$re_class=="Artiodactyla"] <- "Ungulates"
-dat.sum.tot$re_class[dat.sum.tot$re_class=="Lagomorpha" | dat.sum.tot$re_class=="Eulipotyphla" | dat.sum.tot$re_class=="Peramelemorphia" | dat.sum.tot$re_class=="Sirenia" |  dat.sum.tot$re_class=="Dermoptera" ] <- "Other Mammals"
-
-dat.sum.tot = subset(dat.sum.tot, re_class!="Non-Flying Birds" & re_class!= "Other Mammals")
-#dat.sum.tot = subset(dat.sum.tot,  re_class!= "Other Mammals")
+dat.sum.tot$re_class[dat.sum.tot$re_class=="Cetacea" | dat.sum.tot$re_class=="Sirenia" |  dat.sum.tot$re_class=="Dermoptera" |  dat.sum.tot$re_class=="Pilosa"  ] <- "Other Mammals"
+dat.sum.tot = subset(dat.sum.tot, re_class!= "Other Mammals")
+#dat.sum.tot = subset(dat.sum.tot, re_class!="Non-Flying Birds" & re_class!= "Other Mammals")
 unique(dat.sum.tot$re_class)
 dat.simp <- ddply(dat.sum.tot, .(re_class), summarize, N=length(re_class))
 dat.simp
@@ -121,7 +148,14 @@ dat.sum.tot$transit_hrs = dat.sum.tot$transit/60
 dat.sum.tot$MRT_hrs = dat.sum.tot$MRT/60
 #convert mass to kg
 dat.sum.tot$mass_kg = as.numeric(dat.sum.tot$mass)/1000
-#write.csv(dat.sum.tot, "data/R_cleaned_data.csv")
+write.csv(dat.sum.tot, "data/R_cleaned_data.csv")
+
+
+
+unique(dat.sum.tot$genus.species)
+
+
+
 
 #check how transit time varies by mass
 #generally, we see that transit is longer at higher mass
@@ -133,12 +167,12 @@ dat.sum.tot$mass_kg = as.numeric(dat.sum.tot$mass)/1000
 #taxa appear to have a stronger effect than food type
 #reclass.colz =  c("Rodents and Lagomorphs" = "black", "Bats"= "black", "Flying Birds"= "black", "Reptiles"= "black",  "Ungulates"= "black", "Carnivores"= "black", "Primates"= "black")
 #reclass.colz =  c("Rodents" = "black", "Bats"= "black", "Flying Birds"= "black", "Reptiles"= "black",  "Ungulates"= "black", "Carnivores"= "black", "Primates"= "black")
-#and replot the mass by transit with categories
-dat.sum.tot$re_class <- factor(dat.sum.tot$re_class, levels = c( "Flying Birds","Bats", "Rodents", "Carnivores", "Primates", "Ungulates", "Reptiles"))
+#and replot the mass by transit with categories 
+dat.sum.tot$re_class <- factor(dat.sum.tot$re_class, levels = c( "Flying Birds","Rodents", "Non-Flying Birds", "Bats", "Carnivores", "Primates", "Ungulates",  "Reptiles", "Lagomorphs", "Marsupials"))
 
 
 #now some stats
-dat.sum.tot$re_class = factor(dat.sum.tot$re_class, levels= c( "Rodents",  "Flying Birds","Bats","Carnivores", "Primates", "Ungulates",  "Reptiles"))
+dat.sum.tot$re_class = factor(dat.sum.tot$re_class, levels= c( "Rodents",  "Flying Birds", "Bats", "Non-Flying Birds", "Carnivores", "Primates", "Ungulates",  "Reptiles", "Lagomorphs", "Marsupials"))
 dat.sum.tot$food.cat = factor(dat.sum.tot$food.cat, levels= c("label-solution", "protein", "fiber/foliage", "fruit/nectar/pollen"))
 
 m1 <- lmer(log10(transit_hrs)~ re_class + (1|food.cat), data=dat.sum.tot, REML = F)
@@ -178,7 +212,7 @@ summary(m1b)
 
 #plot fixed effects
 pS2 <- plot_model(m1b, type="est", vline.color = "black",
-                  axis.labels = rev(c("Flying Birds", "Bats", "Carnivores", "Primates", "Ungulates", "Reptiles")),
+                  axis.labels = rev(c("Flying Birds", "Bats", "Non-Flying Birds", "Carnivores", "Primates", "Ungulates",  "Reptiles", "Lagomorphs", "Marsupials")),
                   title = "Effects of taxon on GIT transit") + theme_bw() + 
   theme(panel.grid = element_blank(), axis.text = element_text(size=14), axis.title.x = element_blank()) 
 print(pS2)
@@ -281,7 +315,7 @@ summary(m2b)
 
 
 pSm2 <- plot_model(m2b, type="est", vline.color = "black",
-                   axis.labels = rev(c("Rodents", "Flying Birds", "Bats","Carnivores","Primates", "Ungulates", "Reptiles")),
+                   axis.labels = rev(c("Rodents", "Flying Birds", "Bats", "Non-Flying Birds", "Carnivores", "Primates", "Ungulates",  "Reptiles", "Lagomorphs", "Marsupials")),
                    title = "Effects of mass on GIT transit") + theme_bw() + 
   theme(panel.grid = element_blank(), axis.text = element_text(size=14), axis.title.x = element_blank()) 
 print(pSm2)
@@ -320,22 +354,23 @@ dat.sum.tot$predicted_transit[!is.na(dat.sum.tot$transit_hrs) & !is.na(dat.sum.t
 #and reshape order
 dat.sum.tot$re_class <- as.character(dat.sum.tot$re_class)
 dat.sum.tot$re_class[dat.sum.tot$re_class=="Flying Birds"] <- "Flying\nBirds"
-dat.sum.tot$re_class <- factor(dat.sum.tot$re_class, levels = c( "Flying\nBirds","Bats", "Rodents", "Carnivores", "Ungulates", "Primates",  "Reptiles"))
+dat.sum.tot$re_class[dat.sum.tot$re_class=="Flying Birds"] <- "Non-Flying\nBirds"
+dat.sum.tot$re_class <- factor(dat.sum.tot$re_class, levels = c( "Flying\nBirds","Bats", "Non-Flying\nBirds", "Rodents", "Carnivores", "Ungulates", "Primates",  "Reptiles","Lagomorphs", "Marsupials"))
 dat.sum.tot$food.cat = factor(dat.sum.tot$food.cat, levels= c("fiber/foliage", "fruit/nectar/pollen","protein","label-solution"))
 
 
-scales::show_col(scales::hue_pal()(7))
-colz =  c( "Flying\nBirds"= "#F8766D", "Bats" = "#C49A00", "Rodents"= "navy","Carnivores" = "#00C094",  "Primates"= "#00B6EB", "Ungulates"= "#A58AFF",   "Reptiles" = "#FB61D7")
+scales::show_col(scales::hue_pal()(10))
+colz =  c( "Flying\nBirds"= "#F8766D", "Bats" = "#C49A00", "Non-Flying\nBirds" ="#DCCDE8", "Rodents"= "navy","Carnivores" = "#00C094",  "Primates"= "#00B6EB", "Ungulates"= "#A58AFF",   "Reptiles" = "#FB61D7","Lagomorphs"= "#BCF8EC", "Marsupials"= "#7B435B")
 shapez = c("fiber/foliage" = 21, "fruit/nectar/pollen" = 22, "label-solution" = 23, "protein" = 24)
 
 
 #and the version that is 2panel
-label.dat <- cbind.data.frame(re_class=c("Flying\nBirds","Bats", "Rodents", "Carnivores", "Primates", "Ungulates",   "Reptiles"), label = c("***", "**", "", "**", "***", "***", "***"))
-label.dat$re_class <- factor(label.dat$re_class, levels=c( "Flying\nBirds","Bats", "Rodents", "Carnivores", "Primates", "Ungulates", "Reptiles"))
+label.dat <- cbind.data.frame(re_class=c("Flying\nBirds","Bats", "Non-Flying\nBirds", "Rodents", "Carnivores", "Primates", "Ungulates",   "Reptiles","Lagomorphs", "Marsupials"), label = c("***", "**", "0", "", "**", "***", "***", "***", "0", "0"))
+label.dat$re_class <- factor(label.dat$re_class, levels=c("Flying\nBirds","Bats", "Non-Flying\nBirds", "Rodents", "Carnivores", "Primates", "Ungulates","Reptiles","Lagomorphs", "Marsupials"))
 
 #and all together
 pA <- ggplot(data=dat.sum.tot)+ geom_boxplot(aes(x=re_class, y=log10(transit_hrs), fill=re_class), show.legend = F) + theme_bw() + 
-  theme(axis.title.x = element_blank(), panel.grid = element_blank(), legend.position = c(.85,.15), legend.background = element_rect(color="black"),
+  theme(axis.title.x = element_blank(), panel.grid = element_blank(), legend.position.inside = c(.85,.15), legend.background = element_rect(color="black"),
         axis.text.y = element_text(size=13), axis.text.x = element_text(size=13), axis.title.y = element_text(size=16),
         plot.margin = unit(c(.2,.2,.8,.2), "cm")) + scale_fill_manual(values=colz) + 
   geom_point(aes(x=re_class, y=log10(transit_hrs),shape=food.cat), position = position_jitterdodge(jitter.width = 0), size=3) +  
