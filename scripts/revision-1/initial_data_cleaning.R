@@ -1,6 +1,7 @@
 rm(list=ls())
 
 #install.packages("TMB", type = "source")
+#install.packages("glmmTMB")
 #install.packages("sjPlot")
 #install.packages("plyr")
 #install.packages("dplyr")
@@ -18,13 +19,15 @@ library(glmmTMB)
 
 #set home directory
 #homewd= "/Users/carabrook/Developer/git-transit-time"
-#homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
-homewd <- "/Users/emilyruhs/Desktop/UChi_Brook_Lab/GitHub_repos/git-transit-time/"
+homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
+#homewd <- "/Users/emilyruhs/Desktop/UChi_Brook_Lab/GitHub_repos/git-transit-time/"
 setwd(homewd)
 
 #load the GIT transit data:
 #dat <- read.csv(file = paste0(homewd, "/data/final-GIT-transit-database-april-2021.csv"), header = T, stringsAsFactors = F )
-dat <- read.csv(file = paste0(homewd, "/data/McFerrin_database_R1.csv"), header = T, stringsAsFactors = F )
+
+#this csv is the database used in the first submission + updated with the papers recommended by R2
+dat <- read.csv(file = paste0(homewd, "/data/revision-1/McFerrin_database_R1.csv"), header = T, stringsAsFactors = F )
 #View(dat)
 
 length(unique(dat$Retention.Citation)) #127 unique papers
@@ -67,7 +70,7 @@ dat.plot$total_MRT = dat.plot$MRT_min*dat.plot$N_individuals
 #now get one entry for each species/food category combination
 dat.split <- dlply(dat.plot, .(fly,class,order,family,genus.species, common.name, typical.diet))
 #making a function
-library(plyr)
+
 
 summarise.dat <- function(dat){
   dat2 <- ddply(dat, .(fly, class, order, family, genus.species, common.name), summarise, 
@@ -155,9 +158,7 @@ dat.sum.tot$re_class[dat.sum.tot$re_class=="Chiroptera"] <- "Bats"
 dat.sum.tot$re_class[dat.sum.tot$re_class=="Artiodactyla"] <- "Ungulates"
 dat.sum.tot$re_class[dat.sum.tot$re_class=="Carnivora"] <- "Carnivores"
 #dat.sum.tot$re_class[dat.sum.tot$re_class=="Perissodactyla" | dat.sum.tot$re_class=="Artiodactyla"] <- "Ungulates"
-
 #dat.sum.tot$re_class[dat.sum.tot$re_class=="Diprotodontia" | dat.sum.tot$re_class=="Peramelemorphia"] <- "Marsupials"
-
 #dat.sum.tot$re_class[dat.sum.tot$re_class=="Lagomorpha" ] <- "Lagomorphs"
 
 unique(dat.sum.tot$re_class)

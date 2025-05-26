@@ -9,13 +9,14 @@ library(ggplot2)
 library(ggforce)
 
 # load data
-homewd <- "/Users/emilyruhs/Desktop/UChi_Brook_Lab/GitHub_repos/git-transit-time/"
+#homewd <- "/Users/emilyruhs/Desktop/UChi_Brook_Lab/GitHub_repos/git-transit-time/"
+homewd <- "/Users/katherinemcferrin/Developer/git-transit-time/"
 
 #load the GIT transit data with phylo name
-dat <- read.csv(file = paste0(homewd, "/data/dat_sum_tot_clean.csv"), header = T, stringsAsFactors = F )
+dat <- read.csv(file = paste0(homewd, "/data/revision-1/dat_sum_tot_clean.csv"), header = T, stringsAsFactors = F )
 
 #load the tree
-tree <- read.tree("Genus_species_list.nwk")
+tree <- read.tree(file = paste0(homewd, "/data/revision-1/Genus_species_list_2.nwk"))
 
 
 
@@ -52,7 +53,7 @@ tree <- read.tree("Genus_species_list.nwk")
 
 
  
-##################  MGT phylogenetic signal ##########
+####transit time phylogenetic signal ####
 
 #for GIT
 GIT <- dat[c("phylo_name", "transit_hrs")]
@@ -125,7 +126,7 @@ contMap(tree,log10(MRT_hrs), fsize =0.7)
 
 #########################################  MGT. #################################
 
-########### MGT data cleaning #######
+########### Transit time data cleaning #######
 
 #_________________________________________________________________________________________________________________
 #I think this code runs PGLS and also provides lambda estimates as part of the model
@@ -133,10 +134,10 @@ library(caper)
 
 #caper automatically builds the correlation structure using the comparative data object
 # Load your tree
-tree <- read.tree("Genus_species_list_2.nwk")
+tree <- read.tree(file = paste0(homewd, "/data/revision-1/Genus_species_list_2.nwk"))
 
 # Load your data
-dat <- read.csv(file = paste0(homewd, "/data/dat_sum_tot_clean.csv"), header = T, stringsAsFactors = F )
+dat <- read.csv(file = paste0(homewd, "/data/revision-1/dat_sum_tot_clean.csv"), header = T, stringsAsFactors = F )
 names(dat)
 
 # clean dataset with only the columns you need
@@ -157,7 +158,7 @@ missing_from_tree #there are zero
 
 
 
-###################### MGT - model 1 ################
+###################### Transit time - model 1 ################
 
 
 # Fit PGLS model
@@ -241,6 +242,8 @@ D <- ggplot(GIT_pruned, aes(x = fitted, y = resid, shape = typical.diet)) +
     legend.position = c(0.8,0.8),
     legend.background = element_rect(fill="white", color="black"))
 
+D
+
 ggsave(file = paste0(homewd,"/figures/MGT_residualVSfitted.jpeg"),
        plot=D,
        units="mm",  
@@ -279,6 +282,7 @@ C <- ggplot(GIT_pruned, aes(x = typical.diet, y = resid)) +
   labs(title = "Residual Spread by Natural Diet",
        y = "\nNormalized Residuals",
        x="")
+C
 
 ggsave(file = paste0(homewd,"/figures/MGT_resid.jpeg"),
        plot=C,
@@ -353,7 +357,7 @@ ggsave(file = paste0(homewd,"/figures/Fig_1A.png"),
 
 
 
-###################### MGT - model 2 - mass ################
+###################### Transit time - model 2 - mass ################
 pgls_model_GIT_2 <- gls(log_transit_hrs ~ log10(mass_kg):re_class, 
                         data = GIT_pruned, 
                         correlation = cor_phylo_fixed1,
