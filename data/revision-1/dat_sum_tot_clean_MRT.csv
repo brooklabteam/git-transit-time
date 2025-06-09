@@ -1,0 +1,61 @@
+genus.species,fly,class,order,family,common.name,sum_mass,typical.diet,N_tot,total_MRT,MRT,avg_mass,re_class,MRT_hrs,mass_kg,phylo_name_old,sci_name,phylo_name
+Hapalemur griseus,N,Mammalia,Primates,Lemuridae,Eastern lesser bamboo lemur,1050,folivore,6,16808.4,2801.4,175,Primates,46.69,0.175,Hapalemur_aureus,Hapalemur_griseus,Hapalemur_aureus
+Pan troglodytes,N,Mammalia,Primates,Hominidae,Chimpanzee,58400,omnivore,2,3780,1890,29200,Primates,31.5,29.2,Pan_troglodytes,Pan_troglodytes,Pan_troglodytes
+Allenopithecus nigroviridis,N,Mammalia,Primates,Cercopithecidae,Allen’s swamp monkey ,9800,folivore,3,4239.9999,1413.3333,3266.666667,Primates,23.555555,3.266666667,Allenopithecus_nigroviridis,Allenopithecus_nigroviridis,Allenopithecus_nigroviridis
+Cercopithecus lhoesti ,N,Mammalia,Primates,Cercopithecidae,L’Hoest’s monkey ,3550,folivore,2,3124,1562,1775,Primates,26.03333333,1.775,Allochrocebus_lhoesti,Allochrocebus_lhoesti,Allochrocebus_lhoesti
+Cercopithecus mitis,N,Mammalia,Primates,Cercopithecidae,Blue monkey,8600,frugivore/nectarivore,2,3000,1500,4300,Primates,25,4.3,Cercopithecus_nictitans,Cercopithecus_mitis,Cercopithecus_mitis
+Dromaius novaehollandiae,N,Aves,Struthioniformes,Dromaiidae,emu,99000,omnivore,6,471,78.5,16500,Non-Flying Birds,1.308333333,16.5,Dromaius_novaehollandiae,Dromaius_novaehollandiae,Dromaius_novaehollandiae
+Lophocebus albigena,N,Mammalia,Primates,Cercopithecidae,Gray-cheecked mangabey,5300,frugivore/nectarivore,2,4560,2280,2650,Primates,38,2.65,Lophocebus_albigena,Lophocebus_albigena,Lophocebus_albigena
+Cercopithecus talapoin,N,Mammalia,Primates,Cercopithecidae,Talapoin monkey,1600,frugivore/nectarivore,2,2016,1008,800,Primates,16.8,0.8,Miopithecus_talapoin,Miopithecus_talapoin,Miopithecus_talapoin
+Bison bonasus,N,Mammalia,Artiodactyla,Bovidae,European bison,376000,folivore,4,6948,1737,94000,Ungulates,28.95,94,Bison_bonasus,Bison_bonasus,Bison_bonasus
+Tragelaphus eurycerus,N,Mammalia,Artiodactyla,Bovidae,bongo,366000,folivore,6,12690,2115,61000,Ungulates,35.25,61,Tragelaphus_eurycerus,Tragelaphus_eurycerus,Tragelaphus_eurycerus
+Alces alces,N,Mammalia,Artiodactyla,Cervidae,moose,560285.7142,folivore,24,48394.28572,2016.428572,23345.23809,Ungulates,33.60714286,23.34523809,Alces_alces,Alces_alces,Alces_alces
+Dolichotis patagonum,N,Mammalia,Rodentia,Caviidae,Patagonian mara,14800,folivore,6,9738,1623,2466.666667,Rodents,27.05,2.466666667,Dolichotis_patagonum,Dolichotis_patagonum,Dolichotis_patagonum
+Cercopithecus pogonias,N,Mammalia,Primates,Cercopithecidae,Crested mona monkey,3300,frugivore/nectarivore,2,3228,1614,1650,Primates,26.9,1.65,Cercopithecus_pogonias_grayi,Cercopithecus_pogonias,Cercopithecus_pogonias
+Cavia porcellus,N,Mammalia,Rodentia,Caviidae,guinea pig,4570,folivore,36,42438.6,1178.85,126.9444444,Rodents,19.6475,0.126944444,Cavia_porcellus,Cavia_porcellus,Cavia_porcellus
+Tragelaphus spekii,N,Mammalia,Artiodactyla,Bovidae,sitatunga,1.00E+05,folivore,8,17808,2226,12500,Ungulates,37.1,12.5,Tragelaphus_spekii,Tragelaphus_spekii,Tragelaphus_spekii
+Eptesicus serotinus,Y,Mammalia,Chiroptera,Vespertilionidae,Serotine bat,23.1,insectivore,5,870,174,4.62,Bats,2.9,0.00462,Eptesicus_serotinus,Eptesicus_serotinus,Eptesicus_serotinus
+Callithrix jacchus,N,Mammalia,Primates,Cebidae,common marmoset,696,omnivore,6,4896,816,116,Primates,13.6,0.116,Callithrix_jacchus,Callithrix_jacchus,Callithrix_jacchus
+Macaca fuscata,N,Mammalia,Primates,Cercopithecidae,Japanese macaque,81400,frugivore/nectarivore,25,57675,2307,3256,Primates,38.45,3.256,Macaca_fuscata,Macaca_fuscata,Macaca_fuscata
+Mesocricetus auratus,N,Mammalia,Rodentia,Cricetidae,hamster,105,folivore,6,3276,546,17.5,Rodents,9.1,0.0175,Mesocricetus_auratus,Mesocricetus_auratus,Mesocricetus_auratus
+Octodon degus,N,Mammalia,Rodentia,Octodontidae,degu,354,folivore,16,16752,1047,22.125,Rodents,17.45,0.022125,Octodon_degus,Octodon_degus,Octodon_degus
+Marmota caligata,N,Mammalia,Rodentia,Sciuridae,hoary marmot,4616,folivore,12,19332,1611,384.6666667,Rodents,26.85,0.384666667,Marmota_caligata,Marmota_monax,Marmota_caligata
+Spermophilus columbianus,N,Mammalia,Rodentia,Sciuridae,Columbian ground squirrel,1152,folivore,12,16056,1338,96,Rodents,22.3,0.096,Urocitellus_columbianus,Urocitellus_columbianus,Urocitellus_columbianus
+Tamias amoenus,N,Mammalia,Rodentia,Sciuridae,yellow-pine chipmunk,123.8,omnivore,12,9648,804,10.31666667,Rodents,13.4,0.010316667,Tamias_amoenus,Tamias_amoenus,Tamias_amoenus
+Pithecia pithecia,N,Mammalia,Primates,Pitheciidae,white-faced saki,1712.5,folivore,4,6150,1537.5,428.125,Primates,25.625,0.428125,Pithecia_pithecia,Pithecia_pithecia,Pithecia_pithecia
+Bos taurus,N,Mammalia,Artiodactyla,Bovidae,cow,2903000,folivore,18,40460.57143,2247.809524,161277.7778,Ungulates,37.46349206,161.2777778,Bos_taurus,Bos_taurus,Bos_taurus
+Rhea americana,N,Aves,Struthioniformes,Rheidae,greater rhea,72000,omnivore,15,11310,754,4800,Non-Flying Birds,12.56666667,4.8,Rhea_americana,Rhea_americana,Rhea_americana
+Tragelaphus angasii,N,Mammalia,Artiodactyla,Bovidae,nyala,128000,folivore,12,21636,1803,10666.66667,Ungulates,30.05,10.66666667,Tragelaphus_angasii,Tragelaphus_angasii,Tragelaphus_angasii
+Pongo pygmaeus,N,Mammalia,Primates,Hominidae,Bornean orangutan,141400,frugivore/nectarivore,6,25002,4167,23566.66667,Primates,69.45,23.56666667,Pongo_pygmaeus,Pongo_pygmaeus,Pongo_pygmaeus
+Lasiopodomys brandtii,N,Mammalia,Rodentia,Cricetidae,Brandt's vole,4.9,folivore,11,4191,381,0.445454545,Rodents,6.35,0.000445455,Lasiopodomys_brandtii,Lasiopodomys_brandtii,Lasiopodomys_brandtii
+Meriones unguiculatus,N,Mammalia,Rodentia,Muridae,Mongolian gerbils,51.3,folivore,11,7227,657,4.663636364,Rodents,10.95,0.004663636,Meriones_unguiculatus,Meriones_unguiculatus,Meriones_unguiculatus
+Myotis nattereri,Y,Mammalia,Chiroptera,Vespertilionidae,Natterer's bat,6.8,insectivore,3,564,188,2.266666667,Bats,3.133333333,0.002266667,Myotis_nattereri,Myotis_nattereri,Myotis_nattereri
+Vespertilio murinus,Y,Mammalia,Chiroptera,Vespertilionidae,Parti-colored bat,14.3,insectivore,5,1210,242,2.86,Bats,4.033333333,0.00286,Vespertilio_murinus,Vespertilio_murinus,Vespertilio_murinus
+Varecia variegata,N,Mammalia,Primates,Lemuridae,black-and-white-ruffed lemur,3622,frugivore/nectarivore,6,2775.6,462.6,603.6666667,Primates,7.71,0.603666667,Varecia_variegata,Varecia_variegata,Varecia_variegata
+Struthio camelus,N,Aves,Struthioniformes,Struthionidae,common ostrich,327000,omnivore,18,33444,1858,18166.66667,Non-Flying Birds,30.96666667,18.16666667,Struthio_camelus,Struthio_camelus,Struthio_camelus
+Eulemur fulvus,N,Mammalia,Primates,Lemuridae,common brown lemur ,2258.6,frugivore/nectarivore,6,3306.6,551.1,376.4333333,Primates,9.185,0.376433333,Eulemur_coronatus,Eulemur_fulvus,Eulemur_coronatus
+Myocastor coypus,N,Mammalia,Rodentia,Echimyidae,nutria,8800,folivore,10,26754,2675.4,880,Rodents,44.59,0.88,Myocastor_coypus,Myocastor_coypus,Myocastor_coypus
+Capra hircus,N,Mammalia,Artiodactyla,Bovidae,domestic goat,31000,folivore,27,81864,3032,1148.148148,Ungulates,50.53333333,1.148148148,Capra_hircus,Capra_hircus,Capra_hircus
+Kobus ellipsiprymnus,N,Mammalia,Artiodactyla,Bovidae,waterbuck,347000,folivore,10,20265,2026.5,34700,Ungulates,33.775,34.7,Kobus_ellipsiprymnus,Kobus_ellipsiprymnus,Kobus_ellipsiprymnus
+Giraffa camelopardalis,N,Mammalia,Artiodactyla,Giraffidae,giraffe,1330400,folivore,24,54712.8,2279.7,55433.33333,Ungulates,37.995,55.43333333,Giraffa_giraffa,Giraffa_camelopardalis,Giraffa_reticulata
+Cercopithecus ascanius,N,Mammalia,Primates,Cercopithecidae,Red-tailed monkey,8785,frugivore/nectarivore,3,4866,1622,2928.333333,Primates,27.03333333,2.928333333,Cercopithecus_ascanius,Cercopithecus_ascanius,Cercopithecus_ascanius
+Myotis bechsteinii,Y,Mammalia,Chiroptera,Vespertilionidae,Bechstein's bat,8,insectivore,5,1545,309,1.6,Bats,5.15,0.0016,Myotis_bechsteinii,Myotis_bechsteinii,Myotis_bechsteinii
+Myotis daubentonii,Y,Mammalia,Chiroptera,Vespertilionidae,Daubenton's bat,7.6,insectivore,17,3094,182,0.447058824,Bats,3.033333333,0.000447059,Myotis_daubentonii,Myotis_daubentonii,Myotis_daubentonii
+Myotis myotis,Y,Mammalia,Chiroptera,Vespertilionidae,Greater mouse-eared bat,25.8,insectivore,8,984,123,3.225,Bats,2.05,0.003225,Myotis_myotis,Myotis_myotis,Myotis_myotis
+Nyctalus leisleri,Y,Mammalia,Chiroptera,Vespertilionidae,Lesser Noctule,12.5,insectivore,3,777,259,4.166666667,Bats,4.316666667,0.004166667,Nyctalus_leisleri,Nyctalus_leisleri,Nyctalus_leisleri
+Pipistrellus pipistrellus,Y,Mammalia,Chiroptera,Vespertilionidae,Common pipistrelle,5.1,insectivore,7,1778,254,0.728571429,Bats,4.233333333,0.000728571,Pipistrellus_pipistrellus,Pipistrellus_pipistrellus,Pipistrellus_pipistrellus
+Plecotus auritus,Y,Mammalia,Chiroptera,Vespertilionidae,Brown long-eared bat,6.9,insectivore,6,792,132,1.15,Bats,2.2,0.00115,Plecotus_auritus,Plecotus_auritus,Plecotus_auritus
+Ovis aries,N,Mammalia,Artiodactyla,Bovidae,domestic sheep,77200,folivore,14,34080,2434.285714,5514.285714,Ungulates,40.57142857,5.514285714,Ovis_aries,Ovis_aries,Ovis_aries
+Rattus norvegicus,N,Mammalia,Rodentia,Muridae,common rat,590,omnivore,12,9072,756,49.16666667,Rodents,12.6,0.049166667,Rattus_norvegicus,Rattus_norvegicus,Rattus_norvegicus
+Propithecus coquereli,N,Mammalia,Primates,Indriidae,Coquerel's sifaka,3396,folivore,6,12466.8,2077.8,566,Primates,34.63,0.566,Propithecus_coquereli,Propithecus_coquereli,Allenopithecus_nigroviridis
+Rhinopithecus bieti,N,Mammalia,Primates,Cercopithecidae,Snub-Nosed Monkey,23500,folivore,6,18630,3105,3916.666667,Primates,51.75,3.916666667,Rhinopithecus_bieti,Rhinopithecus_bieti,Rhinopithecus_bieti
+Litocranius walleri,N,Mammalia,Artiodactyla,Bovidae,gerenuk,74000,folivore,2,4686,2343,37000,Ungulates,39.05,37,Litocranius_walleri,Litocranius_walleri,Litocranius_walleri
+Oryx leucoryx,N,Mammalia,Artiodactyla,Bovidae,Arabian oryx,140000,folivore,2,4488,2244,70000,Ungulates,37.4,70,Oryx_leucoryx,Oryx_leucoryx,Oryx_leucoryx
+Cercopithecus neglectus,N,Mammalia,Primates,Cercopithecidae,De Brazza's monkey,6500,frugivore/nectarivore,2,4092,2046,3250,Primates,34.1,3.25,Cercopithecus_neglectus,Cercopithecus_neglectus,Cercopithecus_neglectus
+Cercopithecus erythrotis,N,Mammalia,Primates,Cercopithecidae,Red-eared guenon,3585,frugivore/nectarivore,1,1602,1602,3585,Primates,26.7,3.585,Cercopithecus_erythrotis,Cercopithecus_erythrotis,Cercopithecus_erythrotis
+Microtus townsendii,N,Mammalia,Rodentia,Cricetidae,Townsend vole,109.8,folivore,12,10044,837,9.15,Rodents,13.95,0.00915,Microtus_townsendii,Microtus_townsendii,Microtus_townsendii
+Phyllotis darwini,N,Mammalia,Rodentia,Cricetidae,Darwin's leaf-eared mouse,162,omnivore,12,6444,537,13.5,Rodents,8.95,0.0135,Phyllotis_darwini,Phyllotis_osilae,Phyllotis_magister
+Nyctalus noctula,Y,Mammalia,Chiroptera,Vespertilionidae,Noctule,27.5,insectivore,9,2655,295,3.055555556,Bats,4.916666667,0.003055556,Nyctalus_noctula,Nyctalus_noctula,Nyctalus_noctula
+Pteropus rufus,Y,Mammalia,Chiroptera,Pteropodidae,Madagascan Flying Fox,625,frugivore/nectarivore,4,120,30,156.25,Bats,0.5,0.15625,Pteropus_rufus,Pteropus_lylei,Pteropus_rufus
+Syconycteris australis,Y,Mammalia,Chiroptera,Pteropodidae,Common blossum bat,39.4,frugivore/nectarivore,6,639,106.5,6.566666667,Bats,1.775,0.006566667,Syconycteris_australis,Syconycteris_australis,Syconycteris_australis
+Uromys caudimaculatus,N,Mammalia,Rodentia,Muridae,giant white-tailed rat,1270,omnivore,2,6054,3027,635,Rodents,50.45,0.635,Uromys_caudimaculatus,Uromys_caudimaculatus,Uromys_caudimaculatus
