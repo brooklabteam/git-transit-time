@@ -550,6 +550,30 @@ AIC(gls_model_GIT_1_diet, gls_model_GIT_1_mass_simple_diet)
 # related to transit in our models, so the model without it
 # (gls_model_GIT_1_diet) is probably the best overall.
 
+# This is pretty surprising since we know from the literature that mass is
+# strongly correlated with gut transit, so we might want to also test if this
+# is all due to phylogeny
+
+gls_model_GIT_1_mass_only <- gls(log_transit_hrs ~ log10(mass_kg), 
+                                   data = GIT_pruned, 
+                                   correlation = cor_phylo_fixed1,
+                                   method = "ML")
+
+gls_model_GIT_0_mass_only <- gls(log_transit_hrs ~ log10(mass_kg), 
+                                 data = GIT_pruned, 
+                                 correlation = cor_phylo_fixed0,
+                                 method = "ML")
+
+
+
+summary(gls_model_GIT_0_mass_only) 
+#mass is hugely significant and positively related to gut transit
+summary(gls_model_GIT_1_mass_only)
+#mass is only weakly significant when accounting for phylogeny, suggesting that 
+#mass is not important independent of phylogeny (different from flight)
+
+AIC(gls_model_GIT_0_mass_only, gls_model_GIT_1_mass_only)
+# incorporating phylogeny with mass offers a much better fit to the data however!
 
 ## Emily and Katherine questions: 
 # (1) previously we had structured the methods/results as though there were two separate models being run - one # for the diet and one for the mass. Do you still view that as true, or are we presenting these above models 
