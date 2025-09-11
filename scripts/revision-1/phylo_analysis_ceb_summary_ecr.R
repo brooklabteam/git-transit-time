@@ -15,6 +15,8 @@ library(ggforce)
 homewd <- "/Users/emilyruhs/Desktop/GitHub_repos/git-transit-time/"
 homewd <- "/Users/katherinemcferrin/Developer/git-transit-time/"
 
+setwd(homewd)
+
 #load the GIT transit data with phylo name
 dat_GIT <- read.csv(file = paste0(homewd, "data/revision-1/dat_sum_tot_clean_GIT_R2.csv"), header = T, stringsAsFactors = F )
 dat_MRT <- read.csv(file = paste0(homewd, "data/revision-1/dat_sum_tot_clean_MRT_R2.csv"), header = T, stringsAsFactors = F )
@@ -50,7 +52,7 @@ length(unique(dat_MRT$genus.species)) #60 unique species for mean retention time
 
 
 
-#load the tree
+#load the tree - pulled from timetree so should be in principle an ultrametric tree
 tree <- read.tree(file = paste0(homewd, "data/revision-1/timetree_names.nwk"))
 # is.ultrametric(tree) #check for ultrametric - is FALSE
 # 
@@ -110,11 +112,12 @@ GIT <- dat_GIT[c("phylo_name", "transit_hrs")]
 transit_hrs <- setNames(GIT$transit_hrs, GIT$phylo_name)
 
 # Then only keep the overlapping species
-common_species <- intersect(tree_ultra2$tip.label, names(transit_hrs))
-tree <- drop.tip(tree_ultra2, setdiff(tree$tip.label, common_species))
+common_species <- intersect(tree_ultra2$tip.label, names(transit_hrs)) #107 here. there are 120 entries for transit hours and 124 tips in tree_ultra2
+tree <- drop.tip(tree_ultra2, setdiff(tree$tip.label, common_species)) #from Cara: it's the same here but to be fully accurate, shouldn't you do setdiff(tree_ultra2$tip.label, ...) rather than tree$tip.label?
 #tree <- drop.tip(tree_ultra, setdiff(tree$tip.label, names(transit_hrs)))
 transit_hrs <- transit_hrs[common_species]
-
+setdiff(names(transit_hrs), tree$tip.label)#none
+setdiff(tree$tip.label, names(transit_hrs))#none
 
 lambda_gs1<-phylosig(tree, transit_hrs,
                     method="lambda",test=TRUE)
@@ -122,6 +125,8 @@ lambda_gs1
 # Cara: my understanding is that this is the number (1.00745) you'd want 
 # to put in your phylogenetic model (rather than 1) but I could be wrong here, 
 # Emily: lambda is now so close to one that we will use lambda = 1 in the model, and not need model 2
+# Cara: a little research suggests that values >1 are pretty rare and since
+# this is basically 1, that seems fine to me
 
 # Phylogenetic signal lambda : 1.00745
 # logL(lambda) : -731.72
@@ -155,14 +160,16 @@ MRT_hrs <- setNames(MRT$MRT_hrs, MRT$phylo_name)
 
 # Then only keep the overlapping species
 common_species <- intersect(tree_ultra2$tip.label, names(MRT_hrs))
-tree <- drop.tip(tree_ultra2, setdiff(tree$tip.label, common_species))
+tree <- drop.tip(tree_ultra2, setdiff(tree$tip.label, common_species)) #Cara: same as above, to keep it clean, I would write as setdiff(tree_ultra2$tip.label,...)
 MRT_hrs <- MRT_hrs[common_species]
 
 #for MRT
 lambda_gs2<-phylosig(tree, MRT_hrs,
                      method="lambda",test=TRUE)
 lambda_gs2
-### put the 0.89 into the model instead of 1?
+### put the 0.89 into the model instead of 1? 
+#Cara: I think so -- this suggests the phylogenetic signal is a bit weaker for MRT vs MGT
+#which makes sense because the data are fewer
 # 
 # Phylogenetic signal lambda : 0.890595 
 # logL(lambda) : -234.723 
@@ -196,6 +203,11 @@ contMap(tree,log10(MRT_hrs), fsize =0.6)
 dat_GIT <- read.csv(file = paste0(homewd, "/data/revision-1/dat_sum_tot_clean_GIT_R2.csv"), header = T, stringsAsFactors = F )
 names(dat_GIT)
 
+#remove these
+dat_GIT <- subset(dat_GIT, phylo_name!="Uromacer_oxyrhynchus")
+dat_GIT <- subset(dat_GIT, phylo_name!="Atheris_squamigera")
+
+
 # clean dataset with only the columns you need
 GIT <- dat_GIT[c("phylo_name", "transit_hrs", "trial.diet", "re_class", "mass_kg")]
 #GIT <- na.omit(GIT$transit_hrs)
@@ -209,6 +221,9 @@ is.ultrametric(tree_ultra2)
 common_species <- intersect(tree_ultra2$tip.label, GIT$phylo_name)
 tree_pruned <- drop.tip(tree_ultra2, setdiff(tree$tip.label, common_species))
 GIT_pruned <- GIT[GIT$phylo_name %in% common_species, ]
+
+# there are some duplicated taxa with different diets:
+GIT_pruned[duplicated(GIT_pruned$phylo_name),]
 
 # check to see that the names match
 # Species in common_species but not in tree_pruned$tip.label
@@ -302,6 +317,10 @@ summary(gls_model_GIT_1)
 
 # Emily: flyer is a highly significant term which says that flight is significantly
 # negatively related to GIT transit time.
+# Cara: This is on top of a model that already includes significant 
+# phylogenetic clustering in transit time, suggesting that flight affects transit
+# time independent of phylogeny. I will note that I would not say it is "highly
+# significant" but moderately (or even weakly*) so (I like the scale, p<0.001***, p<0.01**, p<0.1*)
 
 
 
@@ -335,6 +354,8 @@ AIC(gls_model_GIT_0, gls_model_GIT_1, gls_model_GIT_0_diet, gls_model_GIT_1_diet
 # gls_model_GIT_1_diet  7 -314.6670  ******top
 
 # Emily: model gls_model_GIT_1_diet has the best fit, but only marginally. 
+# Cara: an AIC difference of 4 or more is considered significant, so this
+# is actually a sizerable improvement over the phylogenetic model without diet
 
 
 
@@ -371,8 +392,22 @@ AIC(gls_model_GIT_0, gls_model_GIT_0_diet, gls_model_GIT_0_diet_re,
 # gls_model_GIT_1_diet     7 -314.6670 **** top
 # gls_model_GIT_1_diet_re  4  197.3335
 
-#Emily: in all cases, the fit as a fixed effect was more better supported than the fit as
-# a random effect. The models with the lambda=1, which is what the data predicts is best supported.
+#Emily: in all cases, the fit as a fixed effect was better supported than the fit as
+# a random effect. 
+# Cara: The models with the lambda=1, which incorporate phylogenetic clustering
+# of GIT transit time, are best supported. The top fit model, gls_model_GIT_1_diet,
+# offers the best fit overall. When you look at the results and compare:
+summary(gls_model_GIT_1_diet) #flyer p=0.003
+summary(gls_model_GIT_1)# flyer p=0.015
+# you see that the significance of "flyer" is actually improved when diet is 
+# also modeled--making it significant** by most standards (p=0.003). You also see that
+# diet type "fruit/nectar/pollen" is weakly significant* (p=0.04) by some standards.
+# This suggests that both flight and fruit/nectar/pollen diet are associated with
+# faster GIT transit. Because the flyer p-value improved with the addition of diet,
+# I am guessing there are some fruit/nectar/pollen diet non-flyers with fairly fast 
+# transit, so this additional variable helps clarify the what traits are correlated 
+# with rapid transit and when. Thus, to conclude, flight has independently significant
+# negative effect on GIT transit even after accounting for both phylogeny and diet.
 
 
 ###################
@@ -382,6 +417,10 @@ AIC(gls_model_GIT_0, gls_model_GIT_0_diet, gls_model_GIT_0_diet_re,
 #???????
 
 # now, let's also consider the effects of mass and, later, mass and diet
+
+# below won't run because the correlation structure is set by a 
+# phylogeny of 109 species but the dataset has 117 entries due to some taxa being 
+# reeated multiple times due tp differences in diet or mass reported each time
  
 #with full phylogenetic effects:
 gls_model_GIT_1_mass <- gls(log_transit_hrs ~ log10(mass_kg)*flyer, 
@@ -403,6 +442,9 @@ gls_model_GIT_0_mass <- gls(log_transit_hrs ~ log10(mass_kg)*flyer,
 
 AIC(gls_model_GIT_0_mass, gls_model_GIT_1_mass)
 #Emily: model 1 is the best
+#Cara: This shows that transit time is still influenced by phylogeny, not
+# exclusively by mass (e.g. the model with phylogeny AND mass performed better
+# than the model with mass alone)
 
 # df       AIC
 # gls_model_GIT_0_mass  5 -160.8576
@@ -417,7 +459,9 @@ summary(gls_model_GIT_1_mass)
 # flyer1                -0.7625409 0.4633963 -1.645548  0.1027
 # log10(mass_kg):flyer1  0.0942537 0.1328935  0.709242  0.4797
 
-# Cara: we can test whether it would be best to drop the interaction
+# Cara: flyer is the only significant term here at all but weakly so.
+# We can test whether it would be best to drop the interaction which 
+# might clarify the variables that matter most.
 
 gls_model_GIT_1_mass_simple <- gls(log_transit_hrs ~ flyer + log10(mass_kg), 
                              data = GIT_pruned, 
@@ -445,6 +489,8 @@ summary(gls_model_GIT_1_mass_simple)
 # that flyers have rapid transit independent of small body size; 
 # however, there is no effect of mass alone on transit
 
+# Cara: good! additionally, note that the significance of flyer improved
+# in the simple model which I think clarifies the relationship.
 
 # now, let's see if adding diet improves this model:
 
@@ -491,6 +537,18 @@ summary(gls_model_GIT_1_mass_simple_diet)
 # but their inclusion does improve the overall model, so it is best to keep them.
 # the fruit/nectar/pollen diet has a near-significant negative relationship
 # with transit (independent of flying status and mass) which makes intuitive sense.
+
+# Cara: yes, good interpretation. I'll also note that including diet here again
+# improved the significance of flyer but had no effect on mass, supporting my 
+# prior hypothesis that there are probably some non-flyers with fruit/nectar/pollen diets
+# that had fairly fast transit time.
+
+# Cara: what if we compare our two best fit models so far? 
+AIC(gls_model_GIT_1_diet, gls_model_GIT_1_mass_simple_diet)
+# These are really very close; however, the simpler model which includes
+# diet but not mass still has a better AIC, and mass was not significantly
+# related to transit in our models, so the model without it
+# (gls_model_GIT_1_diet) is probably the best overall.
 
 
 ## Emily and Katherine questions: 
