@@ -21,8 +21,7 @@ setwd(homewd)
 dat_GIT <- read.csv(file = paste0(homewd, "data/revision-1/dat_sum_tot_clean_GIT_R2.csv"), header = T, stringsAsFactors = F )
 dat_MRT <- read.csv(file = paste0(homewd, "data/revision-1/dat_sum_tot_clean_MRT_R2.csv"), header = T, stringsAsFactors = F )
 
-#remove the two species that don't have masses earlier on - While they have data on diet, it will be
-# easier to explain if we just remove them from the offset.
+#remove the two species that don't have masses earlier on - 
 dat_GIT <- subset(dat_GIT, phylo_name!="Uromacer_oxyrhynchus")
 dat_GIT <- subset(dat_GIT, phylo_name!="Atheris_squamigera")
 
@@ -54,30 +53,11 @@ length(unique(dat_MRT$genus.species)) #60 unique species for mean retention time
 
 #load the tree - pulled from timetree so should be in principle an ultrametric tree
 tree <- read.tree(file = paste0(homewd, "data/revision-1/timetree_names.nwk"))
-# is.ultrametric(tree) #check for ultrametric - is FALSE
-# 
-# tree_ultra <- chronos(tree)
-# is.ultrametric(tree_ultra)
 
-# "false convergence" happens when the optimization routine thinks it has converged, but really just got stuck in a flat likelihood surface.
-# Usually this means the fit didn’t fully optimize branch lengths, but you still get an ultrametric tree out.
-# 
-# For comparative methods (like gls() or pgls): Usually yes, it’s fine. You just need an ultrametric tree, and the exact timing doesn’t matter much if your question isn’t about divergence dating.
-
-#try to make the warnings less by fitting lambda
-
-# tree_ultra <- chronos(tree, lambda=0.38)
-# is.ultrametric(tree_ultra) #still give false convergence
-
-# does this way give less warnings?
+#make ultrametric
 tree_ultra2 <- force.ultrametric(tree, method = "nnls") #no warnings
 
 is.ultrametric(tree_ultra2) # TRUE
-
-### LET'S GO WITH THIS force.ultrametric APPROACH AS IT DOES NOT HAVE WARNINGS
-
-
-
 
 
 
@@ -98,13 +78,7 @@ plot(tree_ultra2,
 # Add a scale bar with adjusted size and location
 add.scale.bar(length = 0.05, lwd = 2, cex = 0.7, col = "black")
 
-# 
-# 
-# 
 
-
-
- 
 ##################  MGT phylogenetic signal ##########
 dat_GIT$phylo_name <- as.character(dat_GIT$phylo_name)
 
@@ -128,12 +102,8 @@ setdiff(tree$tip.label, names(transit_hrs))#none
 lambda_gs1<-phylosig(tree, transit_hrs,
                     method="lambda",test=TRUE)
 lambda_gs1 
-# Cara: my understanding is that this is the number (1.00745) you'd want 
-# to put in your phylogenetic model (rather than 1) but I could be wrong here, 
-# Emily: lambda is now so close to one that we will use lambda = 1 in the model, and not need model 2
+# Emily: lambda is now so close to one that we will use lambda = 1 in the model
 
-# Cara: a little research suggests that values >1 are pretty rare and since
-# this is basically 1, that seems fine to me
 
 # Phylogenetic signal lambda : 1.00745
 # logL(lambda) : -731.72
@@ -174,8 +144,8 @@ MRT_hrs <- MRT_hrs[common_species]
 lambda_gs2<-phylosig(tree, MRT_hrs,
                      method="lambda",test=TRUE)
 lambda_gs2
-### put the 0.89 into the model instead of 1?
-#Cara: I think so -- this suggests the phylogenetic signal is a bit weaker for MRT vs MGT
+### lambda= 0.89. need to evaluate this in the final model fit.
+#This suggests the phylogenetic signal is a bit weaker for MRT vs MGT
 #which makes sense because the data are fewer
 # 
 # Phylogenetic signal lambda : 0.890595 
@@ -194,17 +164,11 @@ contMap(tree,log10(MRT_hrs), fsize =0.6)
 #phenogram(tree, log10(MRT_hrs), spread.labels = T, fsize=0.6, colors = "black")
 
 
-
-
-
 #########################################  MGT. #################################
 
 ########### MGT data cleaning #######
 
 #_________________________________________________________________________________________________________________
-#I think this code runs PGLS and also provides lambda estimates as part of the model
-
-
 
 # Load your data
 dat_GIT <- read.csv(file = paste0(homewd, "/data/revision-1/dat_sum_tot_clean_GIT_R2.csv"), header = T, stringsAsFactors = F )
@@ -283,12 +247,9 @@ cor_phylo_fixed1 <- corPagel(1, phy = tree_pruned, fixed = TRUE, form = ~phylo_n
 # this is no phylogentic effects:
 cor_phylo_fixed0 <- corPagel(0, phy = tree_pruned, fixed = TRUE, form = ~phylo_name) #assumes no phylogenetic signal
 
-# this is what was estimated from your data above - removing because lambda is 1 in the above model
-#cor_phylo_fixed2 <- corPagel(lambda_gs1$lambda, phy = tree_pruned, fixed = TRUE, form = ~phylo_name) 
 
+#Now test the effect of flyer on GIT transit without accounting for mass or diet
 
-# Cara: now test the effect of flyer on GIT transit without accounting for mass or diet
-# All text below is from Cara
 
 #with full phylogenetic effects:
 gls_model_GIT_1 <- gls(log_transit_hrs ~ flyer, 
@@ -302,15 +263,11 @@ gls_model_GIT_0 <- gls(log_transit_hrs ~ flyer,
                         correlation = cor_phylo_fixed0,
                         method = "ML")
 
-#with estimated phylogenetic effects:
-# gls_model_GIT_2 <- gls(log_transit_hrs ~ flyer, 
-#                         data = GIT_pruned, 
-#                         correlation = cor_phylo_fixed2,
-#                         method = "ML")
+
 
 AIC(gls_model_GIT_0, gls_model_GIT_1)
-# Emily: the estimated phylogenetic effects (which happens to be lambda=1)
-# provide a better fit than the no-phylo effects model. 
+# the modell including phylogenetic effects (lambda=1)
+# provides a better fit than the no-phylo effects model. 
 
 # df       AIC
 # gls_model_GIT_0  3 -160.4626
@@ -322,12 +279,10 @@ summary(gls_model_GIT_1)
 # (Intercept)  1.6179687 0.2872801  5.632025  0.0000
 # flyer1      -0.9935241 0.4029689 -2.465511  0.0152
 
-# Emily: flyer is a significant term which says that flight is significantly
-# negatively related to GIT transit time.
-# Cara: This is on top of a model that already includes significant 
-# phylogenetic clustering in transit time, suggesting that flight affects transit
-# time independent of phylogeny. I will note that I would not say it is "highly
-# significant" but moderately (or even weakly*) so (I like the scale, p<0.001***, p<0.01**, p<0.1*)
+# Flyer is a significant term which says that flight is significantly
+# negatively related to GIT transit time. This is on top of a model that already
+# includes significant phylogenetic clustering in transit time, suggesting that 
+# flight affects transit time independent of phylogeny. 
 
 
 
@@ -335,23 +290,18 @@ summary(gls_model_GIT_1)
 # first try as a fixed effect:
 GIT_pruned$trial.diet <- as.factor(GIT_pruned$trial.diet)
 
-# Cara: with full phylogenetic effects:
+#with full phylogenetic effects:
 gls_model_GIT_1_diet <- gls(log_transit_hrs ~ flyer + trial.diet, 
                         data = GIT_pruned, 
                         correlation = cor_phylo_fixed1,
                         method = "ML")
 
-# Cara: with no phylogenetic effects:
+# with no phylogenetic effects:
 gls_model_GIT_0_diet <- gls(log_transit_hrs ~ flyer + trial.diet, 
                         data = GIT_pruned, 
                         correlation = cor_phylo_fixed0,
                         method = "ML")
 
-# Cara: with estimated phylogenetic effects:
-# gls_model_GIT_2_diet <- gls(log_transit_hrs ~ flyer + typical.diet, 
-#                         data = GIT_pruned, 
-#                         correlation = cor_phylo_fixed2,
-#                         method = "ML")
 
 AIC(gls_model_GIT_0, gls_model_GIT_1, gls_model_GIT_0_diet, gls_model_GIT_1_diet)
 # df       AIC
@@ -370,15 +320,11 @@ summary(gls_model_GIT_1_diet)
 # trial.dietmeat                -0.0549632 0.3388140 -0.162222  0.8714
 # trial.dietprotein             -0.4110963 0.3313120 -1.240813  0.2173
 
-# Emily: model gls_model_GIT_1_diet has the best fit, but only marginally. 
-# Cara: an AIC difference of 4 or more is considered significant, so this
-# is actually a sizerable improvement over the phylogenetic model without diet
-# Emily: yes, but when you add a term, don't you take a penalty of 2? So this is really delta 2 AIC
+# model gls_model_GIT_1_diet has the best fit
 
-
-
-# Cara: let's try it also as a random effect - here we use the lme function which
-# is also supported in the nlme package. we can compare these since all were fit via ML:
+# let's try diet as a random effect - here we use the lme function which
+# is also supported in the nlme package.
+# we can compare these since all were fit via ML:
 
 gls_model_GIT_1_diet_re <- lme(log_transit_hrs ~ flyer,
                             random = ~1 | trial.diet,
@@ -392,15 +338,9 @@ gls_model_GIT_0_diet_re <- lme(log_transit_hrs ~ flyer,
                                 data = GIT_pruned,
                                 method = "ML")
 
-# gls_model_GIT_2_diet_re <- lme(log_transit_hrs ~ flyer,
-#                                 random = ~1 | typical.diet,
-#                                 correlation = cor_phylo_fixed2,
-#                                 data = GIT_pruned,
-#                                 method = "ML")
-
 AIC(gls_model_GIT_0, gls_model_GIT_0_diet, gls_model_GIT_0_diet_re,
     gls_model_GIT_1, gls_model_GIT_1_diet, gls_model_GIT_1_diet_re)
-    #gls_model_GIT_2, gls_model_GIT_2_diet, gls_model_GIT_2_diet_re)
+    
 
 # df       AIC
 # gls_model_GIT_0          3 -160.4626
@@ -410,9 +350,8 @@ AIC(gls_model_GIT_0, gls_model_GIT_0_diet, gls_model_GIT_0_diet_re,
 # gls_model_GIT_1_diet     7 -314.6670 **** top
 # gls_model_GIT_1_diet_re  4  197.3335
 
-#Emily: in all cases, the fit with diet as a fixed effect was better supported than the fit as
-# a random effect. 
-# Cara: The models with the lambda=1, which incorporate phylogenetic clustering
+# In all cases, the fit with diet as a fixed effect was better supported than the fit as
+# a random effect.  The models with the lambda=1, which incorporate phylogenetic clustering
 # of GIT transit time, are best supported. The top fit model, gls_model_GIT_1_diet,
 # offers the best fit overall. When you look at the results and compare:
 summary(gls_model_GIT_1_diet) #flyer p=0.003
@@ -431,16 +370,8 @@ summary(gls_model_GIT_1)# flyer p=0.015
 ###################
 ########## model gls_model_GIT_1_diet is best for reporting.
 
-
-#???????
-
 # now, let's also consider the effects of mass and, later, mass and diet
 
-# below won't run because the correlation structure is set by a 
-# phylogeny of 109 species but the dataset has 117 entries due to some taxa being 
-# reeated multiple times due tp differences in diet or mass reported each time
-
-# Emily: It ran for me...
  
 #with full phylogenetic effects:
 gls_model_GIT_1_mass <- gls(log_transit_hrs ~ log10(mass_kg)*flyer, 
@@ -454,15 +385,10 @@ gls_model_GIT_0_mass <- gls(log_transit_hrs ~ log10(mass_kg)*flyer,
                         correlation = cor_phylo_fixed0,
                         method = "ML")
 
-#with estimated phylogenetic effects:
-# gls_model_GIT_2_mass <- gls(log_transit_hrs ~ log10(mass_kg)*flyer, 
-#                         data = GIT_pruned, 
-#                         correlation = cor_phylo_fixed2,
-#                         method = "ML")
+
 
 AIC(gls_model_GIT_0_mass, gls_model_GIT_1_mass)
-#Emily: model 1 is the best
-#Cara: This shows that transit time is still influenced by phylogeny, not
+# model 1 is the best. This shows that transit time is still influenced by phylogeny, not
 # exclusively by mass (e.g. the model with phylogeny AND mass performed better
 # than the model with mass alone)
 
@@ -479,10 +405,10 @@ summary(gls_model_GIT_1_mass)
 # flyer1                -0.7625409 0.4633963 -1.645548  0.1027
 # log10(mass_kg):flyer1  0.0942537 0.1328935  0.709242  0.4797
 
-# Cara: flyer is the only significant term here at all but weakly so.
+# flyer is the only significant term here at all but very weakly so (basically just a ternd).
 # We can test whether it would be best to drop the interaction which 
 # might clarify the variables that matter most.
-# Emily: really just trending... no longer significant
+
 
 gls_model_GIT_1_mass_simple <- gls(log_transit_hrs ~ flyer + log10(mass_kg), 
                              data = GIT_pruned, 
@@ -514,7 +440,6 @@ summary(gls_model_GIT_1_mass_simple)
 # in the simple model which I think clarifies the relationship.
 
 # now, let's see if adding diet improves this model:
-
 
 # I'll just illustrate with the best fit model
 # first, as a fixed effect
@@ -552,19 +477,19 @@ summary(gls_model_GIT_1_mass_simple_diet)
 # trial.dietmeat                -0.0826795 0.3425893 -0.241337  0.8098
 # trial.dietprotein             -0.3997218 0.3327219 -1.201369  0.2322
 
-# Emily: flyer is still significantly negatively related to transit, 
+#  flyer is still significantly negatively related to transit, 
 # after accounting for mass and diet (and phylogeny). 
 # None of the individual effects of diet are significant, 
 # but their inclusion does improve the overall model, so it is best to keep them.
 # the fruit/nectar/pollen diet has a near-significant negative relationship
 # with transit (independent of flying status and mass) which makes intuitive sense.
 
-# Cara: yes, good interpretation. I'll also note that including diet here again
-# improved the significance of flyer but had no effect on mass, supporting my 
-# prior hypothesis that there are probably some non-flyers with fruit/nectar/pollen diets
+# We also note that including diet here again improved the significance of flyer 
+# but had no effect on mass, supporting the prior hypothesis that there are probably
+# some non-flyers with fruit/nectar/pollen diets
 # that had fairly fast transit time.
 
-# Cara: what if we compare our two best fit models so far? 
+# what if we compare our two best fit models so far? 
 AIC(gls_model_GIT_1_diet, gls_model_GIT_1_mass_simple_diet)
 # These are really very close; however, the simpler model which includes
 # diet but not mass still has a better AIC, and mass was not significantly
@@ -611,12 +536,3 @@ length(unique(GIT_pruned$phylo_name)) #107 unique species for transit time, this
 
 
 
-
-## Emily and Katherine questions: 
-# (1) previously we had structured the methods/results as though there were two separate models being run - one # for the diet and one for the mass. Do you still view that as true, or are we presenting these above models 
-# as all part of the AIC model comparison? 
-
-# (2) just a note, we removed the 'slim' models because we no longer had to fit separate datasets, as we 
-# removed those two species at the offset. (these species had a NA for mass)
-# (3) second note, lambda is now basically 1 (set by our data), so we no longer need the model twos where the 
-# data were deciding the lambda.
