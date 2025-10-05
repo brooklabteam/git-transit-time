@@ -54,37 +54,16 @@ length(unique(dat_MRT$genus.species)) #60 unique species for mean retention time
 
 #load the tree - pulled from timetree so should be in principle an ultrametric tree
 tree <- read.tree(file = paste0(homewd, "data/revision-1/timetree_names.nwk"))
-# is.ultrametric(tree) #check for ultrametric - is FALSE
-# 
-# tree_ultra <- chronos(tree)
-# is.ultrametric(tree_ultra)
-
-# "false convergence" happens when the optimization routine thinks it has converged, but really just got stuck in a flat likelihood surface.
-# Usually this means the fit didn’t fully optimize branch lengths, but you still get an ultrametric tree out.
-# 
-# For comparative methods (like gls() or pgls): Usually yes, it’s fine. You just need an ultrametric tree, and the exact timing doesn’t matter much if your question isn’t about divergence dating.
-
-#try to make the warnings less by fitting lambda
-
-# tree_ultra <- chronos(tree, lambda=0.38)
-# is.ultrametric(tree_ultra) #still give false convergence
-
-# does this way give less warnings?
 tree_ultra2 <- force.ultrametric(tree, method = "nnls") #no warnings
 
 is.ultrametric(tree_ultra2) # TRUE
-
-### LET'S GO WITH THIS force.ultrametric APPROACH AS IT DOES NOT HAVE WARNINGS
-
-
-
 
 
 
 ##### plot the phylogeny for GIT and MRT #######
 
 # Plot the tree with enhancements
-## Emily: I will remove the species above and those without diets for the final paper tree
+
 plot(tree_ultra2,
      type = "phylogram",    # or "fan", "cladogram", "unrooted"
      cex = 0.6,             # Tip label size
@@ -174,9 +153,8 @@ MRT_hrs <- MRT_hrs[common_species]
 lambda_gs2<-phylosig(tree, MRT_hrs,
                      method="lambda",test=TRUE)
 lambda_gs2
-### put the 0.89 into the model instead of 1?
-#Cara: I think so -- this suggests the phylogenetic signal is a bit weaker for MRT vs MGT
-#which makes sense because the data are fewer
+### put the 0.89 into the model instead of 1. this suggests the phylogenetic
+# signal is a bit weaker for MRT vs MGT which makes sense because the data are fewer
 # 
 # Phylogenetic signal lambda : 0.890595 
 # logL(lambda) : -234.723 
@@ -282,8 +260,8 @@ cor_phylo_fixed0 <- corPagel(0, phy = tree_pruned, fixed = TRUE, form = ~phylo_n
 cor_phylo_fixed2 <- corPagel(lambda_gs2$lambda, phy = tree_pruned, fixed = TRUE, form = ~phylo_name) 
 
 
-# Cara: now test the effect of flyer on MRT transit without accounting for mass or diet
-# All text below is from Cara
+# now test the effect of flyer on MRT transit without accounting for mass or diet
+
 
 #with full phylogenetic effects:
 gls_model_MRT_1 <- gls(log_MRT_hrs ~ flyer, 
@@ -304,7 +282,7 @@ gls_model_MRT_2 <- gls(log_MRT_hrs ~ flyer,
                         method = "ML")
 
 AIC(gls_model_MRT_0, gls_model_MRT_1, gls_model_MRT_2)
-# Emily: The model with full brownian phylogenetic effects is the best fit.
+# The model with full brownian phylogenetic effects is the best fit.
 # df        AIC
 # gls_model_MRT_0  3  -42.67912
 # gls_model_MRT_1  3 -111.97139 ****
@@ -317,12 +295,11 @@ summary(gls_model_MRT_1)
 # (Intercept)  1.637944 0.3066152  5.342018  0.0000
 # flyer1      -1.435929 0.5262160 -2.728782  0.0084
 
-# Emily: flyer is a significant term which says that flight is significantly
+# Flyer is a significant term which says that flight is significantly
 # negatively related to MRT transit time.
 # This is on top of a model that already includes significant 
 # phylogenetic clustering in transit time, suggesting that flight affects transit
-# time independent of phylogeny. I will note that I would not say it is "highly
-# significant" but moderately (or even weakly*) so (I like the scale, p<0.001***, p<0.01**, p<0.1*)
+# time independent of phylogeny. 
 
 
 
@@ -330,19 +307,19 @@ summary(gls_model_MRT_1)
 # first try as a fixed effect:
 MRT_pruned$trial.diet <- as.factor(MRT_pruned$trial.diet)
 
-# Cara: with full phylogenetic effects:
+#with full phylogenetic effects:
 gls_model_MRT_1_diet <- gls(log_MRT_hrs ~ flyer + trial.diet, 
                         data = MRT_pruned, 
                         correlation = cor_phylo_fixed1,
                         method = "ML")
 
-# Cara: with no phylogenetic effects:
+#with no phylogenetic effects:
 gls_model_MRT_0_diet <- gls(log_MRT_hrs ~ flyer + trial.diet, 
                         data = MRT_pruned, 
                         correlation = cor_phylo_fixed0,
                         method = "ML")
 
-# Cara: with estimated phylogenetic effects:
+#  with estimated phylogenetic effects:
 gls_model_MRT_2_diet <- gls(log_MRT_hrs ~ flyer + trial.diet,
                         data = MRT_pruned,
                         correlation = cor_phylo_fixed2,
@@ -367,12 +344,12 @@ summary(gls_model_MRT_1_diet)
 # trial.dietfruit/nectar/pollen  0.0522815 0.0554737  0.942455  0.3500
 # trial.dietprotein              0.2320196 0.2713630  0.855016  0.3962
 
-# Emily: model gls_model_MRT_1_diet has a close AIC to the model without diet
+#  model gls_model_MRT_1_diet has a close AIC to the model without diet
 # Plus diet doesn't come out as significant when you do the summary output. 
-# So prefer the simpler model? (see above for the summary output for gls_model_MRT_1)
+# So prefer the simpler model (see above for the summary output for gls_model_MRT_1)
 
 
-# Cara: let's try it also as a random effect - here we use the lme function which
+# let's try it also as a random effect - here we use the lme function which
 # is also supported in the nlme package. we can compare these since all were fit via ML:
 
 gls_model_MRT_1_diet_re <- lme(log_MRT_hrs ~ flyer,
@@ -408,9 +385,8 @@ AIC(gls_model_MRT_0, gls_model_MRT_0_diet, gls_model_MRT_0_diet_re,
 # gls_model_MRT_2_diet     5  -89.55585
 # gls_model_MRT_2_diet_re  4   22.04532
 
-#Emily: in all cases, the fit with diet as a fixed effect was better supported than the fit as
-# a random effect. 
-# Cara: The models with the lambda=1, which incorporate phylogenetic clustering
+# in all cases, the fit with diet as a fixed effect was better supported than the fit as
+# a random effect. The models with the lambda=1, which incorporate phylogenetic clustering
 # of MRT transit time, are best supported. The top fit model, gls_model_MRT_1,
 # offers the best fit overall. When you look at the results and compare:
 summary(gls_model_MRT_1_diet) #flyer p=0.0197
@@ -448,8 +424,7 @@ gls_model_MRT_2_mass <- gls(log_MRT_hrs ~ log10(mass_kg)*flyer,
                         method = "ML")
 
 AIC(gls_model_MRT_0_mass, gls_model_MRT_1_mass, gls_model_MRT_2_mass)
-#Emily: model 1 is the best
-#Cara: This shows that MRT is still influenced by phylogeny, not
+# model 1 is the best. This shows that MRT is still influenced by phylogeny, not
 # exclusively by mass (e.g. the model with phylogeny AND mass performed better
 # than the model with mass alone)
 
@@ -467,7 +442,7 @@ summary(gls_model_MRT_1_mass)
 # flyer1                -1.7505317 0.5900825 -2.966588  0.0044
 # log10(mass_kg):flyer1 -0.2889297 0.2699299 -1.070388  0.2890
 
-# Emily: flyer is the only significant term here 
+# flyer is the only significant term here 
 # We can test whether it would be best to drop the interaction which 
 # might clarify the variables that matter most.
 
@@ -483,7 +458,7 @@ AIC(gls_model_MRT_1_mass, gls_model_MRT_1_mass_simple)
 # gls_model_MRT_1_mass         5 -110.3849
 # gls_model_MRT_1_mass_simple  4 -111.1697
 
-# Emily: there is no difference in AIC,really, though the simple model is slightly better
+#  there is no difference in AIC,really, though the simple model is slightly better
 #so we prefer the simplest model 
 # (no interaction term), shown here:
 summary(gls_model_MRT_1_mass_simple)
@@ -498,7 +473,7 @@ summary(gls_model_MRT_1_mass_simple)
 # that flyers have rapid MRT independent of small body size; 
 # however, there is no effect of mass alone on transit
 
-# Emily: additionally, note that the significance of flyer improved
+# additionally, note that the significance of flyer improved
 # in the simple model which I think clarifies the relationship.
 
 # now, let's see if adding diet improves this model:
@@ -537,11 +512,11 @@ summary(gls_model_MRT_1_mass_simple)
 # flyer1         -1.4631818 0.5261519 -2.780912  0.0073
 # log10(mass_kg)  0.0462851 0.0431644  1.072298  0.2881
 
-# Emily: flyer is still significantly negatively related to MRT, 
+#  flyer is still significantly negatively related to MRT, 
 # after accounting for mass (and phylogeny). 
 
 
-# Cara: what if we compare our two best fit models so far? 
+#  what if we compare our two best fit models so far? 
 AIC(gls_model_MRT_1, gls_model_MRT_1_mass_simple)
 
 # df       AIC
@@ -574,15 +549,15 @@ gls_model_MRT_2_mass_only <- gls(log_MRT_hrs ~ log10(mass_kg),
 summary(gls_model_MRT_0_mass_only) 
 #mass is significant and positively related to MRT
 summary(gls_model_MRT_1_mass_only)
-#mass is not significantly related to MRT
+#mass is not significantly related to MRT when accounting for phylogeny too
 summary(gls_model_MRT_2_mass_only)
-#mass is not significantly related to MRT
+#mass is not significantly related to MRT when accounting for phylogeny too
 
 AIC(gls_model_MRT_0_mass_only, gls_model_MRT_1_mass_only, gls_model_MRT_2_mass_only)
 # 
 # df        AIC
 # gls_model_MRT_0_mass_only  3  -25.15709
-# gls_model_MRT_1_mass_only  3 -105.53606
+# gls_model_MRT_1_mass_only  3 -105.53606***
 # gls_model_MRT_2_mass_only  3  -82.03153
 
 
