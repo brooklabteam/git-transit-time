@@ -1,10 +1,7 @@
 # git-transit-time
 
-Here is the database for our in-progress GIT transit time paper.
+See the following folders for our current gut passage time database, scripts, and literature:
 
-Right now, the repo contains three folders:
-
-- 'GIT-transit-literature' includes the final papers included in our database after going through the results of the database search.
-- 'data' includes ths csv file resulting from the review of the papers in the above folder
-- 'scripts' has just one R script that processes and models data from the database derived from that review
-- 'figures' includes the outputs of the analysis in the R-script
+- 'GIT-transit-literature' includes the final papers included in our database after going through the results of the database search
+- 'data/revision-1' includes the most updated csv file resulting from the review of the papers in the above folder
+- 'scripts/revision-1' has the most updated scripts with the phylogenetic comparative analysis for GIT transit time and MRT data from the papers in the folder above
