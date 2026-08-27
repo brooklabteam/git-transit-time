@@ -59,10 +59,14 @@ head(dat.plot)
 #summarize by species
 dat.plot$N_individuals[dat.plot$N_individuals=="not reported"] <- 1 #assigning 1 individual if total # not reported
 dat.plot$N_individuals[is.na(dat.plot$N_individuals)] <- 1 #assigning 1 individual if #individuals is NA
+dat.plot$N_individuals[dat.plot$N_individuals=="unknown"] <- 1
+dat.plot$N_individuals[dat.plot$N_individuals=="unk"] <- 1
+unique(dat.plot$N_individuals)
 dat.plot$N_individuals = as.numeric(dat.plot$N_individuals)
 dat.plot$total_transit = dat.plot$transit*dat.plot$N_individuals #multiplying transit time x #individuals
 
 #and also add for MRT
+sort(unique(dat.plot$MRT_min))
 dat.plot$MRT_min = as.numeric(dat.plot$MRT_min)
 dat.plot$total_MRT = dat.plot$MRT_min*dat.plot$N_individuals
 
@@ -158,7 +162,7 @@ write.csv(dat.sum.tot, "data/revision-3/dat_sum_tot_GIT_R3.csv")
 
 #and group
 #remove any non-mammalian classes and any mammalian orders with < =4 entries
-# also removing marsupials because they are weird
+# also removing marsupials because they are weird (and all < 4 spp)
 #Amphibia, Cetacea, Chondrichtythes, Dermoptera, Pilosa, Sirenia
 
 dat.sum.tot = subset(dat.sum.tot, re_class !="Amphibia" & 
@@ -315,7 +319,7 @@ paper.dat
 write.csv(dat.sum.tot2, "data/revision-3/dat_sum_tot_MRT_R2.csv")
 
 #and group
-#remove any non-mammalian classes and any mammalian orders with < 2 entries
+#remove any non-mammalian classes and any mammalian orders with <= 4 entries
 #Amphibia, Cetacea, Chondrichtythes, Dermoptera, Pilosa, Sirenia
 
 dat.sum.tot2 = subset(dat.sum.tot2, re_class !="Amphibia" & 

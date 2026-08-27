@@ -18,22 +18,18 @@ homewd <- "/Users/carabrook/Developer/git-transit-time/"
 setwd(homewd)
 
 #load the MRT transit data with phylo name
-dat_MRT <- read.csv(file = paste0(homewd, "/data/revision-3/dat_sum_tot_clean_MRT_R3.csv"), header = T, stringsAsFactors = F )
+dat_MRT <- read.csv(file = paste0(homewd, "data/revision-3/dat_sum_tot_clean_MRT_R3.csv"), header = T, stringsAsFactors = F )
 
 mass_col    <- "avg_mass"        # body-mass column
 species_col <- "genus.species"  # tip / phylogeny-name column
 
 # species missing a mass in either dataset
 miss <- function(d) d[[species_col]][is.na(d[[mass_col]]) | trimws(d[[mass_col]]) == "0"]
-no_mass <- sort(unique(c(miss(dat_MRT))))
+no_mass <- sort(unique(c(miss(dat_MRT)))) 
 
 # report which ones
 cat("Species without mass (", length(no_mass), "):\n", sep = "")
-print(no_mass) #13
-# [1] "Alopochen aegyptiaca"     "Anser anser"              "Dromaius novaehollandiae" "Gulosus aristotelis"     
-# [5] "Macronectes giganteus"    "Martes melampus"          "Meleagris gallopavo"      "Mitu salvini"            
-# [9] "Plectopterus gambensis"   "Pygoscelis papua"         "Rhea americana"           "Stercorarius skua"       
-# [13] "Struthio camelus"     
+print(no_mass) #0
 
 # remove them from both datasets
 dat_MRT <- dat_MRT[!dat_MRT[[species_col]] %in% no_mass, ]
@@ -44,26 +40,23 @@ dat_MRT <- dat_MRT[!dat_MRT[[species_col]] %in% no_mass, ]
 length(unique(dat_MRT$genus.species)) #240 unique species for transit time
 tt.pivot <-ddply(dat_MRT, .(re_class), summarise, N_species_transit = length(unique(genus.species)))
 print(tt.pivot)
-
 # re_class N_species_transit
 # 1                Bats                13
-# 2          Carnivores                16
-# 3        Flying Birds                61
-# 4          Marsupials                14
-# 5    Non-Flying Birds                 2
+# 2           Carnivora                18
+# 3 Even-toed Ungulates                55
+# 4        Flying Birds                72
+# 5    Non-Flying Birds                 7
 # 6  Odd-toed Ungulates                10
 # 7            Primates                40
-# 8            Reptiles                 3
-# 9             Rodents                27
-# 10          Ungulates                54
+# 8             Rodents                27
 
 
-dat_MRT <- subset(dat_MRT, dat_MRT$re_class != "Non-Flying Birds")
-dat_MRT <- subset(dat_MRT, dat_MRT$re_class != "Reptiles")
+#dat_MRT <- subset(dat_MRT, dat_MRT$re_class != "Non-Flying Birds")
+#dat_MRT <- subset(dat_MRT, dat_MRT$re_class != "Reptiles")
 #288
 
 #load the tree - pulled from timetree so should be in principle an ultrametric tree
-tree <- read.tree(file = paste0(homewd, "/data/Book3.nwk"))
+tree <- read.tree(file = paste0(homewd, "data/revision-3/Book3.nwk"))
 # is.ultrametric(tree) #check for ultrametric - is FALSE
 # 
 
@@ -93,21 +86,26 @@ MRT <- dat_MRT[c("phylo_name", "MRT_hrs")]
 MRT_hrs <- setNames(MRT$MRT_hrs, MRT$phylo_name)
 
 # Then only keep the overlapping species
-common_species <- intersect(tree_ultra2$tip.label, names(MRT_hrs)) #222
+common_species <- intersect(tree_ultra2$tip.label, names(MRT_hrs)) #222. Cara: I read 227 ???
 tree <- drop.tip(tree_ultra2, setdiff(tree_ultra2$tip.label, common_species)) 
-MRT_hrs <- MRT_hrs[common_species] #222
+MRT_hrs <- MRT_hrs[common_species] #223. Cara: I read 223
 
 #for MRT
 lambda_gs2<-phylosig(tree, MRT_hrs,
                      method="lambda",test=TRUE)
 lambda_gs2
 
-# Phylogenetic signal lambda : 0.941198 
-# logL(lambda) : -966.376 
-# LR(lambda=0) : 134.609 
-# P-value (based on LR test) : 4.01964e-31 
+# Phylogenetic signal lambda : 0.820087 
+# logL(lambda) : -967.56 
+# LR(lambda=0) : 137.925 
+# P-value (based on LR test) : 7.56859e-32 
 
 
+#Cara: I get
+# Phylogenetic signal lambda : 0.942855 
+# logL(lambda) : -990.395 
+# LR(lambda=0) : 149.005 
+# P-value (based on LR test) : 2.8609e-34
 
 ############# plotting phylo signal by tree/phenogram ############
 
@@ -135,7 +133,7 @@ contMap(tree,log10(MRT_hrs), fsize =0.6)
 MRT <- dat_MRT[c("phylo_name", "MRT_hrs", "trial.diet", "re_class", "mass_kg")]
 #MRT <- na.omit(MRT$transit_hrs)
 
-tree <- read.tree(paste0(homewd, "/data/Book3.nwk"))
+tree <- read.tree(paste0(homewd, "data/revision-3/Book3.nwk"))
 tree_ultra2 <- force.ultrametric(tree, method = "nnls") #no warnings
 is.ultrametric(tree_ultra2)
 
@@ -157,7 +155,7 @@ species2 <- unique(MRT_pruned$phylo_name)
 missing_in_df2 <- setdiff(species1, species2)
 missing_in_df2 
 
-#[1] "Gazella"           "Nectarinia_famosa"
+#[1] "Gazella"           "Nectarinia_famosa" ""
 
 #sort(tree$tip.label)
 
@@ -169,10 +167,10 @@ missing_in_df2
 
 # factor the groups so that rodent is the comparasion
 unique(MRT_pruned$re_class)
-# [1] "Flying Birds"       "Ungulates"          "Primates"           "Marsupials"         "Carnivores"         "Rodents"           
-# [7] "Odd-toed Ungulates" "Bats" 
+# [1] "Flying Birds"        "Carnivora"           "Even-toed Ungulates" "Primates"            "Rodents"            
+# [6] "Odd-toed Ungulates"  "Bats"   
 
-length(unique(MRT_pruned$phylo_name)) #222
+length(unique(MRT_pruned$phylo_name)) #230. Cara+ I read 227
 
 
 # MRT_pruned$re_class <- factor(MRT_pruned$re_class, levels = c("Rodents","Bats", "Non-Flying Birds", 
@@ -197,7 +195,7 @@ cor_phylo_fixed0 <- corPagel(0, phy = tree_pruned, fixed = TRUE, form = ~phylo_n
 
 # this is what was estimated from your data above - removing because lambda is 1 in the above model
 cor_phylo_fixed2 <- corPagel(lambda_gs2$lambda, phy = tree_pruned, fixed = TRUE, form = ~phylo_name) 
-# Phylogenetic signal lambda : 0.942855
+
 
 
 # Cara: now test the effect of flyer on MRT transit without accounting for mass or diet
@@ -209,9 +207,9 @@ gls_model_MRT_1 <- gls(log_MRT_hrs ~ flyer,
                         correlation = cor_phylo_fixed1,
                          method = "ML")
 summary(gls_model_MRT_1)$tTable
-# Value Std.Error   t-value     p-value
-# (Intercept)  0.9189334 0.3804043  2.415676 0.016337307
-# flyer1      -0.9032493 0.3026176 -2.984788 0.003084689
+# Value Std.Error   t-value      p-value
+# (Intercept)  1.106883 0.3658369  3.025619 0.0027005942
+# flyer1      -0.979569 0.2897306 -3.380966 0.0008200439
 
 #with no phylogenetic effects:
 gls_model_MRT_0 <- gls(log_MRT_hrs ~ flyer, 
@@ -220,8 +218,8 @@ gls_model_MRT_0 <- gls(log_MRT_hrs ~ flyer,
                         method = "ML")
 summary(gls_model_MRT_0)$tTable
 # Value  Std.Error   t-value      p-value
-# (Intercept)  1.0584276 0.04461767 23.722163 2.474435e-69
-# flyer1      -0.5934719 0.20927542 -2.835841 4.899079e-03
+# (Intercept)  1.0169502 0.04298513 23.658186 5.043775e-70
+# flyer1      -0.5519944 0.20511263 -2.691177 7.527674e-03
 
 #with estimated phylogenetic effects:
 gls_model_MRT_2 <- gls(log_MRT_hrs ~ flyer,
@@ -229,23 +227,23 @@ gls_model_MRT_2 <- gls(log_MRT_hrs ~ flyer,
                         correlation = cor_phylo_fixed2,
                         method = "ML")
 summary(gls_model_MRT_2)$tTable
-# Value Std.Error   t-value     p-value
-# (Intercept)  1.0454412 0.3351832  3.119015 0.002001056
-# flyer1      -0.9060088 0.2736555 -3.310765 0.001050674
+# Value Std.Error   t-value      p-value
+# (Intercept)  1.2704204 0.2990841  4.247703 2.901354e-05
+# flyer1      -0.9643594 0.2523240 -3.821910 1.616340e-04
 
 AIC(gls_model_MRT_0, gls_model_MRT_1, gls_model_MRT_2)
 # Emily: The model with full brownian phylogenetic effects is the best fit.
 # df        AIC
-# gls_model_MRT_0  3   641.2291
-# gls_model_MRT_1  3 -2536.6349 **
-# gls_model_MRT_2  3 -2337.8360
+# gls_model_MRT_0  3   652.0917
+# gls_model_MRT_1  3 -2603.3888
+# gls_model_MRT_2  3 -2356.8415
 
 
 
 summary(gls_model_MRT_1)$tTable
-# Value Std.Error   t-value     p-value
-# (Intercept)  0.9189334 0.3804043  2.415676 0.016337307
-# flyer1      -0.9032493 0.3026176 -2.984788 0.003084689
+# Value Std.Error   t-value      p-value
+# (Intercept)  1.106883 0.3658369  3.025619 0.0027005942
+# flyer1      -0.979569 0.2897306 -3.380966 0.0008200439
 
 # Emily: flyer is a significant term which says that flight is significantly
 # negatively related to MRT transit time.
@@ -266,13 +264,14 @@ gls_model_MRT_1_diet <- gls(log_MRT_hrs ~ flyer + trial.diet,
                         method = "ML")
 summary(gls_model_MRT_1_diet)$tTable
 # Value  Std.Error    t-value     p-value
-# (Intercept)                    0.87122645 0.38061330  2.2890068 0.022826232
-# flyer1                        -0.93943401 0.30933013 -3.0369949 0.002615539
-# trial.dietfruit/nectar/pollen -0.01033575 0.09025405 -0.1145184 0.908909254
-# trial.dietmeat                 0.31635315 0.14526655  2.1777426 0.030262873
-# trial.dietmixed                0.16245137 0.49938818  0.3253008 0.745197243
-# trial.dietprotein              0.07246705 0.12758207  0.5680034 0.570489499
-# trial.dietunknown              0.16803373 0.25660246  0.6548407 0.513109834
+# (Intercept)                    1.11354193 0.36249869  3.0718509 0.002330760
+# flyer1                        -0.96150947 0.29563591 -3.2523433 0.001280691
+# trial.dietfruit/nectar/pollen -0.02454781 0.08267623 -0.2969149 0.766745472
+# trial.dietmeat                 0.39162042 0.13203398  2.9660578 0.003269156
+# trial.dietmixed                0.04147622 0.34789285  0.1192212 0.905183191
+# trial.dietprotein              0.03075949 0.11749517  0.2617937 0.793667639
+# trial.dietunk                  0.67686643 0.52385479  1.2920879 0.197362526
+# trial.dietunknown             -0.04481134 0.20539463 -0.2181719 0.827449670
 
 
 
@@ -283,13 +282,14 @@ gls_model_MRT_0_diet <- gls(log_MRT_hrs ~ flyer + trial.diet,
                         method = "ML")
 summary(gls_model_MRT_0_diet)$tTable
 # Value  Std.Error    t-value      p-value
-# (Intercept)                    1.1723418 0.05555751 21.1014105 9.752837e-60
-# flyer1                        -0.3914769 0.23656279 -1.6548542 9.907851e-02
-# trial.dietfruit/nectar/pollen -0.4165126 0.11245012 -3.7039766 2.558304e-04
-# trial.dietmeat                -0.1773151 0.14539883 -1.2195088 2.236811e-01
-# trial.dietmixed                0.1018161 0.72438128  0.1405559 8.883222e-01
-# trial.dietprotein             -0.3096478 0.16986671 -1.8228867 6.939069e-02
-# trial.dietunknown              0.3533181 0.36537246  0.9670081 3.343775e-01
+# (Intercept)                    1.12735456 0.05506415 20.4734768 4.037345e-58
+# flyer1                        -0.36571946 0.23001371 -1.5899898 1.129342e-01
+# trial.dietfruit/nectar/pollen -0.41290758 0.10757484 -3.8383287 1.523051e-04
+# trial.dietmeat                -0.12499968 0.13026829 -0.9595557 3.380837e-01
+# trial.dietmixed               -0.07043189 0.50316702 -0.1399772 8.887759e-01
+# trial.dietprotein             -0.29060165 0.16301632 -1.7826537 7.569596e-02
+# trial.dietunk                  0.71774348 0.70945192  1.0116873 3.125368e-01
+# trial.dietunknown              0.40270659 0.35791696  1.1251397 2.614666e-01
 
 
 # With estimated phylogenetic effects:
@@ -298,36 +298,37 @@ gls_model_MRT_2_diet <- gls(log_MRT_hrs ~ flyer + trial.diet,
                         correlation = cor_phylo_fixed2,
                         method = "ML")
 summary(gls_model_MRT_2_diet)$tTable
-# Value Std.Error    t-value      p-value
-# (Intercept)                    0.99017419 0.3341985  2.9628323 0.0033109489
-# flyer1                        -0.95173034 0.2792512 -3.4081508 0.0007504681
-# trial.dietfruit/nectar/pollen  0.01131968 0.0827610  0.1367755 0.8913068911
-# trial.dietmeat                 0.34994613 0.1330169  2.6308400 0.0089908380
-# trial.dietmixed                0.19007558 0.4504509  0.4219674 0.6733737894
-# trial.dietprotein              0.08325051 0.1172196  0.7102101 0.4781670742
-# trial.dietunknown              0.17332156 0.2346984  0.7384864 0.4608397034
+# Value  Std.Error    t-value      p-value
+# (Intercept)                    1.255792696 0.29520449  4.2539756 2.842666e-05
+# flyer1                        -0.965816895 0.25754984 -3.7500195 2.137276e-04
+# trial.dietfruit/nectar/pollen -0.008484854 0.07601623 -0.1116190 9.112033e-01
+# trial.dietmeat                 0.397883091 0.11895486  3.3448243 9.324894e-04
+# trial.dietmixed                0.092743820 0.31435772  0.2950264 7.681863e-01
+# trial.dietprotein              0.040895331 0.10842718  0.3771686 7.063261e-01
+# trial.dietunk                  0.604989346 0.48199768  1.2551707 2.104343e-01
+# trial.dietunknown              0.119854681 0.20885876  0.5738552 5.665137e-01
 
 AIC(gls_model_MRT_0, gls_model_MRT_1, gls_model_MRT_2, 
     gls_model_MRT_0_diet, gls_model_MRT_1_diet, gls_model_MRT_2_diet)
 # df        AIC
-# gls_model_MRT_0       3   641.2291
-# gls_model_MRT_1       3 -2536.6349 *
-# gls_model_MRT_2       3 -2337.8360
-# gls_model_MRT_0_diet  8   634.4242
-# gls_model_MRT_1_diet  8 -2532.5178 *
-# gls_model_MRT_2_diet  8 -2335.7647 *
+# gls_model_MRT_0       3   652.0917
+# gls_model_MRT_1       3 -2603.3888
+# gls_model_MRT_2       3 -2356.8415
+# gls_model_MRT_0_diet  9   644.9016
+# gls_model_MRT_1_diet  9 -2604.0126
+# gls_model_MRT_2_diet  9 -2359.1106
 
-# but remember that lambda is 0.94 for model2 
 
 summary(gls_model_MRT_1_diet)$tTable
 # Value  Std.Error    t-value     p-value
-# (Intercept)                    0.87122645 0.38061330  2.2890068 0.022826232
-# flyer1                        -0.93943401 0.30933013 -3.0369949 0.002615539 *
-# trial.dietfruit/nectar/pollen -0.01033575 0.09025405 -0.1145184 0.908909254
-# trial.dietmeat                 0.31635315 0.14526655  2.1777426 0.030262873 *
-# trial.dietmixed                0.16245137 0.49938818  0.3253008 0.745197243
-# trial.dietprotein              0.07246705 0.12758207  0.5680034 0.570489499
-# trial.dietunknown              0.16803373 0.25660246  0.6548407 0.513109834
+# (Intercept)                    1.11354193 0.36249869  3.0718509 0.002330760
+# flyer1                        -0.96150947 0.29563591 -3.2523433 0.001280691
+# trial.dietfruit/nectar/pollen -0.02454781 0.08267623 -0.2969149 0.766745472
+# trial.dietmeat                 0.39162042 0.13203398  2.9660578 0.003269156
+# trial.dietmixed                0.04147622 0.34789285  0.1192212 0.905183191
+# trial.dietprotein              0.03075949 0.11749517  0.2617937 0.793667639
+# trial.dietunk                  0.67686643 0.52385479  1.2920879 0.197362526
+# trial.dietunknown             -0.04481134 0.20539463 -0.2181719 0.827449670
 
 # Emily: model gls_model_MRT_1_diet has a close AIC to the model without diet
 # Plus only meat comes out as significant when you do the summary output. 
@@ -345,8 +346,8 @@ gls_model_MRT_1_diet_re <- lme(log_MRT_hrs ~ flyer,
                             method = "ML")
 summary(gls_model_MRT_1_diet_re)$tTable
 # Value Std.Error  DF   t-value      p-value
-# (Intercept)  0.8321836 0.2133704 279  3.900183 1.205009e-04
-# flyer1      -1.3387866 0.2577807 279 -5.193509 3.985442e-07
+# (Intercept)  1.0020987 0.1776598 288  5.640547 4.048481e-08
+# flyer1      -0.8692119 0.2400730 288 -3.620615 3.471541e-04
 
 gls_model_MRT_0_diet_re <- lme(log_MRT_hrs ~ flyer,
                                 random = ~1 | trial.diet,
@@ -354,9 +355,9 @@ gls_model_MRT_0_diet_re <- lme(log_MRT_hrs ~ flyer,
                                 data = MRT_pruned,
                                 method = "ML")
 summary(gls_model_MRT_0_diet_re)$tTable
-# Value  Std.Error  DF   t-value      p-value
-# (Intercept)  1.0026173 0.08888188 279 11.280334 1.456172e-24
-# flyer1      -0.4648389 0.22255133 279 -2.088682 3.764272e-02
+# Value Std.Error  DF   t-value      p-value
+# (Intercept)  0.9840423 0.0862259 288 11.412374 3.880157e-25
+# flyer1      -0.4382938 0.2176507 288 -2.013749 4.496575e-02
 
 gls_model_MRT_2_diet_re <- lme(log_MRT_hrs ~ flyer,
                                 random = ~1 | trial.diet,
@@ -365,23 +366,23 @@ gls_model_MRT_2_diet_re <- lme(log_MRT_hrs ~ flyer,
                                 method = "ML")
 summary(gls_model_MRT_2_diet_re)$tTable
 # Value Std.Error  DF   t-value      p-value
-# (Intercept)  0.9135057 0.1702606 279  5.365339 1.699433e-07
-# flyer1      -1.0783676 0.2178704 279 -4.949582 1.288623e-06
+# (Intercept)  1.0186786 0.1489817 288  6.837611 4.816690e-11
+# flyer1      -0.8699707 0.2076528 288 -4.189544 3.720722e-05
 
 AIC(gls_model_MRT_0, gls_model_MRT_0_diet, gls_model_MRT_0_diet_re,
     gls_model_MRT_1, gls_model_MRT_1_diet, gls_model_MRT_1_diet_re,
     gls_model_MRT_2, gls_model_MRT_2_diet, gls_model_MRT_2_diet_re)
 
 # df        AIC
-# gls_model_MRT_0          3   641.2291
-# gls_model_MRT_0_diet     8   634.4242
-# gls_model_MRT_0_diet_re  4   636.9633
-# gls_model_MRT_1          3 -2536.6349 * --- best supported thus far
-# gls_model_MRT_1_diet     8 -2532.5178
-# gls_model_MRT_1_diet_re  4 -1331.1706
-# gls_model_MRT_2          3 -2337.8360 * 
-# gls_model_MRT_2_diet     8 -2335.7647 *
-# gls_model_MRT_2_diet_re  4 -1242.2332
+# gls_model_MRT_0          3   652.0917
+# gls_model_MRT_0_diet     9   644.9016
+# gls_model_MRT_0_diet_re  4   647.5806
+# gls_model_MRT_1          3 -2603.3888
+# gls_model_MRT_1_diet     9 -2604.0126 **
+# gls_model_MRT_1_diet_re  4 -1529.7376
+# gls_model_MRT_2          3 -2356.8415
+# gls_model_MRT_2_diet     9 -2359.1106
+# gls_model_MRT_2_diet_re  4 -1219.6939
 
 #Emily: in all cases, the fit with diet as a fixed effect was better supported than the fit as
 # a random effect. 
@@ -407,10 +408,10 @@ gls_model_MRT_1_mass <- gls(log_MRT_hrs ~ log10(mass_kg)*flyer,
                         method = "ML")
 summary(gls_model_MRT_1_mass)$tTable
 # Value  Std.Error   t-value      p-value
-# (Intercept)            0.9636360 0.36506005  2.639664 8.760712e-03
-# log10(mass_kg)         0.2110837 0.04154097  5.081338 6.831644e-07
-# flyer1                -1.3562368 0.63800296 -2.125753 3.439274e-02
-# log10(mass_kg):flyer1 -0.4678003 0.25691434 -1.820841 6.969066e-02
+# (Intercept)            1.0238383 0.35026088  2.923074 3.737047e-03
+# log10(mass_kg)         0.1969964 0.03792113  5.194899 3.850322e-07
+# flyer1                -1.7562799 0.61182358 -2.870566 4.396946e-03
+# log10(mass_kg):flyer1 -0.6041602 0.24590960 -2.456839 1.459830e-02
 
 
 #with no phylogenetic effects:
@@ -420,10 +421,10 @@ gls_model_MRT_0_mass <- gls(log_MRT_hrs ~ log10(mass_kg)*flyer,
                         method = "ML")
 summary(gls_model_MRT_0_mass)$tTable
 # Value  Std.Error   t-value      p-value
-# (Intercept)            1.0411798 0.03700275 28.137903 7.418260e-84
-# log10(mass_kg)         0.2845213 0.02493923 11.408582 4.841155e-25
-# flyer1                -1.4546686 0.74911485 -1.941850 5.315100e-02
-# log10(mass_kg):flyer1 -0.6321109 0.28943972 -2.183912 2.979258e-02
+# (Intercept)            0.9982601 0.03504252 28.487107 2.724862e-86
+# log10(mass_kg)         0.2919655 0.02386620 12.233430 4.618833e-28
+# flyer1                -1.4117490 0.72219206 -1.954811 5.155934e-02
+# log10(mass_kg):flyer1 -0.6395551 0.27903411 -2.292032 2.261525e-02
 
 #with estimated phylogenetic effects:
 gls_model_MRT_2_mass <- gls(log_MRT_hrs ~ log10(mass_kg)*flyer,
@@ -432,10 +433,10 @@ gls_model_MRT_2_mass <- gls(log_MRT_hrs ~ log10(mass_kg)*flyer,
                         method = "ML")
 summary(gls_model_MRT_2_mass)$tTable
 # Value  Std.Error   t-value      p-value
-# (Intercept)            1.0831822 0.32689521  3.313546 1.041547e-03
-# log10(mass_kg)         0.1614776 0.04051237  3.985884 8.568092e-05
-# flyer1                -1.3948146 0.59963246 -2.326116 2.072131e-02
-# log10(mass_kg):flyer1 -0.4189896 0.24124694 -1.736767 8.352036e-02
+# (Intercept)            1.2483943 0.29035285  4.299576 2.335257e-05
+# log10(mass_kg)         0.1528385 0.03682937  4.149907 4.367707e-05
+# flyer1                -1.7715347 0.58042807 -3.052118 2.481383e-03
+# log10(mass_kg):flyer1 -0.5486613 0.23180124 -2.366947 1.858772e-02
 
 
 
@@ -446,17 +447,17 @@ AIC(gls_model_MRT_0_mass, gls_model_MRT_1_mass, gls_model_MRT_2_mass)
 # than the model with mass alone)
 
 # df        AIC
-# gls_model_MRT_0_mass  5   535.6873
-# gls_model_MRT_1_mass  5 -2558.3849 *
-# gls_model_MRT_2_mass  5 -2350.4346
+# gls_model_MRT_0_mass  5   532.5672
+# gls_model_MRT_1_mass  5 -2627.7650 *
+# gls_model_MRT_2_mass  5 -2372.4915
 
 summary(gls_model_MRT_1_mass)$tTable
 
 # Value  Std.Error   t-value      p-value
-# (Intercept)            0.9636360 0.36506005  2.639664 8.760712e-03
-# log10(mass_kg)         0.2110837 0.04154097  5.081338 6.831644e-07
-# flyer1                -1.3562368 0.63800296 -2.125753 3.439274e-02
-# log10(mass_kg):flyer1 -0.4678003 0.25691434 -1.820841 6.969066e-02
+# (Intercept)            1.0238383 0.35026088  2.923074 3.737047e-03
+# log10(mass_kg)         0.1969964 0.03792113  5.194899 3.850322e-07
+# flyer1                -1.7562799 0.61182358 -2.870566 4.396946e-03
+# log10(mass_kg):flyer1 -0.6041602 0.24590960 -2.456839 1.459830e-02
 
 # Emily: flyer is significant (negative) term here (p=0.03)
 # We can test whether it would be best to drop the interaction which 
@@ -469,32 +470,28 @@ gls_model_MRT_1_mass_simple <- gls(log_MRT_hrs ~ flyer + log10(mass_kg),
                              method = "ML")
 summary(gls_model_MRT_1_mass_simple)$tTable
 # Value  Std.Error   t-value      p-value
-# (Intercept)     0.9627713 0.36655013  2.626575 9.094682e-03
-# flyer1         -0.3435944 0.31393642 -1.094471 2.746789e-01 - not significant
-# log10(mass_kg)  0.1966148 0.04094033  4.802471 2.543771e-06
+# (Intercept)     1.0330241 0.35323805  2.924442 3.720190e-03
+# flyer1         -0.4441066 0.30100972 -1.475390 1.411816e-01
+# log10(mass_kg)  0.1802153 0.03762011  4.790399 2.647871e-06
 
 
 AIC(gls_model_MRT_1_mass, gls_model_MRT_1_mass_simple)
 
 # df       AIC
-# gls_model_MRT_1_mass         5 -2558.385
-# gls_model_MRT_1_mass_simple  4 -2557.042
+# gls_model_MRT_1_mass         5 -2627.765
+# gls_model_MRT_1_mass_simple  4 -2623.709
 
 
 # Emily: there is no difference in AIC,really, though the complex model is slightly better
-#so we prefer the simplest model 
-# (no interaction term), shown here:
+
 summary(gls_model_MRT_1_mass_simple)$tTable
 # Value  Std.Error   t-value      p-value
-# (Intercept)     0.9627713 0.36655013  2.626575 9.094682e-03
-# flyer1         -0.3435944 0.31393642 -1.094471 2.746789e-01
-# log10(mass_kg)  0.1966148 0.04094033  4.802471 2.543771e-06
+# (Intercept)     1.0330241 0.35323805  2.924442 3.720190e-03
+# flyer1         -0.4441066 0.30100972 -1.475390 1.411816e-01
+# log10(mass_kg)  0.1802153 0.03762011  4.790399 2.647871e-06
 
 
-# flyer is not significantly negatively related to transit suggesting 
-# that flyers have rapid MRT independent of small body size; 
-
-# Emily: note that flight is significant in the complex model. so this is really a toss up.
+# Emily: note that flight is significant in the complex model.
 
 # now, let's see if adding diet improves this model:
 
@@ -508,15 +505,15 @@ gls_model_MRT_1_mass_simple_diet <- gls(log_MRT_hrs ~ flyer + log10(mass_kg) +
                                     method = "ML")
 summary(gls_model_MRT_1_mass_simple_diet)$tTable
 # Value  Std.Error    t-value      p-value
-# (Intercept)                                   0.92136859 0.36696315  2.5107932 1.261585e-02
-# flyer1                                       -0.41040091 0.31785767 -1.2911468 1.977292e-01
-# log10(mass_kg)                                0.20376741 0.04241481  4.8041575 2.549326e-06
-# trial.dietfruit/nectar/pollen                 0.02335313 0.08750141  0.2668886 7.897535e-01
-# trial.dietfruit/nectar/pollen; fiber/foliage  0.12500050 0.47665148  0.2622472 7.933258e-01
-# trial.dietfruit/nectar/pollen; meat           0.15418008 0.48130226  0.3203394 7.489526e-01
-# trial.dietmeat                                0.26612168 0.14038877  1.8956052 5.905311e-02
-# trial.dietprotein                             0.18371095 0.12509107  1.4686177 1.430712e-01
-# trial.dietunknown                             0.32024746 0.24938868  1.2841299 2.001695e-01
+# (Intercept)                    1.05610780 0.35163515  3.0034193 0.0029049121
+# flyer1                        -0.50953955 0.30431780 -1.6743666 0.0951479084
+# log10(mass_kg)                 0.17171835 0.03889695  4.4146994 0.0000143375
+# trial.dietfruit/nectar/pollen  0.00972326 0.08051873  0.1207577 0.9039674216
+# trial.dietmeat                 0.34545688 0.12841588  2.6901414 0.0075605840
+# trial.dietmixed                0.12080555 0.33771438  0.3577151 0.7208194225
+# trial.dietprotein              0.12976388 0.11608284  1.1178559 0.2645633825
+# trial.dietunk                  0.58132795 0.50826866  1.1437415 0.2536839293
+# trial.dietunknown              0.06074774 0.20053347  0.3029307 0.7621621627
 
 # then, as a random effect
 gls_model_MRT_1_mass_simple_diet_re <- lme(log_MRT_hrs ~ flyer + log10(mass_kg),
@@ -526,26 +523,26 @@ gls_model_MRT_1_mass_simple_diet_re <- lme(log_MRT_hrs ~ flyer + log10(mass_kg),
                                             method = "ML")
 summary(gls_model_MRT_1_mass_simple_diet_re)$tTable
 # Value  Std.Error  DF   t-value      p-value
-# (Intercept)     0.93318698 0.21187154 277  4.404494 1.516434e-05
-# flyer1         -1.07190391 0.27496359 277 -3.898349 1.215604e-04
-# log10(mass_kg)  0.09943869 0.03718593 277  2.674094 7.938326e-03
+# (Intercept)     0.9985459 0.17498721 287  5.706394 2.873297e-08
+# flyer1         -0.6130110 0.24987085 287 -2.453311 1.474951e-02
+# log10(mass_kg)  0.1005826 0.03170947 287  3.172006 1.678036e-03
 
 # then, compare
 AIC(gls_model_MRT_1_mass_simple, gls_model_MRT_1_mass_simple_diet, gls_model_MRT_1_mass_simple_diet_re)
 
 # df       AIC
-# gls_model_MRT_1_mass_simple          4 -2557.042
-# gls_model_MRT_1_mass_simple_diet    10 -2551.696
-# gls_model_MRT_1_mass_simple_diet_re  5 -1294.370
+# gls_model_MRT_1_mass_simple          4 -2623.709
+# gls_model_MRT_1_mass_simple_diet    10 -2621.460
+# gls_model_MRT_1_mass_simple_diet_re  5 -1537.732
 
 # here, Adding diet does nothing really for the fit. So only have mass in the model is still the best
 
 summary(gls_model_MRT_1_mass_simple)$tTable
 
 # Value  Std.Error   t-value      p-value
-# (Intercept)     0.9627713 0.36655013  2.626575 9.094682e-03
-# flyer1         -0.3435944 0.31393642 -1.094471 2.746789e-01
-# log10(mass_kg)  0.1966148 0.04094033  4.802471 2.543771e-06
+# (Intercept)     1.0330241 0.35323805  2.924442 3.720190e-03
+# flyer1         -0.4441066 0.30100972 -1.475390 1.411816e-01
+# log10(mass_kg)  0.1802153 0.03762011  4.790399 2.647871e-06
 
 # Emily: flyer is not significantly negatively related to transit, 
 # after accounting for mass (and phylogeny). 
@@ -555,9 +552,9 @@ summary(gls_model_MRT_1_mass_simple)$tTable
 AIC(gls_model_MRT_1, gls_model_MRT_1_diet, gls_model_MRT_1_mass_simple)
 
 # df       AIC
-# gls_model_MRT_1              3 -2536.635
-# gls_model_MRT_1_diet         8 -2532.518
-# gls_model_MRT_1_mass_simple  4 -2557.042 **
+# gls_model_MRT_1              3 -2603.389
+# gls_model_MRT_1_diet         9 -2604.013
+# gls_model_MRT_1_mass_simple  4 -2623.709
 
 
 gls_model_MRT_1_mass_only <- gls(log_MRT_hrs ~ log10(mass_kg), 
@@ -566,8 +563,8 @@ gls_model_MRT_1_mass_only <- gls(log_MRT_hrs ~ log10(mass_kg),
                                    method = "ML")
 summary(gls_model_MRT_1_mass_only)$tTable
 # Value  Std.Error  t-value      p-value
-# (Intercept)    0.9564153 0.36663178 2.608654 9.571165e-03
-# log10(mass_kg) 0.2132477 0.03802842 5.607588 4.862342e-08
+# (Intercept)    1.0118063 0.35365084 2.861032 4.525474e-03
+# log10(mass_kg) 0.2008265 0.03499993 5.737913 2.382712e-08
 
 gls_model_MRT_0_mass_only <- gls(log_MRT_hrs ~ log10(mass_kg), 
                                  data = MRT_pruned, 
@@ -575,8 +572,8 @@ gls_model_MRT_0_mass_only <- gls(log_MRT_hrs ~ log10(mass_kg),
                                  method = "ML")
 summary(gls_model_MRT_0_mass_only)$tTable
 # Value  Std.Error  t-value      p-value
-# (Intercept)    1.0470566 0.03635364 28.80197 2.995939e-86
-# log10(mass_kg) 0.2737247 0.02343028 11.68252 5.191835e-26
+# (Intercept)    1.0065686 0.03450639 29.17050 8.680808e-89
+# log10(mass_kg) 0.2783932 0.02247669 12.38586 1.231486e-28
 
 gls_model_MRT_2_mass_only <- gls(log_MRT_hrs ~ log10(mass_kg), 
                                  data = MRT_pruned, 
@@ -584,17 +581,16 @@ gls_model_MRT_2_mass_only <- gls(log_MRT_hrs ~ log10(mass_kg),
                                  method = "ML")
 summary(gls_model_MRT_2_mass_only)$tTable
 # Value  Std.Error  t-value      p-value
-# (Intercept)    1.0747564 0.32904382 3.266302 1.223277e-03
-# log10(mass_kg) 0.1737762 0.03680466 4.721583 3.681160e-06
-
+# (Intercept)    1.232982 0.29405351 4.193054 3.646249e-05
+# log10(mass_kg) 0.168163 0.03362204 5.001570 9.796621e-07
 # mass is always signficant
 
 AIC(gls_model_MRT_0_mass_only, gls_model_MRT_1_mass_only, gls_model_MRT_2_mass_only)
 # 
 # df        AIC
-# gls_model_MRT_0_mass_only  3   536.9815
-# gls_model_MRT_1_mass_only  3 -2557.8340 **
-# gls_model_MRT_2_mass_only  3 -2348.6181
+# gls_model_MRT_0_mass_only  3   535.0061
+# gls_model_MRT_1_mass_only  3 -2623.5177
+# gls_model_MRT_2_mass_only  3 -2366.6604
 
 
 
@@ -609,13 +605,13 @@ library(ggplot2)
 library(dplyr)
 
 unique(MRT_pruned$re_class)
-# [1] "Flying Birds"       "Ungulates"          "Primates"           "Marsupials"         "Carnivores"         "Rodents"           
-# [7] "Odd-toed Ungulates" "Bats"        
+# [1] "Flying Birds"        "Carnivora"           "Even-toed Ungulates" "Primates"            "Non-Flying Birds"   
+# [6] "Rodents"             "Odd-toed Ungulates"  "Bats"             
 
 colz <- c(
   "Flying\nBirds"= "#F8766D",
   "Bats" = "#C49A00",
-  #"Non-Flying\nBirds" = "#edf8b1",
+  "Non-Flying\nBirds" = "#edf8b1",
   "Rodents" = "navy",
   "Primates" = "#00B6EB",
   "Even-toed\nUngulates" = "#A58AFF",
@@ -642,15 +638,17 @@ MRT_pruned$re_class <- as.character(MRT_pruned$re_class)
 
 # Replace the value
 MRT_pruned$re_class[MRT_pruned$re_class == "Flying Birds"] <- "Flying\nBirds"
-MRT_pruned$re_class[MRT_pruned$re_class == "Ungulates"] <- "Even-toed\nUngulates"
+MRT_pruned$re_class[MRT_pruned$re_class == "Non-Flying Birds"] <- "Non-Flying\nBirds"
+MRT_pruned$re_class[MRT_pruned$re_class == "Even-toed Ungulates"] <- "Even-toed\nUngulates"
 MRT_pruned$re_class[MRT_pruned$re_class == "Odd-toed Ungulates"] <- "Odd-toed\nUngulates"
+MRT_pruned$re_class[MRT_pruned$re_class == "Carnivora"] <- "Carnivores"
 
 unique(MRT_pruned$re_class)
 # [1] "Flying Birds"         "Even-toed\nUngulates" "Primates"             "Marsupials"           "Carnivores"          
 # [6] "Rodents"              "Odd-toed\nUngulates"  "Bats"   
 
-MRT_pruned$re_class <- factor(MRT_pruned$re_class, levels = c("Bats", "Flying\nBirds", "Rodents", "Primates", 
-                                                              "Marsupials", "Carnivores",
+MRT_pruned$re_class <- factor(MRT_pruned$re_class, levels = c("Flying\nBirds", "Bats", "Rodents", "Non-Flying\nBirds", 
+                                                              "Carnivores","Primates",
                                                               "Even-toed\nUngulates", "Odd-toed\nUngulates"))
 
 # --- Plot ---
