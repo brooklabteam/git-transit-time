@@ -18,8 +18,8 @@ library(glmmTMB)
 
 #set home directory
 #homewd= "/Users/carabrook/Developer/git-transit-time"
-homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
-#homewd <- "/Users/gavindehnert/Desktop/GitHub_repos/git-transit-time"
+#homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
+homewd <- "/Users/gavindehnert/Desktop/GitHub_repos/git-transit-time"
 setwd(homewd)
 
 #load the GIT transit data:
@@ -235,7 +235,7 @@ dat.sum.tot$mass_kg = as.numeric(dat.sum.tot$avg_mass)/1000
 #than we might otherwise predict -- this is likely due to an effect of temperature that is not
 #reported here.
 
-write.csv(dat.sum.tot, "data/revision-3/dat_sum_tot_clean_GIT_R3.csv", row.names = F)
+write.csv(dat.sum.tot, "data/revision-3/dat_sum_tot_clean_GIT_R3_v2.csv", row.names = F)
 # dat.sum.tot_clean <- read.csv(file = paste0(homewd, "data/dat.sum.tot.csv"), header = T, stringsAsFactors = F )
 #dat.sum.tot_clean <- dat.sum.tot
 
@@ -385,6 +385,6 @@ dat.sum.tot2$mass_kg = as.numeric(dat.sum.tot2$avg_mass)/1000
 #than we might otherwise predict -- this is likely due to an effect of temperature that is not
 #reported here.
 
-write.csv(dat.sum.tot2, "data/revision-3/dat_sum_tot_clean_MRT_R3.csv", row.names = F) #I don't know why there are some NA so manually fixing and re-uploading
+write.csv(dat.sum.tot2, "data/revision-3/dat_sum_tot_clean_MRT_R3_v2.csv", row.names = F) #I don't know why there are some NA so manually fixing and re-uploading
 # dat.sum.tot_clean <- read.csv(file = paste0(homewd, "data/dat.sum.tot.csv"), header = T, stringsAsFactors = F )
 #dat.sum.tot_clean <- dat.sum.tot

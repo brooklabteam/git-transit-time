@@ -18,7 +18,7 @@ homewd <- "/Users/gavindehnert/Desktop/GitHub_repos/git-transit-time"
 setwd(homewd)
 
 #load the MRT transit data with phylo name
-dat_MRT <- read.csv(file = paste0(homewd, "/data/revision-3/dat_sum_tot_clean_MRT_R3.csv"), header = T, stringsAsFactors = F )
+dat_MRT <- read.csv(file = paste0(homewd, "/data/revision-3/dat_sum_tot_clean_MRT_R3_v2.csv"), header = T, stringsAsFactors = F )
 
 mass_col    <- "avg_mass"        # body-mass column
 species_col <- "genus.species"  # tip / phylogeny-name column
@@ -96,10 +96,11 @@ lambda_gs2<-phylosig(tree, MRT_hrs,
                      method="lambda",test=TRUE)
 lambda_gs2
 
-# Phylogenetic signal lambda : 0.775571 
-# logL(lambda) : -950.042 
-# LR(lambda=0) : 139.153 
-# P-value (based on LR test) : 4.07696e-32 
+#EMILY GETS:
+# Phylogenetic signal lambda : 0.820087 
+# logL(lambda) : -967.56 
+# LR(lambda=0) : 137.925 
+# P-value (based on LR test) : 7.56859e-32
 
 #CARA:I get below:
 # Phylogenetic signal lambda : 0.775571 
@@ -168,8 +169,8 @@ missing_in_df2
 
 # factor the groups so that rodent is the comparasion
 unique(MRT_pruned$re_class)
-# [1] "Flying Birds"        "Carnivora"           "Even-toed Ungulates" "Primates"            "Rodents"            
-# [6] "Odd-toed Ungulates"  "Bats"   
+# [1] "Flying Birds"        "Carnivora"           "Even-toed Ungulates" "Primates"            "Non-Flying Birds"   
+# [6] "Rodents"             "Odd-toed Ungulates"  "Bats" 
 
 #CARA I get this (includes non-flying birds):
 # [1] "Rodents"             "Bats"                "Flying Birds"        "Primates"            "Even-toed Ungulates"
@@ -188,7 +189,7 @@ MRT_pruned$log_MRT_hrs <- log10(MRT_pruned$MRT_hrs)
 # add the "flyer" parameter
 MRT_pruned$flyer <- 0
 MRT_pruned$flyer[MRT_pruned$re_class=="Bats"] <- 1
-#CARA: I added the next line belwo:
+#CARA: I added the next line below:
 MRT_pruned$flyer[MRT_pruned$re_class=="Flying Birds"] <- 1
 
 MRT_pruned$flyer <- as.factor(MRT_pruned$flyer)
@@ -214,9 +215,9 @@ gls_model_MRT_1 <- gls(log_MRT_hrs ~ flyer,
                         correlation = cor_phylo_fixed1,
                          method = "ML")
 summary(gls_model_MRT_1)$tTable
-# Value Std.Error   t-value    p-value
-# (Intercept)  0.6604288 0.4035738  1.636451 0.10281518
-# flyer1      -0.5484253 0.2756196 -1.989790 0.04754016
+# Value Std.Error   t-value      p-value
+# (Intercept)  1.3371250 0.3712718  3.601472 0.0003713429
+# flyer1      -0.6813796 0.1844273 -3.694570 0.0002626085
 
 #CARA: I get below:
 # Value Std.Error   t-value    p-value
@@ -244,9 +245,9 @@ gls_model_MRT_2 <- gls(log_MRT_hrs ~ flyer,
                         correlation = cor_phylo_fixed2,
                         method = "ML")
 summary(gls_model_MRT_2)$tTable
-# Value Std.Error   t-value    p-value
-# (Intercept)  0.6796533 0.3652269  1.860907 0.06375544
-# flyer1      -0.5955751 0.2903126 -2.051496 0.04110444
+# Value Std.Error   t-value      p-value
+# (Intercept)  1.4991102 0.3061640  4.896429 1.612745e-06
+# flyer1      -0.6365129 0.1638599 -3.884494 1.267216e-04
 
 #CARA: I get below
 # Value Std.Error   t-value    p-value

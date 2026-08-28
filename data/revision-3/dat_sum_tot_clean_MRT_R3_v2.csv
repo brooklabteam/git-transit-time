@@ -1,0 +1,300 @@
+fly,class,order,family,genus.species,common.name,sum_mass,trial.diet,N_tot,total_MRT,MRT,avg_mass,re_class,MRT_hrs,mass_kg,phylo_name
+Y,Aves,Accipitriformes,Accipitridae,Acciter nisus,sparrowhawk,219.5,meat,2,756,378,109.75,Flying Birds,6.3,0.10975,Accipiter_nisus
+N,Mammalia,Carnivora,Felidae,Acinonyx jubatus,cheetah,32170,unknown,1,1520.4,1520.4,32170,Carnivora,25.34,32.17,Acinonyx_jubatus
+Y,Aves,Passeriformes,Sturnidae,Acridotheres cristatellus,crested-myna,375,fruit/nectar/pollen,18,318,17.66666667,20.83333333,Flying Birds,0.294444444,0.020833333,Acridotheres_cristatellus
+N,Mammalia,Artiodactyla,Bovidae,Addax nasomaculatus,addax,348000,fiber/foliage,32,75360,2355,10875,Even-toed Ungulates,39.25,10.875,Addax_nasomaculatus
+Y,Aves,Charadriiformes,Alcidae,Alca torda,razorbill,2424,meat,12,3827.4,318.95,202,Flying Birds,5.315833333,0.202,Alca_torda
+N,Mammalia,Artiodactyla,Cervidae,Alces alces,moose,5843285.72,fiber/foliage,51,131386.2857,2576.201681,114574.2298,Even-toed Ungulates,42.93669468,114.5742298,Alces_alces
+N,Mammalia,Primates,Cercopithecidae,Allenopithecus nigroviridis,Allen‚Äôs swamp monkey,9800,fiber/foliage,3,4239.9999,1413.3333,3266.666667,Primates,23.555555,3.266666667,Allenopithecus_nigroviridis
+Y,Aves,Anseriformes,Anatidae,Alopochen aegyptiaca,Egyptian goose,15540,fiber/foliage,70,20274,289.6285714,222,Flying Birds,4.827142857,0.222,Alopochen_aegyptiaca
+N,Mammalia,Primates,Atelidae,Alouatta caraya ,black howler monkey,16220,fiber/foliage,6,10224,1704,2703.333333,Primates,28.4,2.703333333,Alouatta_caraya
+N,Mammalia,Primates,Atelidae,Alouatta palliata,mantled howler monkey,36900,fiber/foliage,12,22788,1899,3075,Primates,31.65,3.075,Alouatta_palliata
+N,Mammalia,Primates,Atelidae,Alouatta sara,Bolivian red howler monkey,49080,fiber/foliage,12,29952,2496,4090,Primates,41.6,4.09,Alouatta_sara
+Y,Aves,Anseriformes,Anatidae,Anas crecca,Eurasian Teal,720,fiber/foliage,6,5752.8,958.8,120,Flying Birds,15.98,0.12,Anas_crecca
+Y,Aves,Anseriformes,Anatidae,Anas erthrorhyncha,Red-billed teal,3850,fiber/foliage,70,12786,182.6571429,55,Flying Birds,3.044285714,0.055,Anas_erythrorhyncha
+Y,Aves,Anseriformes,Anatidae,Anas platyrhynchos,mallard duck,9260,fiber/foliage,66,33081.2,501.230303,140.3030303,Flying Birds,8.353838384,0.14030303,Anas_platyrhynchos
+Y,Aves,Anseriformes,Anatidae,Anas platyrhynchos,mallard duck,1120,meat,6,2772,462,186.6666667,Flying Birds,7.7,0.186666667,Anas_platyrhynchos
+Y,Aves,Anseriformes,Anatidae,Anser anser,Goose,9900,fiber/foliage,18,2952,164,550,Flying Birds,2.733333333,0.55,Anser_anser
+Y,Aves,Anseriformes,Anatidae,Anser anser,Greylag Goose,13240,fiber/foliage,40,24720,618,331,Flying Birds,10.3,0.331,Anser_anser
+Y,Aves,Anseriformes,Anseranatidae,Anseranas semipalmata,Australian magpie goose,5000,fiber/foliage,10,3420,342,500,Flying Birds,5.7,0.5,Anseranas_semipalmata
+N,Mammalia,Artiodactyla,Bovidae,Antilope cervicapra,blackbuck,52000,fiber/foliage,10,26700,2670,5200,Even-toed Ungulates,44.5,5.2,Antilope_cervicapra
+N,Aves,Sphenisciformes,Spheniscidae,Aptenodytes patagonicus,king penguin,40950,meat,15,18300,1220,2730,Non-Flying Birds,20.33333333,2.73,Aptenodytes_patagonicus
+N,Mammalia,Carnivora,Viverridae,Arctictis binturong,binturong,18900,protein,4,1560,390,4725,Carnivora,6.5,4.725,Arctictis_binturong
+N,Mammalia,Rodentia,Microtinae,Arvicola terrestris,water vole,990,fiber/foliage,19,9480,498.9473684,52.10526316,Rodents,8.315789474,0.052105263,Arvicola_amphibius
+N,Mammalia,Primates,Atelidae,Ateles belzebuth,spider monkey,8500,fruit/nectar/pollen,17,4590,270,500,Primates,4.5,0.5,Ateles_belzebuth
+N,Mammalia,Artiodactyla,Bovidae,Bison bison,bison,609000,fiber/foliage,2,9456,4728,304500,Even-toed Ungulates,78.8,304.5,Bison_bison
+N,Mammalia,Artiodactyla,Bovidae,Bison bonasus,European bison,376000,fiber/foliage,4,6948,1737,94000,Even-toed Ungulates,28.95,94,Bison_bonasus
+Y,Aves,Passeriformes,Bombycillidae,Bombycilla cedrorum,Cedar Waxwing,336,fruit/nectar/pollen,81,2603.03,32.13617284,4.148148148,Flying Birds,0.535602881,0.004148148,Bombycilla_cedrorum
+Y,Aves,Passeriformes,Bombycillidae,Bombycilla cedrorum,cedar waxwing,155,fruit/nectar/pollen,35,1768.5,50.52857143,4.428571429,Flying Birds,0.842142857,0.004428571,Bombycilla_cedrorum
+N,Mammalia,Artiodactyla,Bovidae,Bos grunniens,yak,650000,fiber/foliage,2,9384,4692,325000,Even-toed Ungulates,78.2,325,Bos_grunniens
+N,Mammalia,Artiodactyla,Bovidae,Bos javanicus,banteng,1459998,fiber/foliage,18,91080,5060,81111,Even-toed Ungulates,84.33333333,81.111,Bos_gaurus
+N,Mammalia,Artiodactyla,Bovidae,Bos taurus,cow,17109178,fiber/foliage,185,482831.5714,2609.900386,92482.04324,Even-toed Ungulates,43.49833977,92.48204324,Bos_taurus
+N,Mammalia,Artiodactyla,Bovidae,Bos taurus,domestic cattle,1510000,fiber/foliage,6,19620,3270,251666.6667,Even-toed Ungulates,54.5,251.6666667,Bos_taurus
+N,Mammalia,Artiodactyla,Bovidae,Bos taurus,Domestic cattle,755000,fiber/foliage,6,23904,3984,125833.3333,Even-toed Ungulates,66.4,125.8333333,Bos_taurus
+N,Mammalia,Artiodactyla,Bovidae,Bos taurus,large heifer,1120000,fiber/foliage,6,249,41.5,186666.6667,Even-toed Ungulates,0.691666667,186.6666667,Bos_taurus
+N,Mammalia,Artiodactyla,Bovidae,Bos taurus,small heifer,480000,fiber/foliage,4,136,34,120000,Even-toed Ungulates,0.566666667,120,Bos_taurus
+N,Mammalia,Artiodactyla,Bovidae,Bos taurus,Droughtmaster steer,6780000,fiber/foliage,16,39456,2466,423750,Even-toed Ungulates,41.1,423.75,Bos_taurus
+N,Mammalia,Artiodactyla,Bovinae,Bos taurus,Cattle,2100000,fruit/nectar/pollen,15,46578,3105.2,140000,Even-toed Ungulates,51.75333333,140,Bos_taurus
+N,Mammalia,Artiodactyla,Bovidae,Bos taurus,steer,3500000,fiber/foliage,25,51768,2070.72,140000,Even-toed Ungulates,34.512,140,Bos_taurus
+N,Mammalia,Artiodactyla,Bovidae,Boselaphus tragocamelus,nilgai,336000,fiber/foliage,10,24600,2460,33600,Even-toed Ungulates,41,33.6,Boselaphus_tragocamelus
+N,Mammalia,Artiodactyla,Bovidae,Bubalus bubalis,swamp buffalo,5250028,fiber/foliage,32,87096,2721.75,164063.375,Even-toed Ungulates,45.3625,164.063375,Bubalus_bubalis
+N,Mammalia,Artiodactyla,Bovidae,Bubalus bubalis,water buffalo,417100,fiber/foliage,4,6943.2,1735.8,104275,Even-toed Ungulates,28.93,104.275,Bubalus_bubalis
+N,Mammalia,Artiodactyla,Bovidae,Bubalus depressicornis,lowland anoa,180000,fiber/foliage,8,15360,1920,22500,Even-toed Ungulates,32,22.5,Bubalus_depressicornis
+N,Mammalia,Artiodactyla,Bovinae,Bulbalus bubalis,Buffalo,1275000,fruit/nectar/pollen,10,26352,2635.2,127500,Even-toed Ungulates,43.92,127.5,Bubalus_bubalis
+Y,Aves,Accipitriformes,Accipitridae,Buteo buteo,common buzzard,848,meat,4,1975.2,493.8,212,Flying Birds,8.23,0.212,Buteo_buteo
+N,Mammalia,Primates,Cebidae,Callithrix jacchus,common marmoset,696,fruit/nectar/pollen,6,4896,816,116,Primates,13.6,0.116,Callithrix_jacchus
+N,Mammalia,Primates,Callitrichidae,Callithrix jacchus,common marmoset,766,protein,26,27651,1063.5,29.46153846,Primates,17.725,0.029461538,Callithrix_jacchus
+N,Mammalia,Artiodactyla,Camelidae,Camelus bactrianus,Bactrian camel,4006000,fiber/foliage,28,96672,3452.571429,143071.4286,Even-toed Ungulates,57.54285714,143.0714286,Camelus_bactrianus
+N,Mammalia,Artiodactyla,Camelidae,Camelus dromedarius,dromedary camel,675000,fiber/foliage,12,53304,4442,56250,Even-toed Ungulates,74.03333333,56.25,Camelus_dromedarius
+N,Mammalia,Carnivora,Canidae,Canis familiaris,domestic dog,11550,meat,6,7470,1245,1925,Carnivora,20.75,1.925,Canis_lupus
+N,Mammalia,Carnivora,Canidae,Canis familiaris,dog,12200,protein,6,6840,1140,2033.333333,Carnivora,19,2.033333333,Canis_lupus
+N,Mammalia,Artiodactyla,Bovidae,Capra hircus,domestic goat,255000,fiber/foliage,51,150120,2943.529412,5000,Even-toed Ungulates,49.05882353,5,Capra_hircus
+N,Mammalia,Artiodactyla,Bovidae,Capra hircus,Domestic Goat,9000,fiber/foliage,12,29520,2460,750,Even-toed Ungulates,41,0.75,Capra_hircus
+N,Mammalia,Artiodactyla,Bovidae,Capra hircus,goat,180200,fiber/foliage,22,33735,1533.409091,8190.909091,Even-toed Ungulates,25.55681818,8.190909091,Capra_hircus
+N,Mammalia,Artiodactyla,Bovidae,Capra nubiana,Nunian ibex,166400,fiber/foliage,16,33336,2083.5,10400,Even-toed Ungulates,34.725,10.4,Capra_nubiana
+N,Mammalia,Artiodactyla,Cervidae,Capreolus capreolus,roe deer,138900,fiber/foliage,16,99942,6246.375,8681.25,Even-toed Ungulates,104.10625,8.68125,Capreolus_capreolus
+N,Mammalia,Rodentia,Castoridae,Castor canadensis,North American beaver,28000,fiber/foliage,16,25800,1612.5,1750,Rodents,26.875,1.75,Castor_canadensis
+N,Mammalia,Rodentia,Caviidae,Cavia porcellus,guinea pig,12150,fiber/foliage,58,66648.6,1149.113793,209.4827586,Rodents,19.15189655,0.209482759,Cavia_porcellus
+N,Mammalia,Perissodactyla,Rhinocerotidae,Cerathotherium simum,White Rhino,8900000,fiber/foliage,14,21458,1532.714286,635714.2857,Odd-toed Ungulates,25.5452381,635.7142857,Ceratotherium_simum
+N,Mammalia,Primates,Cercopithecidae,Cercopithecus ascanius,Red-tailed monkey,8785,fruit/nectar/pollen,3,4866,1622,2928.333333,Primates,27.03333333,2.928333333,Cercopithecus_ascanius
+N,Mammalia,Primates,Cercopithecidae,Cercopithecus erythrotis,Red-eared guenon,3585,fruit/nectar/pollen,1,1602,1602,3585,Primates,26.7,3.585,Cercopithecus_erythrotis
+N,Mammalia,Primates,Cercopithecidae,Cercopithecus lhoesti,L‚ÄôHoest‚Äôs monkey,3550,fiber/foliage,2,3124,1562,1775,Primates,26.03333333,1.775,Allochrocebus_lhoesti
+N,Mammalia,Primates,Cercopithecidae,Cercopithecus mitis,Blue monkey,8600,fruit/nectar/pollen,2,3000,1500,4300,Primates,25,4.3,Cercopithecus_nictitans
+N,Mammalia,Primates,Cercopithecidae,Cercopithecus neglectus,De Brazza's monkey,6500,fruit/nectar/pollen,2,4092,2046,3250,Primates,34.1,3.25,Cercopithecus_neglectus
+N,Mammalia,Primates,Cercopithecidae,Cercopithecus pogonias,Crested mona monkey,3300,fruit/nectar/pollen,2,3228,1614,1650,Primates,26.9,1.65,Cercopithecus_mona
+N,Mammalia,Primates,Cercopithecidae,Cercopithecus talapoin,Talapoin monkey,1600,fruit/nectar/pollen,2,2016,1008,800,Primates,16.8,0.8,Miopithecus_talapoin
+N,Mammalia,Artiodactyla,Cervidae,Cervus elaphus,red deer,223500,fiber/foliage,36,31392,872,6208.333333,Even-toed Ungulates,14.53333333,6.208333333,Cervus_elaphus
+N,Mammalia,Artiodactyla,Cervidae,Cervus elaphus canadensis,wapiti,845666.66,fiber/foliage,72,34344,477,11745.37028,Even-toed Ungulates,7.95,11.74537028,Cervus_canadensis
+N,Mammalia,Rodentia,Chinchillidae,Chinchilla laniger,long-tailed chinchilla,1026,fiber/foliage,12,17100,1425,85.5,Rodents,23.75,0.0855,Chinchilla_lanigera
+N,Mammalia,Artiodactyla,Hippopotamidae,Choeropsis liberiensis,pygmy hippo,654000,fiber/foliage,18,65160,3620,36333.33333,Even-toed Ungulates,60.33333333,36.33333333,Hexaprotodon_liberiensis
+N,Mammalia,Primates,Cercopithecidae,Colobus angolensis; Colobus polykomos; Trachypithecus johnii,colobine monkey,4350,unknown,9,29880,3320,483.3333333,Primates,55.33333333,0.483333333,Colobus_angolensis
+N,Mammalia,Primates,Cercopithecidae,Colobus guereza,black and white colubus monkey,6480,fiber/foliage,6,16314,2719,1080,Primates,45.31666667,1.08,Colobus_guereza
+N,Mammalia,Artiodactyla,Bovidae,Connochaetes taurinus,Blue Wildebeest,388000,fiber/foliage,8,18000,2250,48500,Even-toed Ungulates,37.5,48.5,Connochaetes_taurinus
+N,Mammalia,Rodentia,Cuniculidae,Cuniculus paca,lowland paca,46400,fruit/nectar/pollen,30,81080,2702.666667,1546.666667,Rodents,45.04444444,1.546666667,Cuniculus_paca
+N,Mammalia,Perissodactyla,Rhinocerotidae,Diceros bicornis,Black Rhino,2200000,fiber/foliage,8,17520,2190,275000,Odd-toed Ungulates,36.5,275,Diceros_bicornis
+N,Mammalia,Perissodactyla,Rhinocerotidae,Diceros bicornis,black rhinoceros,2386000,fiber/foliage,12,24840,2070,198833.3333,Odd-toed Ungulates,34.5,198.8333333,Diceros_bicornis
+N,Mammalia,Artiodactyla,Tayassuidae,Dicotyles tajacu,collared peccary,6450,unknown,21,38640,1840,307.1428571,Even-toed Ungulates,30.66666667,0.307142857,Pecari_tajacu
+N,Mammalia,Rodentia,Caviidae,Dolichotis patagonum,Patagonian mara,45480,fiber/foliage,26,26418,1016.076923,1749.230769,Rodents,16.93461538,1.749230769,Dolichotis_patagonum
+N,Aves,Struthioniformes,Dromaiidae,Dromaius novaehollandiae,emu,99000,fiber/foliage,6,471,78.5,16500,Non-Flying Birds,1.308333333,16.5,Dromaius_novaehollandiae
+N,Aves,Casuariiformes,Casuariidae,Dromaius novaehollandiae,Emu,99001,fiber/foliage,24,6522,271.75,4125.041667,Non-Flying Birds,4.529166667,4.125041667,Dromaius_novaehollandiae
+Y,Aves,Columbiformes,Columbidae,Ducula spilorrhoa,Torres imperial pigeon,445,fruit/nectar/pollen,4,378,94.5,111.25,Flying Birds,1.575,0.11125,Ducula_bicolor
+Y,Aves,Passeriformes,Tyrannidae,Elaenia parvirostris,Short Billed Elaenia,32,fiber/foliage,2,86,43,16,Flying Birds,0.716666667,0.016,Elaenia_parvirostris
+N,Mammalia,Artiodactyla,Cervidae,Elaphurus davidianus,P√®re David's deer,450000,fiber/foliage,15,48900,3260,30000,Even-toed Ungulates,54.33333333,30,Elaphurus_davidianus
+Y,Mammalia,Chiroptera,Vespertilionidae,Eptesicus serotinus,Serotine bat,23.1,protein,5,870,174,4.62,Bats,2.9,0.00462,Eptesicus_serotinus
+N,Mammalia,Perissodactyla,Equidae,Equus africanus,African wild donkey,470400,fiber/foliage,10,21870,2187,47040,Odd-toed Ungulates,36.45,47.04,Equus_asinus
+N,Mammalia,Perissodactyla,Equidae,Equus asinus,donkey,2799500,fiber/foliage,66,173934,2635.363636,42416.66667,Odd-toed Ungulates,43.92272727,42.41666667,Equus_asinus
+N,Mammalia,Perissodactyla,Equidae,Equus asinus,African wild donkey,250000,fiber/foliage,5,19800,3960,50000,Odd-toed Ungulates,66,50,Equus_asinus
+N,Mammalia,Perissodactyla,Equidae,Equus caballus,horse,15334500,fiber/foliage,154,304575.4286,1977.762523,99574.67532,Odd-toed Ungulates,32.96270872,99.57467532,Equus_caballus
+N,Mammalia,Perissodactyla,Equidae,Equus caballus,domestic pony,454000,fiber/foliage,6,138,23,75666.66667,Odd-toed Ungulates,0.383333333,75.66666667,Equus_caballus
+N,Mammalia,Perissodactyla,Equidae,Equus caballus,domestic horse,1800000,fiber/foliage,12,324,27,150000,Odd-toed Ungulates,0.45,150,Equus_caballus
+N,Mammalia,Perissodactyla,Equidae,Equus ferus,horse,434000,fiber/foliage,12,246,20.5,36166.66667,Odd-toed Ungulates,0.341666667,36.16666667,Equus_ferus
+N,Mammalia,Perissodactyla,Equidae,Equus grevyi,grevy's zebra,8.00E+05,fiber/foliage,8,212,26.5,1.00E+05,Odd-toed Ungulates,0.441666667,100,Equus_grevyi
+N,Mammalia,Rodentia,Erethizontidae,Erethizon dorsatum,North American porcupine,22000,fiber/foliage,6,17253,2875.5,3666.666667,Rodents,47.925,3.666666667,Erethizon_dorsatum
+N,Aves,Sphenisciformes,Spheniscidae,Eudyptes chrysocome,Rock hopper penguin,8250,meat,15,14550,970,550,Non-Flying Birds,16.16666667,0.55,Eudyptes_pachyrhynchus
+N,Mammalia,Primates,Lemuridae,Eulemur fulvus,common brown lemur,2258.6,fiber/foliage,6,3306.6,551.1,376.4333333,Primates,9.185,0.376433333,Eulemur_albifrons
+Y,Aves,Falconiformes,Falconidae,Falco naumanni,kestrel,180,meat,5,2157,431.4,36,Flying Birds,7.19,0.036,Falco_naumanni
+Y,Aves,Falconiformes,Falconidae,Falco peregrinus,peregrine,762.5,meat,3,1265.4,421.8,254.1666667,Flying Birds,7.03,0.254166667,Falco_peregrinus
+Y,Aves,Falconiformes,Falconidae,Falco subbuteo,hobby,304,meat,2,762,381,152,Flying Birds,6.35,0.152,Falco_subbuteo
+Y,Aves,Charadriiformes,Alcidae,Fratercula arctica,Atlantic puffin,1260,meat,33,11213.4,339.8,38.18181818,Flying Birds,5.663333333,0.038181818,Fratercula_arctica
+Y,Aves,Charadriiformes,Alcidae,Fratercula arctica,atlantic puffin,840,meat,2,804,402,420,Flying Birds,6.7,0.42,Fratercula_arctica
+Y,Aves,Gruiformes,Rallidae,Fulica atra,Common Coot,1640,fiber/foliage,10,9588,958.8,164,Flying Birds,15.98,0.164,Fulica_atra
+Y,Aves,Procellariiformes,Procellariidae,Fulmarus glacialis,northern fulmar,2744,meat,13,5991,460.8461538,211.0769231,Flying Birds,7.680769231,0.211076923,Fulmarus_glacialis
+N,Mammalia,Primates,Galagidae,Galago moholi,Mohol bush baby,400,protein,16,34272,2142,25,Primates,35.7,0.025,Galago_moholi
+Y,Aves,Musophagiformes,Musophagidae,Gallirex johnstoni,Ruwenzori Turaco,1425,fruit/nectar/pollen,30,2088,69.6,47.5,Flying Birds,1.16,0.0475,Gallirex_johnstoni
+Y,Aves,Galliformes,Phasianidae,Gallus gallus,chicken,7500,fiber/foliage,30,12240,408,250,Flying Birds,6.8,0.25,Gallus_gallus
+Y,Aves,Galliformes,Phasianidae,Gallus gallus domesticus,domestic chicken,5160.4,fiber/foliage,48,18948.6,394.7625,107.5083333,Flying Birds,6.579375,0.107508333,Gallus_gallus
+Y,Aves,Galliformes,Phasianidae,Gallus gallus domesticus,broiler chicken,203,fiber/foliage,120,40560,338,1.691666667,Flying Birds,5.633333333,0.001691667,Gallus_gallus
+Y,Aves,Galliformes,Phasianidae,Gallus gallus domesticus,white leghorn chicken,115,fiber/foliage,120,43188,359.9,0.958333333,Flying Birds,5.998333333,0.000958333,Gallus_gallus
+N,Mammalia,Artiodactyla,Bovidae,Gazella gazella,Idmi gazelle,32800,fiber/foliage,10,17520,1752,3280,Even-toed Ungulates,29.2,3.28,Gazella_gazella
+N,Mammalia,Artiodactyla,Bovidae,Gazella spekei,Speke's gazelle,26000,fiber/foliage,10,11910,1191,2600,Even-toed Ungulates,19.85,2.6,Gazella_spekei
+N,Mammalia,Artiodactyla,Bovidae,Gazella subgutturosa marica,Rheem gazelle,35200,fiber/foliage,14,28140,2010,2514.285714,Even-toed Ungulates,33.5,2.514285714,Gazella
+N,Mammalia,Artiodactyla,Giraffidae,Giraffa camelopardalis,giraffe,7695400,fiber/foliage,39,88689.6,2274.092308,197317.9487,Even-toed Ungulates,37.90153846,197.3179487,Giraffa_reticulata
+N,Mammalia,Primates,Hominidae,Gorilla gorilla,gorilla,112300,fruit/nectar/pollen,4,17848.8,4462.2,28075,Primates,74.37,28.075,Gorilla_gorilla
+N,Mammalia,Primates,Hominidae,Gorilla gorilla,Western lowland gorilla,105000,fruit/nectar/pollen,5,15180,3036,21000,Primates,50.6,21,Gorilla_gorilla
+Y,Aves,Suliformes,Phalacrocoracidae,Gulosus aristotelis,shag,5804,meat,12,3811.2,317.6,483.6666667,Flying Birds,5.293333333,0.483666667,
+N,Mammalia,Primates,Lemuridae,Hapalemur griseus,Eastern lesser bamboo lemur,1050,fiber/foliage,6,16808.4,2801.4,175,Primates,46.69,0.175,Hapalemur_aureus
+Y,Aves,Columbiformes,Columbidae,Hemiphaga novaeseelandiae,New Zealand pigeons,630,fruit/nectar/pollen,2,190.8,95.4,315,Flying Birds,1.59,0.315,Hemiphaga_novaeseelandiae
+N,Mammalia,Artiodactyla,Hippopotamidae,Hexaprotodon liberiensis,pygmy hippopotamus,238000,fiber/foliage,4,16080,4020,59500,Even-toed Ungulates,67,59.5,Hexaprotodon_liberiensis
+N,Mammalia,Artiodactyla,Hippopotamidae,Hippopotamus amphibius,common hippopotamus,2175000,fiber/foliage,4,17040,4260,543750,Even-toed Ungulates,71,543.75,Hippopotamus_amphibius
+N,Mammalia,Artiodactyla,Bovidae,Hippotragus niger,Sable antelope,458000,fiber/foliage,6,16380,2730,76333.33333,Even-toed Ungulates,45.5,76.33333333,Hippotragus_niger
+N,Mammalia,Rodentia,Caviidae,Hydrochoerus hydrochaeris,capybara,148360,fiber/foliage,37,75798,2048.594595,4009.72973,Rodents,34.14324324,4.00972973,Hydrochoerus_hydrochaeris
+N,Mammalia,Carnivora,Phocidae,Hydrurga leptonyx,leopard seals,786000,meat,5,21318,4263.6,157200,Carnivora,71.06,157.2,Hydrurga_leptonyx
+N,Mammalia,Primates,Hylobatidae,Hylobates lar,white-handed gibbon,11920,fiber/foliage,8,10824,1353,1490,Primates,22.55,1.49,Hylobates_lar
+Y,Aves,Passeriformes,Pycnonotidae,Hypsipetes amaurotis,Brown-eared bulbul,75,fiber/foliage,7,81.2,11.6,10.71428571,Flying Birds,0.193333333,0.010714286,Hypsipetes_leucocephalus
+Y,Aves,,Pycnonotidae,Hypsipetes amaurotis,Brown-eared bulbul,1125,fiber/foliage,105,2186.8,20.82666667,10.71428571,Flying Birds,0.347111111,0.010714286,Hypsipetes_leucocephalus
+N,Mammalia,Rodentia,Hystricidae,Hystrix indica,Indian crested porcupine,64400,fiber/foliage,12,19962,1663.5,5366.666667,Rodents,27.725,5.366666667,Hystrix_indica
+N,Mammalia,Artiodactyla,Bovidae,Kobus ellipsiprymnus,waterbuck,807000,fiber/foliage,14,29745,2124.642857,57642.85714,Even-toed Ungulates,35.41071429,57.64285714,Kobus_ellipsiprymnus
+N,Mammalia,Rodentia,Chinchillidae,Lagostomus maximus,plains viscacha,7600,fiber/foliage,32,51840,1620,237.5,Rodents,27,0.2375,Lagostomus_maximus
+N,Mammalia,Rodentia,Cricetidae,Lagurus lagurus,steppe lemming,39.6,fiber/foliage,12,2988,249,3.3,Rodents,4.15,0.0033,Lagurus_lagurus
+N,Mammalia,Artiodactyla,Camelidae,Lama glama,llama,592000,fiber/foliage,24,66240,2760,24666.66667,Even-toed Ungulates,46,24.66666667,Lama_glama
+N,Mammalia,Artiodactyla,Camelidae,Lama guanicoe,guanaco,405000,fiber/foliage,6,17772,2962,67500,Even-toed Ungulates,49.36666667,67.5,Lama_guanicoe
+N,Mammalia,Artiodactyla,Camelidae,Lama pacos,alpaca,189000,fiber/foliage,15,42900,2860,12600,Even-toed Ungulates,47.66666667,12.6,Vicugna_pacos
+Y,Aves,Passeriformes,Laniidae,Lanius excubitor,Great grey shrike,65,fruit/nectar/pollen,1,50,50,65,Flying Birds,0.833333333,0.065,Lanius_excubitor
+Y,Aves,Charadriiformes,Laridae,Larus smithsonianus,herring gull,4535,meat,22,7105.2,322.9636364,206.1363636,Flying Birds,5.382727273,0.206136364,Larus_smithsonianus
+N,Mammalia,Rodentia,Cricetidae,Lasiopodomys brandtii,Brandt's vole,4.9,fruit/nectar/pollen,11,4191,381,0.445454545,Rodents,6.35,0.000445455,Lasiopodomys_brandtii
+N,Mammalia,Artiodactyla,Bovidae,Litocranius walleri,gerenuk,74000,fiber/foliage,2,4686,2343,37000,Even-toed Ungulates,39.05,37,Litocranius_walleri
+N,Mammalia,Carnivora,Mustelidae,Lontra canadensis,northern river otter,9500,meat,9,4617,513,1055.555556,Carnivora,8.55,1.055555556,Lontra_canadensis
+N,Mammalia,Primates,Cercopithecidae,Lophocebus albigena,Gray-cheecked mangabey,5300,fruit/nectar/pollen,2,4560,2280,2650,Primates,38,2.65,Lophocebus_albigena
+N,Mammalia,Carnivora,Canidae,Lycalopex culpaeus,culpeo fox,8700,fruit/nectar/pollen,5,3600,720,1740,Carnivora,12,1.74,Lycalopex_culpaeus
+N,Mammalia,Carnivora,Canidae,Lycalopex culpaeus,culpeo fox,8700,mixed,5,5640,1128,1740,Carnivora,18.8,1.74,Lycalopex_culpaeus
+N,Mammalia,Carnivora,Canidae,Lycalopex culpaeus,culpeo fox,8700,meat,5,8460,1692,1740,Carnivora,28.2,1.74,Lycalopex_culpaeus
+N,Mammalia,Primates,Cercopithecidae,Macaca cyclopis,Taiwanese macaque,16620,fiber/foliage,12,25344,2112,1385,Primates,35.2,1.385,Macaca_cyclopis
+N,Mammalia,Primates,Cercopthecidae,Macaca fascicularis,long-tailed macaque,4100,fiber/foliage,5,6.25,1.25,820,Primates,0.020833333,0.82,Macaca_fascicularis
+N,Mammalia,Primates,Cercopithecidae,Macaca fascicularis,long-tailed macaque,9380,fiber/foliage,8,17928,2241,1172.5,Primates,37.35,1.1725,Macaca_fascicularis
+N,Mammalia,Primates,Cercopithecidae,Macaca fuscata,Japanese macaque,8600,fruit/nectar/pollen,5,10800,2160,1720,Primates,36,1.72,Macaca_fuscata
+N,Mammalia,Primates,Cercopithecidae,Macaca fuscata,Japanese macaque,72800,fiber/foliage,20,46875,2343.75,3640,Primates,39.0625,3.64,Macaca_fuscata
+N,Mammalia,Primates,Cercopithecidae,Macaca fuscata,Japanese Macaque,18400,fruit/nectar/pollen,9,23334,2592.666667,2044.444444,Primates,43.21111111,2.044444444,Macaca_fuscata
+N,Mammalia,Primates,Cercopthecidae,Macaca nemestrina,pig-tailed macaque,7000,fiber/foliage,5,13,2.6,1400,Primates,0.043333333,1.4,Macaca_nemestrina
+Y,Aves,Procellariiformes,Procellariidae,Macronectes giganteus,Southern Giant Petrel,3000,meat,12,10872,906,250,Flying Birds,15.1,0.25,Macronectes_giganteus
+N,Mammalia,Artiodactyla,Bovidae,Madoqua saltiana phillipsi,Phillip's dik dik,13880,fiber/foliage,62,114822,1851.967742,223.8709677,Even-toed Ungulates,30.86612903,0.223870968,Madoqua_saltiana
+Y,Aves,Anseriformes,Anatidae,Marmaronetta angustirostris,Marbled Teal,616,fiber/foliage,10,9588,958.8,61.6,Flying Birds,15.98,0.0616,Marmaronetta_angustirostris
+N,Mammalia,Rodentia,Sciuridae,Marmota caligata,hoary marmot,4616,protein,12,19332,1611,384.6666667,Rodents,26.85,0.384666667,Marmota_caligata
+N,Mammalia,Carnivora,Mustelidae,Martes melampus,Japanese Marten,5598,mixed,12,4977.6,414.8,466.5,Carnivora,6.913333333,0.4665,Martes_melampus
+Y,Aves,Galliformes,Phasianidae,Meleagris gallopavo,Turkey,19950,fiber/foliage,18,15552,864,1108.333333,Flying Birds,14.4,1.108333333,Meleagris_gallopavo
+N,Mammalia,Rodentia,Muridae,Meriones unguiculatus,Mongolian gerbils,51.3,fiber/foliage,11,7227,657,4.663636364,Rodents,10.95,0.004663636,Meriones_unguiculatus
+N,Mammalia,Rodentia,Cricetidae,Mesocricetus auratus,hamster,105,fiber/foliage,6,3276,546,17.5,Rodents,9.1,0.0175,Mesocricetus_auratus
+N,Mammalia,Rodentia,Cricetidae,Microtus agrestis,short-tailed field vole,57.2,fiber/foliage,12,3744,312,4.766666667,Rodents,5.2,0.004766667,Microtus_agrestis
+N,Mammalia,Rodentia,Cricetidae,Microtus townsendii,Townsend vole,109.8,protein,12,10044,837,9.15,Rodents,13.95,0.00915,Microtus_townsendii
+Y,Aves,Accipitriformes,Accipitridae,Milvus milvus,red kite,1033.5,meat,2,898.8,449.4,516.75,Flying Birds,7.49,0.51675,Milvus_milvus
+N,Mammalia,Carnivora,Phocidae,Mirounga leonina,southern elephant seals,4100000,meat,6,4242,707,683333.3333,Carnivora,11.78333333,683.3333333,Mirounga_leonina
+N,Aves,Galliformes,Cracidae,Mitu salvini,Salvin's curassows,9300,fruit/nectar/pollen,6,844,140.6666667,1550,Non-Flying Birds,2.344444444,1.55,Mitu_salvini
+N,Mammalia,Carnivora,Phocidae,Monachus schauinslandi,Hawaiian monk seal,186000,meat,3,3060,1020,62000,Carnivora,17,62,Neomonachus_schauinslandi
+Y,Aves,Suliformes,Sulidae,Morus capensis,Cape gannet,7800,meat,15,9450,630,520,Flying Birds,10.5,0.52,Morus_capensis
+N,Mammalia,Rodentia,Muridae,Mus musculus,laboratory mouse,29,fiber/foliage,6,1440,240,4.833333333,Rodents,4,0.004833333,Mus_musculus
+N,Mammalia,Rodentia,Echimyidae,Myocastor coypus,nutria,8800,fiber/foliage,10,26754,2675.4,880,Rodents,44.59,0.88,Myocastor_coypus
+N,Mammalia,Rodentia,Myocastoridae,Myocastor coypus,nutria,3720,fiber/foliage,8,13056,1632,465,Rodents,27.2,0.465,Myocastor_coypus
+Y,Mammalia,Chiroptera,Vespertilionidae,Myotis bechsteinii,Bechstein's bat,8,protein,5,1545,309,1.6,Bats,5.15,0.0016,Myotis_bechsteinii
+Y,Mammalia,Chiroptera,Vespertilionidae,Myotis daubentonii,Daubenton's bat,7.6,protein,17,3094,182,0.447058824,Bats,3.033333333,0.000447059,Myotis_daubentonii
+Y,Mammalia,Chiroptera,Vespertilionidae,Myotis myotis,Greater mouse-eared bat,25.8,protein,8,984,123,3.225,Bats,2.05,0.003225,Myotis_myotis
+Y,Mammalia,Chiroptera,Vespertilionidae,Myotis nattereri,Natterer's bat,6.8,protein,3,564,188,2.266666667,Bats,3.133333333,0.002266667,Myotis_nattereri
+N,Mammalia,Artiodactyla,Bovidae,Nanger dama,Dama gazelle,122200,fiber/foliage,8,12576,1572,15275,Even-toed Ungulates,26.2,15.275,Nanger_dama
+N,Mammalia,Artiodactyla,Bovidae,Nanger soemmerringii,Soemmerring's gazelle,71200,fiber/foliage,22,37092,1686,3236.363636,Even-toed Ungulates,28.1,3.236363636,Nanger_soemmerringii
+N,Mammalia,Primates,Cercopithecidae,Nasalis larvatus,proboscis monkey,40000,fiber/foliage,16,39030,2439.375,2500,Primates,40.65625,2.5,Nasalis_larvatus
+N,Mammalia,Primates,Cercopithecidae,Nasalis larvatus,proboscis monkey,10000,protein,6,17640,2940,1666.666667,Primates,49,1.666666667,Nasalis_larvatus
+Y,Aves,Passeriformes,Nectariniidae,Nectarinia amesthystina,black sunbird,22.5,fruit/nectar/pollen,21,385,18.33333333,1.071428571,Flying Birds,0.305555556,0.001071429,Nectarinia_senegalensis
+Y,Aves,Passeriformes,Nectariniidae,Nectarinia famosa,malachite sunbird,39,fruit/nectar/pollen,15,336,22.4,2.6,Flying Birds,0.373333333,0.0026,Nectarinia_famosa
+N,Mammalia,Rodentia,Cricetidae,Neotoma lepida,desert woodrat,125,fiber/foliage,5,3900,780,25,Rodents,13,0.025,Neotoma_lepida
+Y,Aves,Anseriformes,Anatidae,Netta rufina,Red-crested Pochard,2300,fiber/foliage,6,5752.8,958.8,383.3333333,Flying Birds,15.98,0.383333333,Netta_rufina
+Y,Mammalia,Chiroptera,Vespertilionidae,Nyctalus leisleri,Lesser Noctule,12.5,protein,3,777,259,4.166666667,Bats,4.316666667,0.004166667,Nyctalus_leisleri
+Y,Mammalia,Chiroptera,Vespertilionidae,Nyctalus noctula,Noctule,27.5,protein,9,2655,295,3.055555556,Bats,4.916666667,0.003055556,Nyctalus_noctula
+N,Mammalia,Carnivora,Canidae,Nyctereutes procynoides,raccoon dog,4130,fruit/nectar/pollen,6,2700,450,688.3333333,Carnivora,7.5,0.688333333,Nyctereutes_procyonoides
+N,Mammalia,Carnivora,Canidae,Nyctereutes procynoides,raccoon dog,4131,meat,6,4650,775,688.5,Carnivora,12.91666667,0.6885,Nyctereutes_procyonoides
+Y,Mammalia,Chiroptera,Vespertillionidae,Nyctophilus gouldi,Gould‚Äôs long-eared bat,9.25,meat,5,1614,322.8,1.85,Bats,5.38,0.00185,Nyctophilus_gouldi
+N,Mammalia,Artiodactyla,Bovidae,Obis aries,Domestic Sheep,110000,fiber/foliage,3,6120,2040,36666.66667,Even-toed Ungulates,34,36.66666667,Ovis_aries
+N,Mammalia,Rodentia,Octodontidae,Octodon degus,degu,925,fiber/foliage,32,33504,1047,28.90625,Rodents,17.45,0.02890625,Octodon_degus
+N,Mammalia,Artiodactyla,Cervidae,Odocoileus virginianus,white-tailed deer,156750,fiber/foliage,6,7326,1221,26125,Even-toed Ungulates,20.35,26.125,Odocoileus_virginianus
+Y,Aves,Passeriformes,Sturnidae,Onychognathus morio,red-winged starling,135,fiber/foliage,4,140,35,33.75,Flying Birds,0.583333333,0.03375,Onychognathus_morio
+Y,Aves,Passeriformes,Sturnidae,Onychognathus tristramii,Tristam's Grackle,119,fruit/nectar/pollen,9,1215.9,135.1,13.22222222,Flying Birds,2.251666667,0.013222222,Onychognathus_morio
+Y,Aves,Opisthocomiformes,Opisthocomidae,Opisthocomus hoazin,Hoatzin,3600,unknown,20,36810,1840.5,180,Flying Birds,30.675,0.18,Opisthocomus_hoazin
+N,Mammalia,Artiodactyla,Bovidae,Oryx gazella,Oryx Antelope,420000,fiber/foliage,6,16020,2670,70000,Even-toed Ungulates,44.5,70,Oryx_gazella
+N,Mammalia,Artiodactyla,Bovidae,Oryx leucoryx,Arabian oryx,140000,fiber/foliage,2,4488,2244,70000,Even-toed Ungulates,37.4,70,Oryx_leucoryx
+N,Mammalia,Artiodactyla,Bovidae,Ovibos moschatus,muskoxen,2280000,fiber/foliage,32,118800,3712.5,71250,Even-toed Ungulates,61.875,71.25,Ovibos_moschatus
+N,Mammalia,Artiodactyla,Bovidae,Ovibos moschatus,musk ox,717000,fiber/foliage,20,55896,2794.8,35850,Even-toed Ungulates,46.58,35.85,Ovibos_moschatus
+N,Mammalia,Artiodactyla,Bovidae,Ovis aries,domestic sheep,277200,fiber/foliage,19,50580,2662.105263,14589.47368,Even-toed Ungulates,44.36842105,14.58947368,Ovis_aries
+N,Mammalia,Artiodactyla,Bovidae,Ovis aries,Domestic Sheep,110000,fiber/foliage,3,9720,3240,36666.66667,Even-toed Ungulates,54,36.66666667,Ovis_aries
+N,Mammalia,Artiodactyla,Bovidae,Ovis aries,sheep,1293870,fiber/foliage,92,184232,2002.521739,14063.80435,Even-toed Ungulates,33.37536232,14.06380435,Ovis_aries
+N,Mammalia,Artiodactyla,Bovidae,Ovis aries,kazakh sheep,42000,fiber/foliage,6,13044.91765,2174.152941,7000,Even-toed Ungulates,36.23588235,7,Ovis_aries
+N,Mammalia,Primates,Hominidae,Pan troglodytes,Chimpanzee,58400,fruit/nectar/pollen,2,3780,1890,29200,Primates,31.5,29.2,Pan_troglodytes
+N,Mammalia,Carnivora,Viverridae,Paradoxurus hermaphroditus,palm civet,3500,fiber/foliage,3,468,156,1166.666667,Carnivora,2.6,1.166666667,Paradoxurus_hermaphroditus
+N,Mammalia,Artiodactyla,Tayassuidae,Pecari tacaju,collared peccary,39000,fiber/foliage,12,30456,2538,3250,Even-toed Ungulates,42.3,3.25,Pecari_tajacu
+Y,Aves,Accipitriformes,Accipitridae,Pernis apivorus,honey buzzard,470,meat,1,408.6,408.6,470,Flying Birds,6.81,0.47,Pernis
+N,Mammalia,Artiodactyla,Suidae,Phacochoerus africanus,warthog,2.00E+05,fiber/foliage,2,78,39,1.00E+05,Even-toed Ungulates,0.65,100,Phacochoerus_africanus
+N,Mammalia,Artiodactyla,Bovidae,Philantomba maxwellii,Maxwell's duiker,9000,fruit/nectar/pollen,6,15192,2532,1500,Even-toed Ungulates,42.2,1.5,Philantomba_maxwellii
+N,Mammalia,Carnivora,Phocidae,Phoca groenlandica,harp seal,260000,meat,4,2940,735,65000,Carnivora,12.25,65,Phoca_groenlandica
+N,Mammalia,Carnivora,Pinnipedia,Phoca vitulina,harbour seal,177600,meat,24,32640,1360,7400,Carnivora,22.66666667,7.4,Phoca_vitulina
+Y,Aves,Procellariiformes,Diomedeidae,Phoebetria fusca,Sooty Albatrosses,7500,meat,15,13800,920,500,Flying Birds,15.33333333,0.5,Phoebetria
+N,Mammalia,Rodentia,Cricetidae,Phyllotis darwini,Darwin's leaf-eared mouse,162,fiber/foliage,12,6444,537,13.5,Rodents,8.95,0.0135,Phyllotis_darwini
+N,Mammalia,Rodentia,Cricetidae,Phyllotis xanthopygus,leaf-eared mouse,111,fiber/foliage,12,4356,363,9.25,Rodents,6.05,0.00925,Phyllotis_xanthopygus
+Y,Aves,Passeriformes,Contingidae,Phytotoma rara,Rufuos tailed plant-cutter,40.9,fruit/nectar/pollen,12,727.2,60.6,3.408333333,Flying Birds,1.01,0.003408333,Phytotoma_rara
+Y,Aves,Passeriformes,Contingidae,Phytotoma rara,Rufuos tailed plant-cutter,40.9,fiber/foliage,12,411.6,34.3,3.408333333,Flying Birds,0.571666667,0.003408333,Phytotoma_rara
+Y,Mammalia,Chiroptera,Vespertilionidae,Pipistrellus pipistrellus,Common pipistrelle,5.1,protein,7,1778,254,0.728571429,Bats,4.233333333,0.000728571,Pipistrellus_pipistrellus
+N,Mammalia,Primates,Pitheciidae,Pithecia pithecia,white-faced saki,1712.5,fiber/foliage,4,6150,1537.5,428.125,Primates,25.625,0.428125,Pithecia_pithecia
+Y,Mammalia,Chiroptera,Vespertilionidae,Plecotus auritus,Brown long-eared bat,6.9,protein,6,792,132,1.15,Bats,2.2,0.00115,Plecotus_auritus
+Y,Aves,Anseriformes,Anatidae,Plectopterus gambensis,Spur-winged goose,3900,fiber/foliage,4,1528,382,975,Flying Birds,6.366666667,0.975,Sarkidiornis_melanotos
+Y,Aves,Anseriformes,Anatidae,Plectopterus gambensis,Spur-winged goose,3900,protein,4,560,140,975,Flying Birds,2.333333333,0.975,Sarkidiornis_melanotos
+N,Mammalia,Primates,Hominidae,Pongo pygmaeus,Bornean orangutan,141400,fruit/nectar/pollen,6,25002,4167,23566.66667,Primates,69.45,23.56666667,Pongo_pygmaeus
+N,Mammalia,Primates,Hominidae,Pongo pygmaeus,Bornean orangutan,135140,fiber/foliage,8,1084.8,135.6,16892.5,Primates,2.26,16.8925,Pongo_pygmaeus
+N,Mammalia,Carnivora,Procyonidae,Potos flavus,kinkajou,4250,protein,2,300,150,2125,Carnivora,2.5,2.125,Potos_flavus
+Y,Aves,Passeriformes,Promeropidae,Promerops gurneyi,gurney's sugarbird,34.75,fruit/nectar/pollen,2,12.2,6.1,17.375,Flying Birds,0.101666667,0.017375,Promerops
+N,Mammalia,Primates,Indriidae,Propithecus tattersalli,Golden crowned sifaka,6186,fiber/foliage,6,12312,2052,1031,Primates,34.2,1.031,Propithecus_tattersalli
+N,Mammalia,Primates,Indriidae,Propithecus verreauxi coquereli,Coquerel's sifaka,10772,fiber/foliage,18,35038.8,1946.6,598.4444444,Primates,32.44333333,0.598444444,Propithecus_verreauxi
+Y,Aves,Piciformes,Megalaimidae,Psilopogon asiaticus,blue-throated barbet,665,fruit/nectar/pollen,35,940,26.85714286,19,Flying Birds,0.447619048,0.019,Megalaima_asiatica
+Y,Mammalia,Chiroptera,Pteropodidae,Pteropus rufus,Madagascan Flying Fox,625,fruit/nectar/pollen,4,120,30,156.25,Bats,0.5,0.15625,Pteropus_rufus
+Y,Aves,Passeriformes,Ptiliogonatidae,Ptiliogonys cinereus,grey silky flycatchers,100.5,fruit/nectar/pollen,12,227.2,18.93333333,8.375,Flying Birds,0.315555556,0.008375,Ptilogonys_caudatus
+Y,Aves,Passeriformes,Ptiliogonatidae,Ptiliogonys cinereus,silky flycatcher,103.5,fruit/nectar/pollen,21,470.4,22.4,4.928571429,Flying Birds,0.373333333,0.004928571,Ptilogonys_caudatus
+N,Mammalia,Artiodactyla,Cervidae,Pudu puda,Southern pudu,9000,fruit/nectar/pollen,6,10764,1794,1500,Even-toed Ungulates,29.9,1.5,Pudu_puda
+Y,Aves,Passeriformes,Pyconitidae,Pycnonotus goiavier,Yellow-vented Bulbul,40.5,fruit/nectar/pollen,7,242.9,34.7,5.785714286,Flying Birds,0.578333333,0.005785714,Pycnonotus_goiavier
+Y,Aves,Passeriformes,Pyconitidae,Pyconotus aurigaster,sooty-headed bulbul,315,fruit/nectar/pollen,42,972,23.14285714,7.5,Flying Birds,0.385714286,0.0075,Pycnonotus_aurigaster
+Y,Aves,Passeriformes,Pyconitidae,Pyconotus joscosus,Red-whiskered bulbul,227.5,fruit/nectar/pollen,56,1336,23.85714286,4.0625,Flying Birds,0.397619048,0.0040625,Pycnonotus_jocosus
+N,Mammalia,Primates,Cercopithecidae,Pygathrix nemaeus,red-shanked douc,32400,fiber/foliage,8,24180,3022.5,4050,Primates,50.375,4.05,Pygathrix_nemaeus
+N,Mammalia,Primates,Cercopithecidae,Pygathrix nemaeus,red-shanked douc langur,3595,fiber/foliage,3,6108,2036,1198.333333,Primates,33.93333333,1.198333333,Pygathrix_nemaeus
+N,Aves,Sphenisciformes,Spheniscidae,Pygoscelis papua,gentoo penguin,19500,meat,15,12930,862,1300,Non-Flying Birds,14.36666667,1.3,Pygoscelis_papua
+N,Aves,Sphenisciformes,Spheniscidae,Pygoscelis papua,Gentoo Penguin,3000,meat,12,5940,495,250,Non-Flying Birds,8.25,0.25,Pygoscelis_papua
+Y,Aves,Piciformes,Ramphastidae,Ramphastos pluricinctus,Many-banded arcari,258.5,fruit/nectar/pollen,1,30,30,258.5,Flying Birds,0.5,0.2585,Pteroglossus_pluricinctus
+N,Mammalia,Artiodactyla,Cervidae,Rangifer tarandus,reindeer,1492000,fiber/foliage,32,89280,2790,46625,Even-toed Ungulates,46.5,46.625,Rangifer_tarandus
+N,Mammalia,Rodentia,Muridae,Rattus norvegicus,common rat,590,fiber/foliage,12,9072,756,49.16666667,Rodents,12.6,0.049166667,Rattus_norvegicus
+N,Aves,Struthioniformes,Rheidae,Rhea americana,greater rhea,72000,fiber/foliage,15,11310,754,4800,Non-Flying Birds,12.56666667,4.8,Rhea_americana
+N,Aves,Palaeognathae,Rheidae,Rhea americana,Greater Rhea,24500,fiber/foliage,5,3900,780,4900,Non-Flying Birds,13,4.9,Rhea_americana
+N,Mammalia,Perissodactyla,Rhinocerotidae,Rhinoceros unicornis,Indian rinoceros,1950000,fruit/nectar/pollen,1,4560,4560,1950000,Odd-toed Ungulates,76,1950,Rhinoceros_unicornis
+N,Mammalia,Primates,Cercopithecidae,Rhinopithecus bieti,Snub-Nosed Monkey,11750,fruit/nectar/pollen,3,6750,2250,3916.666667,Primates,37.5,3.916666667,Rhinopithecus_bieti
+N,Mammalia,Primates,Cercopithecidae,Rhinopithecus bieti,Snub-Nosed Monkey,11750,fiber/foliage,3,11880,3960,3916.666667,Primates,66,3.916666667,Rhinopithecus_bieti
+Y,Aves,Charadriiformes,Laridae,Rissa tridactyla,Black-legged kittiwake,1830,meat,24,7729.2,322.05,76.25,Flying Birds,5.3675,0.07625,Rissa_tridactyla
+Y,Aves,Passeriformes,Pyconitidae,Rubigula  Flaviventris,black-crested bulbul,217,fruit/nectar/pollen,56,1152,20.57142857,3.875,Flying Birds,0.342857143,0.003875,Pycnonotus_flaviventris
+Y,Aves,Passeriformes,Thraupidae,Saltator similis,Green winged saltator,129.9,fiber/foliage,6,184.5,30.75,21.65,Flying Birds,0.5125,0.02165,Saltator_similis
+Y,Aves,Apodiformes,Trochilidae,Selasphorous rufus,Rufous Hummingbirds,2.5,fruit/nectar/pollen,4,192,48,0.625,Flying Birds,0.8,0.000625,Selasphorus_rufus
+N,Mammalia,Primates,Cercopithecidae,Semnopithecus vetulus,purple-faced langur,21600,fiber/foliage,12,44460,3705,1800,Primates,61.75,1.8,Trachypithecus_vetulus
+Y,Aves,Passeriformes,Parulidae,Setophag coronata,yellow rumped warbler,11.5,fiber/foliage,11,1353,123,1.045454545,Flying Birds,2.05,0.001045455,Setophaga_coronata
+Y,Aves,Passeriformes,Parulidae,Setophaga coronata,yellow rumped warbler,23,fruit/nectar/pollen,34,1564,46,0.676470588,Flying Birds,0.766666667,0.000676471,Setophaga_coronata
+Y,Aves,Passeriformes,Parulidae,Setophaga coronata,yellow rumped warbler,23,protein,28,1750,62.5,0.821428571,Flying Birds,1.041666667,0.000821429,Setophaga_coronata
+Y,Aves,Passeriformes,Parulidae,Setophaga coronata,yellow rumped warbler,11.5,fiber/foliage,11,1166,106,1.045454545,Flying Birds,1.766666667,0.001045455,Setophaga_coronata
+N,Mammalia,Rodentia,Sciuridae,Spermophilus columbianus,Columbian ground squirrel,1152,protein,12,16056,1338,96,Rodents,22.3,0.096,Urocitellus_columbianus
+Y,Aves,Columbiformes,Columbidae,Spilopelia senegalensis,laughing dove,160.5,fiber/foliage,6,2043,340.5,26.75,Flying Birds,5.675,0.02675,Spilopelia_senegalensis
+Y,Aves,Steatornithiformes,Steatornithidae,Steatornis caripensis,oilbird,324,fruit/nectar/pollen,9,3393,377,36,Flying Birds,6.283333333,0.036,Steatornis_caripensis
+Y,Aves,Passeriformes,Thraupidae,Stephanophorus diadematus,Diademed tanager,177,fiber/foliage,9,147.6,16.4,19.66666667,Flying Birds,0.273333333,0.019666667,Stephanophorus_diadematus
+Y,Aves,Charadriiformes,Stercorariidae,Stercorarius skua,great skua,4904,meat,12,4351.2,362.6,408.6666667,Flying Birds,6.043333333,0.408666667,Stercorarius_skua
+Y,Aves,Columbiformes,Columbidae,Streptopelia semitorquata,red-eyed doe,236,fiber/foliage,5,2308,461.6,47.2,Flying Birds,7.693333333,0.0472,Streptopelia_semitorquata
+N,Aves,Struthioniformes,Struthionidae,Struthio camelus,common ostrich,327000,fiber/foliage,18,33444,1858,18166.66667,Non-Flying Birds,30.96666667,18.16666667,Struthio_camelus
+N,Aves,Palaeognathae,Struthioniformes,Struthio camelus,Ostrich,260200,fiber/foliage,14,30000,2142.857143,18585.71429,Non-Flying Birds,35.71428571,18.58571429,Struthio_camelus
+Y,Aves,Passeriformes,Sturnidae,Sturnus vulgaris,European Starling,164.5,fruit/nectar/pollen,10,355,35.5,16.45,Flying Birds,0.591666667,0.01645,Sturnus_vulgaris
+Y,Aves,Passeriformes,Sturnidae,Sturnus vulgaris,European Starling,85,protein,5,100,20,17,Flying Birds,0.333333333,0.017,Sturnus_vulgaris
+N,Mammalia,Artiodactyla,Suidae,Sus scrofa,Wild pig,45000,unk,1,4200,4200,45000,Even-toed Ungulates,70,45,Sus_scrofa
+Y,Mammalia,Chiroptera,Pteropodidae,Syconycteris australis,Common blossum bat,39.4,fruit/nectar/pollen,6,639,106.5,6.566666667,Bats,1.775,0.006566667,Syconycteris_australis
+Y,Aves,Passeriformes,Sylviidae,Sylvia atricapilla,blackcap,15.1,protein,23,1828.5,79.5,0.656521739,Flying Birds,1.325,0.000656522,Sylvia_atricapilla
+N,Mammalia,Artiodactyla,Bovidae,Syncerus caffer,forest buffalo,1135000,fiber/foliage,4,8640,2160,283750,Even-toed Ungulates,36,283.75,Syncerus_caffer
+N,Mammalia,Rodentia,Sciuridae,Tamias amoenus,yellow-pine chipmunk,123.8,protein,12,9648,804,10.31666667,Rodents,13.4,0.010316667,Tamias_amoenus
+N,Mammalia,Perissodactyla,Tapiridae,Tapirus indicus,Malaysian tapir,2450000,fruit/nectar/pollen,49,352926,7202.571429,50000,Odd-toed Ungulates,120.0428571,50,Tapirus_indicus
+N,Mammalia,Perissodactyla,Tapiridae,Tapirus indicus,Malaysian tapir,558000,fiber/foliage,18,51840,2880,31000,Odd-toed Ungulates,48,31,Tapirus_indicus
+N,Mammalia,Perissodactyla,Tapiridae,Tapirus terrestris,lowland tapir,386000,fiber/foliage,30,87300,2910,12866.66667,Odd-toed Ungulates,48.5,12.86666667,Tapirus_terrestris
+Y,Aves,Musophagiformes,Musophagidae,Tauraco corythaix,Knysa turaco,321,fiber/foliage,4,441.6,110.4,80.25,Flying Birds,1.84,0.08025,Tauraco_corythaix
+Y,Aves,Passeriformes,Mimidae,Taxostoma curviroste,Curve-billed Thrasher,154,fiber/foliage,2,422,211,77,Flying Birds,3.516666667,0.077,Toxostoma_curvirostre
+N,Mammalia,Primates,Cercopithecidae,Trachypithecus auratus,east Javan langur,21600,fiber/foliage,12,32160,2680,1800,Primates,44.66666667,1.8,Trachypithecus_auratus
+N,Mammalia,Primates,Cercopithecidae,Trachypithecus cristatus,silvered leaf monkey,10800,fruit/nectar/pollen,10,35700,3570,1080,Primates,59.5,1.08,Trachypithecus_cristatus
+N,Mammalia,Primates,Cercopithecidae,Trachypithecus francoisi,Francois's langur,11920,fiber/foliage,8,18528,2316,1490,Primates,38.6,1.49,Trachypithecus_francoisi
+N,Mammalia,Primates,Cercopithecidae,Trachypithecus obscurus,dusky leaf monkey,12000,fruit/nectar/pollen,4,14100,3525,3000,Primates,58.75,3,Trachypithecus_obscurus
+N,Mammalia,Primates,Cercopithecidae,Trachypthecus auratus auratus,Janvan langur,21000,protein,6,16200,2700,3500,Primates,45,3.5,Trachypithecus_auratus
+N,Mammalia,Artiodactyla,Bovidae,Tragelaphus angasii,nyala,128000,fiber/foliage,12,21636,1803,10666.66667,Even-toed Ungulates,30.05,10.66666667,Tragelaphus_angasii
+N,Mammalia,Artiodactyla,Bovidae,Tragelaphus eurycerus,bongo,366000,fiber/foliage,6,12690,2115,61000,Even-toed Ungulates,35.25,61,Tragelaphus_eurycerus
+N,Mammalia,Artiodactyla,Bovidae,Tragelaphus spekii,sitatunga,1.00E+05,fiber/foliage,8,17808,2226,12500,Even-toed Ungulates,37.1,12.5,Tragelaphus_spekii
+N,Mammalia,Artiodactyla,Tragulidae,Tragulus javanicus,lesser mousedeer,2800,fiber/foliage,16,38064,2379,175,Even-toed Ungulates,39.65,0.175,Tragulus_javanicus
+Y,Aves,Passeriformes,Troglodytidae,Troglodytes aedon,house wren,11,protein,9,297,33,1.222222222,Flying Birds,0.55,0.001222222,Troglodytes_aedon
+Y,Aves,Passeriformes,Turdidae,Turdus abicollis,White-necked thrush,216,fiber/foliage,6,43.6,7.266666667,36,Flying Birds,0.121111111,0.036,Turdus_albicollis
+Y,Aves,Passeriformes,Turdidae,Turdus amaurochalinus,Cream-bellied thrush,289.5,fiber/foliage,11,253.3,23.02727273,26.31818182,Flying Birds,0.383787879,0.026318182,Turdus_amaurochalinus
+Y,Aves,Passeriformes,Turdidae,Turdus leucomelas,pale-breated thresh,69.1,fiber/foliage,1,45,45,69.1,Flying Birds,0.75,0.0691,Turdus_leucomelas
+Y,Aves,Passeriformes,Turdidae,Turdus migratorius,American robin,154,fruit/nectar/pollen,15,400,26.66666667,10.26666667,Flying Birds,0.444444444,0.010266667,Turdus_migratorius
+Y,Aves,Passeriformes,Turdidae,Turdus migratorius,American robin,77,protein,9,198,22,8.555555556,Flying Birds,0.366666667,0.008555556,Turdus_migratorius
+Y,Aves,Passeriformes,Turdidae,Turdus rufiventris,Rufous bellied thrush,66.8,fiber/foliage,1,20,20,66.8,Flying Birds,0.333333333,0.0668,Turdus_rufiventris
+Y,Aves,Charadriiformes,Alcidae,Uria aalge,common guillemot,2784,meat,21,6314.4,300.6857143,132.5714286,Flying Birds,5.011428571,0.132571429,Uria_aalge
+Y,Aves,Charadriiformes,Alcidae,Uria aalge,common giuillemot,1856,meat,2,758.4,379.2,928,Flying Birds,6.32,0.928,Uria_aalge
+Y,Aves,Charadriiformes,Alcidae,Uria lomvia,brunnich's guillemot,1852,meat,12,3567.6,297.3,154.3333333,Flying Birds,4.955,0.154333333,Uria_lomvia
+N,Mammalia,Rodentia,Muridae,Uromys caudimaculatus,giant white-tailed rat,1270,fiber/foliage,2,6054,3027,635,Rodents,50.45,0.635,Uromys_caudimaculatus
+N,Mammalia,Carnivora,Ursidae,Ursus americanus,black bear,46950,fiber/foliage,5,2070,414,9390,Carnivora,6.9,9.39,Ursus_americanus
+N,Mammalia,Carnivora,Ursidae,Ursus americanus,black bear,46950,protein,5,3870,774,9390,Carnivora,12.9,9.39,Ursus_americanus
+N,Mammalia,Carnivora,Ursidae,Ursus arctos,brown bear,340000,fruit/nectar/pollen,6,2082,347,56666.66667,Carnivora,5.783333333,56.66666667,Ursus_arctos
+N,Mammalia,Carnivora,Ursidae,Ursus arctos,brown bear,340000,meat,6,5220,870,56666.66667,Carnivora,14.5,56.66666667,Ursus_arctos
+N,Mammalia,Carnivora,Ursidae,Ursus arctos,brown bear,89900,fiber/foliage,3,1260,420,29966.66667,Carnivora,7,29.96666667,Ursus_arctos
+N,Mammalia,Carnivora,Ursidae,Ursus arctos,brown bear,89900,protein,3,2340,780,29966.66667,Carnivora,13,29.96666667,Ursus_arctos
+N,Mammalia,Carnivora,Ursidae,Ursus thibetanus,Asiatic black bear,325000,fruit/nectar/pollen,15,16699.5,1113.3,21666.66667,Carnivora,18.555,21.66666667,Ursus_thibetanus
+N,Mammalia,Primates,Lemuridae,Varecia variegata,black-and-white-ruffed lemur,29782,fiber/foliage,36,9585.6,266.2666667,827.2777778,Primates,4.437777778,0.827277778,Varecia_variegata
+N,Mammalia,Primates,Lemuridae,Varecia variegata,Black and White Ruffed Lemur,3600,fruit/nectar/pollen,1,264,264,3600,Primates,4.4,3.6,Varecia_variegata
+Y,Mammalia,Chiroptera,Vespertilionidae,Vespertilio murinus,Parti-colored bat,14.3,protein,5,1210,242,2.86,Bats,4.033333333,0.00286,Vespertilio_murinus
+N,Mammalia,Carnivora,Canidae,Vulpes lagopus,arctic fox,2300,fruit/nectar/pollen,10,11928,1192.8,230,Carnivora,19.88,0.23,Vulpes_lagopus
