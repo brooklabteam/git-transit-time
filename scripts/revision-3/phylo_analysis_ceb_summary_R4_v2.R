@@ -49,7 +49,7 @@ dat_MRT <- dat_MRT[!dat_MRT[[species_col]] %in% no_mass, ]
 #### species counts ####
 #table 1 in the manuscript
 
-length(unique(dat_GIT$genus.species)) #247 unique species for transit time
+length(unique(dat_GIT$genus.species)) #257 unique species for transit time
 tt.pivot <-ddply(dat_GIT, .(re_class), summarise, N_species_transit = length(unique(genus.species)))
 print(tt.pivot)
 # re_class N_species_transit
@@ -198,54 +198,6 @@ contMap(tree,log10(transit_hrs), fsize =0.5)
 # 
 
 
-
-
-
-################### MRT phylogenetic signal ##########################
-# dat_MRT$phylo_name <- as.character(dat_MRT$phylo_name)
-# 
-# tree <- read.tree(file = paste0(homewd, "/data/Book3.nwk"))
-# tree_ultra2 <- force.ultrametric(tree, method = "nnls") #no warnings
-# is.ultrametric(tree_ultra2)
-# 
-# #for MRT
-# MRT <- dat_MRT[c("phylo_name", "MRT_hrs")] #292
-# #MRT <- na.omit(MRT)
-# 
-# length(unique(MRT$phylo_name)) #227
-# 
-# #make sure theMRT#make sure they match
-# # If you have a data frame GIT with the trait
-# MRT_hrs <- setNames(MRT$MRT_hrs, MRT$phylo_name) #292
-# 
-# # Then only keep the overlapping species
-# common_species <- intersect(tree_ultra2$tip.label, names(MRT_hrs)) #225
-# tree <- drop.tip(tree_ultra2, setdiff(tree_ultra2$tip.label, common_species)) 
-# MRT_hrs <- MRT_hrs[common_species]
-# 
-# #for MRT
-# lambda_gs2<-phylosig(tree, MRT_hrs,
-#                      method="lambda",test=TRUE)
-# lambda_gs2
-# # Phylogenetic signal lambda : 0.943984 
-# # logL(lambda) : -982.221 
-# # LR(lambda=0) : 148.399 
-# # P-value (based on LR test) : 3.88009e-34 
-# 
-# 
-# 
-# ############# plotting phylo signal by tree/phenogram ############
-# 
-# 
-# contMap(tree,log10(MRT_hrs), fsize =0.5)
-
-
-#phenogram(tree, log10(MRT_hrs), spread.labels = T, fsize=0.6, colors = "black")
-
-
-
-
-
 #########################################  MGT. #################################
 
 ########### MGT data cleaning #######
@@ -321,8 +273,6 @@ cor_phylo_fixed1 <- corPagel(1, phy = tree_pruned, fixed = TRUE, form = ~phylo_n
 # this is no phylogentic effects:
 cor_phylo_fixed0 <- corPagel(0, phy = tree_pruned, fixed = TRUE, form = ~phylo_name) #assumes no phylogenetic signal
 
-# the model above is already 1, so no need to run this
-#cor_phylo_fixed2 <- corPagel(lambda_gs1$lambda, phy = tree_pruned, fixed = TRUE, form = ~phylo_name) 
 
 
 # Cara: now test the effect of flyer on GIT transit without accounting for mass or diet
@@ -379,14 +329,13 @@ gls_model_GIT_1_diet <- gls(log_transit_hrs ~ flyer + trial.diet,
                         method = "ML")
 summary(gls_model_GIT_1_diet)$tTable
 # Value  Std.Error    t-value      p-value
-# (Intercept)                    1.59335821 0.24736163  6.4414122 5.116891e-10
-# flyer1                        -1.09964106 0.15544590 -7.0741077 1.198727e-11
-# trial.dietfruit/nectar/pollen -0.02306373 0.06461230 -0.3569556 7.213929e-01
-# trial.dietmeat                 0.06709616 0.09139377  0.7341437 4.634733e-01
-# trial.dietmixed               -0.06044453 0.23238596 -0.2601041 7.949740e-01
-# trial.dietprotein              0.08934049 0.04969743  1.7976883 7.329987e-02
-# trial.dietunknown              0.44044834 0.14184424  3.1051550 2.096068e-03
-# trial.dietunkown               0.32749447 0.16064680  2.0385994 4.242595e-02
+# (Intercept)                    1.60261797 0.24648551  6.5018749 3.594393e-10
+# flyer1                        -1.09578246 0.15509633 -7.0651734 1.257761e-11
+# trial.dietfruit/nectar/pollen -0.01969721 0.06424345 -0.3066026 7.593722e-01
+# trial.dietmeat                 0.06425718 0.09113576  0.7050710 4.813480e-01
+# trial.dietmixed               -0.06523612 0.23193641 -0.2812673 7.787117e-01
+# trial.dietprotein              0.08902638 0.04963278  1.7937013 7.393214e-02
+# trial.dietunknown              0.39161857 0.11063244  3.5398170 4.681942e-04
 
 
 # Cara: with no phylogenetic effects:
@@ -396,15 +345,14 @@ gls_model_GIT_0_diet <- gls(log_transit_hrs ~ flyer + trial.diet,
                         method = "ML")
 summary(gls_model_GIT_0_diet)$tTable
 
-# Value  Std.Error      t-value      p-value
-# (Intercept)                    1.229793696 0.06266350  19.62536039 1.336560e-54
-# flyer1                        -1.336857763 0.07187589 -18.59952876 6.883702e-51
-# trial.dietfruit/nectar/pollen -0.123620131 0.09132065  -1.35369300 1.769221e-01
-# trial.dietmeat                 0.084715747 0.10398242   0.81471222 4.159270e-01
-# trial.dietmixed               -0.174033024 0.31240011  -0.55708375 5.779137e-01
-# trial.dietprotein             -0.090097967 0.09424822  -0.95596465 3.399118e-01
-# trial.dietunknown              0.587553713 0.19176930   3.06385703 2.397180e-03
-# trial.dietunkown              -0.008714668 0.17257198  -0.05049874 9.597608e-01
+# Value  Std.Error     t-value      p-value
+# (Intercept)                    1.23140059 0.06328795  19.4571087 4.697948e-54
+# flyer1                        -1.35614045 0.07220339 -18.7822264 1.314605e-51
+# trial.dietfruit/nectar/pollen -0.11466745 0.09216882  -1.2441024 2.144950e-01
+# trial.dietmeat                 0.09355365 0.10496697   0.8912675 3.735455e-01
+# trial.dietmixed               -0.16921235 0.31552316  -0.5362914 5.921800e-01
+# trial.dietprotein             -0.08527729 0.09517346  -0.8960197 3.710065e-01
+# trial.dietunknown              0.25025965 0.14189221   1.7637307 7.886014e-02
 
 
 
@@ -412,8 +360,8 @@ AIC(gls_model_GIT_0, gls_model_GIT_1, gls_model_GIT_0_diet, gls_model_GIT_1_diet
 # df        AIC
 # gls_model_GIT_0       3   468.5400
 # gls_model_GIT_1       3 -1860.6365
-# gls_model_GIT_0_diet  9   462.2914
-# gls_model_GIT_1_diet  9 -1867.9795
+# gls_model_GIT_0_diet  8   467.0779
+# gls_model_GIT_1_diet  8 -1869.6673
 
 # CARA: conclusion is still the same: gls_model_GIT_1_diet is best model but 
 # gls_model_GIT_1 is also pretty good. either way, seems like including flight
@@ -423,14 +371,13 @@ AIC(gls_model_GIT_0, gls_model_GIT_1, gls_model_GIT_0_diet, gls_model_GIT_1_diet
 
 summary(gls_model_GIT_1_diet)$tTable
 # Value  Std.Error    t-value      p-value
-# (Intercept)                    1.59335821 0.24736163  6.4414122 5.116891e-10
-# flyer1                        -1.09964106 0.15544590 -7.0741077 1.198727e-11
-# trial.dietfruit/nectar/pollen -0.02306373 0.06461230 -0.3569556 7.213929e-01
-# trial.dietmeat                 0.06709616 0.09139377  0.7341437 4.634733e-01
-# trial.dietmixed               -0.06044453 0.23238596 -0.2601041 7.949740e-01
-# trial.dietprotein              0.08934049 0.04969743  1.7976883 7.329987e-02
-# trial.dietunknown              0.44044834 0.14184424  3.1051550 2.096068e-03
-# trial.dietunkown               0.32749447 0.16064680  2.0385994 4.242595e-02
+# (Intercept)                    1.60261797 0.24648551  6.5018749 3.594393e-10
+# flyer1                        -1.09578246 0.15509633 -7.0651734 1.257761e-11
+# trial.dietfruit/nectar/pollen -0.01969721 0.06424345 -0.3066026 7.593722e-01
+# trial.dietmeat                 0.06425718 0.09113576  0.7050710 4.813480e-01
+# trial.dietmixed               -0.06523612 0.23193641 -0.2812673 7.787117e-01
+# trial.dietprotein              0.08902638 0.04963278  1.7937013 7.393214e-02
+# trial.dietunknown              0.39161857 0.11063244  3.5398170 4.681942e-04
 
 # Emily: model gls_model_GIT_1_diet has the best fit.
 # CARA: I get the same table as you. I agree with your conclusion
@@ -447,8 +394,8 @@ gls_model_GIT_1_diet_re <- lme(log_transit_hrs ~ flyer,
 
 summary(gls_model_GIT_1_diet_re)$tTable
 # Value Std.Error  DF   t-value      p-value
-# (Intercept)  1.436815 0.1829032 281  7.855603 8.485812e-14
-# flyer1      -1.040085 0.1581725 281 -6.575639 2.354509e-10
+# (Intercept)  1.457103 0.1867034 282  7.804375 1.174627e-13
+# flyer1      -1.044916 0.1601138 282 -6.526085 3.124348e-10
 
 
 
@@ -459,10 +406,9 @@ gls_model_GIT_0_diet_re <- lme(log_transit_hrs ~ flyer,
                                 method = "ML")
 summary(gls_model_GIT_0_diet_re)$tTable
 # Value  Std.Error  DF   t-value      p-value
-# (Intercept)  1.232913 0.06576884 281  18.74616 2.021530e-51
-# flyer1      -1.321680 0.06884071 281 -19.19910 4.624105e-53
+# (Intercept)  1.216819 0.05492749 282  22.15318 1.108390e-63
+# flyer1      -1.327690 0.06787143 282 -19.56184 1.964575e-54
 
-#CARA: I get the same as above
 
 
 
@@ -471,11 +417,11 @@ AIC(gls_model_GIT_0, gls_model_GIT_0_diet, gls_model_GIT_0_diet_re,
 
 # df        AIC
 # gls_model_GIT_0          3   468.5400
-# gls_model_GIT_0_diet     9   462.2914
-# gls_model_GIT_0_diet_re  4   468.7100
+# gls_model_GIT_0_diet     8   467.0779
+# gls_model_GIT_0_diet_re  4   469.2664
 # gls_model_GIT_1          3 -1860.6365
-# gls_model_GIT_1_diet     9 -1867.9795
-# gls_model_GIT_1_diet_re  4  -501.9682
+# gls_model_GIT_1_diet     8 -1869.6673
+# gls_model_GIT_1_diet_re  4  -500.6376
 
 #Emily: in all cases, the fit with diet as a fixed effect was better supported than the fit as
 # a random effect. 
@@ -503,11 +449,7 @@ AIC(gls_model_GIT_0, gls_model_GIT_0_diet, gls_model_GIT_0_diet_re,
 
 # now, let's also consider the effects of mass and, later, mass and diet
 
-# below won't run because the correlation structure is set by a 
-# phylogeny of 109 species but the dataset has 117 entries due to some taxa being 
-# reeated multiple times due tp differences in diet or mass reported each time
 
-# Emily: It ran for me...
  
 #with full phylogenetic effects:
 gls_model_GIT_1_mass <- gls(log_transit_hrs ~ log10(mass_kg)*flyer, 
@@ -517,10 +459,10 @@ gls_model_GIT_1_mass <- gls(log_transit_hrs ~ log10(mass_kg)*flyer,
 summary(gls_model_GIT_1_mass)$tTable
 
 # Value  Std.Error   t-value      p-value
-# (Intercept)            1.75512239 0.24535303  7.153457 7.165193e-12
+# (Intercept)            1.75512240 0.24535303  7.153457 7.165192e-12
 # log10(mass_kg)         0.12103748 0.03952381  3.062394 2.405480e-03
-# flyer1                -0.98282090 0.17900293 -5.490530 8.870842e-08
-# log10(mass_kg):flyer1 -0.08939807 0.06736103 -1.327148 1.855218e-01
+# flyer1                -0.98282091 0.17900293 -5.490530 8.870839e-08
+# log10(mass_kg):flyer1 -0.08939808 0.06736102 -1.327148 1.855218e-01
 
 
 #with no phylogenetic effects:
@@ -554,10 +496,10 @@ AIC(gls_model_GIT_0_mass, gls_model_GIT_1_mass)
 summary(gls_model_GIT_1_mass)$tTable
 
 # Value  Std.Error   t-value      p-value
-# (Intercept)            1.75512239 0.24535303  7.153457 7.165193e-12
+# (Intercept)            1.75512240 0.24535303  7.153457 7.165192e-12
 # log10(mass_kg)         0.12103748 0.03952381  3.062394 2.405480e-03
-# flyer1                -0.98282090 0.17900293 -5.490530 8.870842e-08
-# log10(mass_kg):flyer1 -0.08939807 0.06736103 -1.327148 1.855218e-01
+# flyer1                -0.98282091 0.17900293 -5.490530 8.870839e-08
+# log10(mass_kg):flyer1 -0.08939808 0.06736102 -1.327148 1.855218e-01
 
 # all significant, except interaction
 #CARA: I agree
@@ -584,7 +526,7 @@ AIC(gls_model_GIT_1_mass, gls_model_GIT_1_mass_simple)
 # identical
 
 
-#CARA: conclusion is the same as yours (complex slighlt better)
+
 
 #so I'm going to write up the simple model because they are so close and significance is across the board
 # (no interaction term), shown here:
@@ -592,7 +534,7 @@ summary(gls_model_GIT_1_mass_simple)$tTable
 
 # Value  Std.Error   t-value      p-value
 # (Intercept)     1.72185069 0.24439348  7.045404 1.383368e-11
-# flyer1         -0.90149539 0.16841113 -5.352944 1.778077e-07
+# flyer1         -0.90149540 0.16841113 -5.352944 1.778077e-07
 # log10(mass_kg)  0.08978464 0.03178465  2.824780 5.064167e-03
 
 # flyer is significantly negatively related to transit suggesting 
@@ -612,15 +554,14 @@ gls_model_GIT_1_mass_simple_diet <- gls(log_transit_hrs ~ flyer + log10(mass_kg)
                                     method = "ML")
 summary(gls_model_GIT_1_mass_simple_diet)$tTable
 # Value  Std.Error     t-value      p-value
-# (Intercept)                    1.587176210 0.24269266  6.53986086 2.913505e-10
-# flyer1                        -0.867262863 0.16668626 -5.20296553 3.796425e-07
-# log10(mass_kg)                 0.112865097 0.03267440  3.45423608 6.372989e-04
-# trial.dietfruit/nectar/pollen  0.003090516 0.06384161  0.04840912 9.614247e-01
-# trial.dietmeat                 0.005872697 0.09140123  0.06425183 9.488156e-01
-# trial.dietmixed               -0.095405049 0.22821799 -0.41804350 6.762357e-01
-# trial.dietprotein              0.114429237 0.04929607  2.32126478 2.099059e-02
-# trial.dietunknown              0.452181067 0.13920457  3.24832045 1.302339e-03
-# trial.dietunkown               0.388518782 0.15859732  2.44971839 1.490942e-02
+# (Intercept)                    1.592328973 0.24175539  6.58652939 2.209722e-10
+# flyer1                        -0.863595039 0.16601458 -5.20192274 3.807473e-07
+# log10(mass_kg)                 0.113595567 0.03254018  3.49093243 5.587486e-04
+# trial.dietfruit/nectar/pollen  0.005147694 0.06340661  0.08118545 9.353523e-01
+# trial.dietmeat                 0.003884389 0.09103795  0.04266780 9.659967e-01
+# trial.dietmixed               -0.098318386 0.22766590 -0.43185381 6.661788e-01
+# trial.dietprotein              0.114415463 0.04921702  2.32471320 2.079993e-02
+# trial.dietunknown              0.424873814 0.10891869  3.90083476 1.200067e-04
 
 
 
@@ -633,19 +574,19 @@ gls_model_GIT_1_mass_simple_diet_re <- lme(log_transit_hrs ~ flyer + log10(mass_
                                             method = "ML")
 summary(gls_model_GIT_1_mass_simple_diet_re)$tTable
 # Value  Std.Error  DF   t-value      p-value
-# (Intercept)     1.4315643 0.18244168 280  7.846696 9.081017e-14
-# flyer1         -0.8147733 0.16835077 280 -4.839736 2.151371e-06
-# log10(mass_kg)  0.1066165 0.03076425 280  3.465597 6.120376e-04
+# (Intercept)     1.4492430 0.18716737 281  7.743032 1.766444e-13
+# flyer1         -0.8066961 0.16996020 281 -4.746383 3.302343e-06
+# log10(mass_kg)  0.1115418 0.03060434 281  3.644640 3.188962e-04
 
 
 
 # then, compare
 AIC(gls_model_GIT_1_mass_simple, gls_model_GIT_1_mass_simple_diet, gls_model_GIT_1_mass_simple_diet_re)
-
+# 
 # df        AIC
 # gls_model_GIT_1_mass_simple          4 -1866.5891
-# gls_model_GIT_1_mass_simple_diet    10 -1878.0396
-# gls_model_GIT_1_mass_simple_diet_re  5  -511.8524
+# gls_model_GIT_1_mass_simple_diet     9 -1879.9367
+# gls_model_GIT_1_mass_simple_diet_re  5  -511.7503
 
 
 # here, mass and diet does improve model fit when diet is modeled as a fixed effect! 
@@ -653,15 +594,14 @@ AIC(gls_model_GIT_1_mass_simple, gls_model_GIT_1_mass_simple_diet, gls_model_GIT
 summary(gls_model_GIT_1_mass_simple_diet)$tTable
 
 # Value  Std.Error     t-value      p-value
-# (Intercept)                    2.28840608 0.38708876  5.91183813 9.820484e-09
-# flyer1                        -0.94183916 0.16218959 -5.80702594 1.722825e-08
-# log10(mass_kg)                 0.37841586 0.11514000  3.28657154 1.143445e-03
-# trial.dietfruit/nectar/pollen -0.08209583 0.07380936 -1.11226858 2.669767e-01
-# trial.dietmeat                -0.05749159 0.09945606 -0.57806026 5.636880e-01
-# trial.dietmixed               -0.08992824 0.23057681 -0.39001423 6.968225e-01
-# trial.dietprotein             -0.00163639 0.07571056 -0.02161376 9.827715e-01
-# trial.dietunknown              0.18385168 0.14305079  1.28521963 1.997776e-01
-# trial.dietunkown               0.34867125 0.10350069  3.36878179 8.609747e-04
+# (Intercept)                    1.592328973 0.24175539  6.58652939 2.209722e-10
+# flyer1                        -0.863595039 0.16601458 -5.20192274 3.807473e-07
+# log10(mass_kg)                 0.113595567 0.03254018  3.49093243 5.587486e-04
+# trial.dietfruit/nectar/pollen  0.005147694 0.06340661  0.08118545 9.353523e-01
+# trial.dietmeat                 0.003884389 0.09103795  0.04266780 9.659967e-01
+# trial.dietmixed               -0.098318386 0.22766590 -0.43185381 6.661788e-01
+# trial.dietprotein              0.114415463 0.04921702  2.32471320 2.079993e-02
+# trial.dietunknown              0.424873814 0.10891869  3.90083476 1.200067e-04
 
 # Emily: flyer is still significantly negatively related to transit, 
 # after accounting for mass and diet (and phylogeny). 
@@ -679,14 +619,10 @@ summary(gls_model_GIT_1_mass_simple_diet)$tTable
 AIC(gls_model_GIT_1_diet, gls_model_GIT_1_mass_simple_diet)
 
 # df       AIC
-# gls_model_GIT_1_diet              9 -1864.433
-# gls_model_GIT_1_mass_simple_diet 10 -1873.372
+# gls_model_GIT_1_diet              8 -1869.667
+# gls_model_GIT_1_mass_simple_diet  9 -1879.937
 
 
-#CARA: I get below:
-# df       AIC
-# gls_model_GIT_1_diet              9 -2260.710
-# gls_model_GIT_1_mass_simple_diet 10 -2269.649
 
 gls_model_GIT_1_mass_only <- gls(log_transit_hrs ~ log10(mass_kg), 
                                    data = GIT_pruned, 
@@ -711,29 +647,24 @@ summary(gls_model_GIT_0_mass_only)$tTable
 
 summary(gls_model_GIT_1_mass_only)$tTable
 # mass is hugely significant and positively related to gut transit
-# CARA: mass looks not sig in this to me? seems it is only positively 
-# related to transit when phylogeny is not accounted for
 
-# Value Std.Error  t-value    p-value
-# (Intercept)    0.9917517 0.3797755 2.611416 0.00949097
-# log10(mass_kg) 0.1167145 0.1144964 1.019372 0.30888470
+#EMILY: mass is hugely significant again
+
+# Value  Std.Error  t-value      p-value
+# (Intercept)    1.5412074 0.25344575 6.081015 3.800689e-09
+# log10(mass_kg) 0.1566326 0.03060441 5.117976 5.664631e-07
 
 #CARA: I get the same as above
 AIC(gls_model_GIT_0_mass_only, gls_model_GIT_1_mass_only)
 # incorporating phylogeny with mass offers a much better fit to the data however!
 
-# 
 # df        AIC
 # gls_model_GIT_0_mass_only  3   610.0041
-# gls_model_GIT_1_mass_only  3 -1814.7723
+# gls_model_GIT_1_mass_only  3 -1840.9948
 
-#CARA: I get below:
-# df        AIC
-# gls_model_GIT_0_mass_only  3   610.0041
-# gls_model_GIT_1_mass_only  3 -2211.0488
+
 
 #CARA: I agree with conclusions. including phylogeny is a better fit...
-#and when we do so, mass is no longer sig
 
 
 ###### ------ PLOTTING FOR FIGURE 2
@@ -812,7 +743,7 @@ p1 <- ggplot(GIT_pruned) +
 print(p1)
 
 
-ggsave(file = paste0(homewd,"/figures_r4/Fig_2A.png"),
+ggsave(file = paste0(homewd,"/figures/revision-3/Fig_2A.png"),
        units="mm",  
        width=120, 
        height=80, 
@@ -843,10 +774,11 @@ gls_model <- gls(
 )
 
 summary(gls_model)
-# Value Std.Error   t-value p-value
-# (Intercept)  1.2460550 0.3158390  3.945222  0.0001
-# flyer1      -1.0727758 0.1682121 -6.377520  0.0000
-# log_mass_c   0.0782048 0.1074887  0.727563  0.4675
+# Coefficients:
+#   Value  Std.Error   t-value p-value
+# (Intercept)  1.6666752 0.24539620  6.791773  0.0000
+# flyer1      -0.9014954 0.16841113 -5.352944  0.0000
+# log_mass_c   0.0897846 0.03178465  2.824780  0.0051
 
 
 
@@ -890,7 +822,7 @@ p2 <-
 p2
 
 # --- Save the plot ---
-ggsave("figures_r4/GIT_plot2b.png", plot = p2, width = 7, height = 6, dpi = 300)
+ggsave("figures/revision-3/GIT_plot2b.png", plot = p2, width = 7, height = 6, dpi = 300)
 
 
 
@@ -900,7 +832,7 @@ out.plot2 <- cowplot::plot_grid(p1, p2, nrow=1, ncol=2, labels=c("(A)", "(B)"), 
 
 print(out.plot2)
 
-ggsave(file = paste0(homewd,"/figures_r4/Fig2_TwoPanel_R2.jpeg"),
+ggsave(file = paste0(homewd,"/figures/revision-3/Fig2_TwoPanel_R2.jpeg"),
        units="mm",  
        width=170, 
        height=70, 
