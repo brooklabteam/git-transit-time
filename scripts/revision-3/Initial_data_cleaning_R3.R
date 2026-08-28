@@ -61,6 +61,7 @@ dat.plot$N_individuals[dat.plot$N_individuals=="not reported"] <- 1 #assigning 1
 dat.plot$N_individuals[is.na(dat.plot$N_individuals)] <- 1 #assigning 1 individual if #individuals is NA
 dat.plot$N_individuals[dat.plot$N_individuals=="unknown"] <- 1
 dat.plot$N_individuals[dat.plot$N_individuals=="unk"] <- 1
+dat.plot$N_individuals[dat.plot$N_individuals==""] <- 1 #Cara added this
 unique(dat.plot$N_individuals)
 dat.plot$N_individuals = as.numeric(dat.plot$N_individuals)
 dat.plot$total_transit = dat.plot$transit*dat.plot$N_individuals #multiplying transit time x #individuals
@@ -117,7 +118,7 @@ head(dat.sum.tot)
 dat.sum.tot$transit <- dat.sum.tot$total_transit/dat.sum.tot$N_tot
 #dat.sum.tot$MRT <- dat.sum.tot$total_MRT/dat.sum.tot$N_tot
 dat.sum.tot$avg_mass <- dat.sum.tot$sum_mass/dat.sum.tot$N_tot
-subset(dat.sum.tot, !is.na(transit)) #313
+nrow(subset(dat.sum.tot, !is.na(transit))) #313. Cara: I get 326
 
 
 
