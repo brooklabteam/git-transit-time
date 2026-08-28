@@ -163,7 +163,7 @@ N,Mammalia,Primates,Cercopithecidae,Cercopithecus pogonias,Crested mona monkey,3
 N,Mammalia,Primates,Cercopithecidae,Nasalis larvatus,proboscis monkey,10000,protein,6,17640,2940,1666.666667,Primates,49,1.666666667,Nasalis_larvatus
 N,Mammalia,Primates,Cercopithecidae,Macaca fuscata,Japanese macaque,8600,fruit/nectar/pollen,5,10800,2160,1720,Primates,36,1.72,Macaca_fuscata
 N,Mammalia,Carnivora,Canidae,Lycalopex culpaeus,culpeo fox,8700,fruit/nectar/pollen,5,3600,720,1740,Carnivora,12,1.74,Lycalopex_culpaeus
-N,Mammalia,Carnivora,Canidae,Lycalopex culpaeus,culpeo fox,8700,fruit/nectar/pollen; meat,5,5640,1128,1740,Carnivora,18.8,1.74,Lycalopex_culpaeus
+N,Mammalia,Carnivora,Canidae,Lycalopex culpaeus,culpeo fox,8700,mixed,5,5640,1128,1740,Carnivora,18.8,1.74,Lycalopex_culpaeus
 N,Mammalia,Carnivora,Canidae,Lycalopex culpaeus,culpeo fox,8700,meat,5,8460,1692,1740,Carnivora,28.2,1.74,Lycalopex_culpaeus
 N,Mammalia,Rodentia,Caviidae,Dolichotis patagonum,Patagonian mara,45480,fiber/foliage,26,26418,1016.076923,1749.230769,Rodents,16.93461538,1.749230769,Dolichotis_patagonum
 N,Mammalia,Rodentia,Castoridae,Castor canadensis,North American beaver,28000,fiber/foliage,16,25800,1612.5,1750,Rodents,26.875,1.75,Castor_canadensis
