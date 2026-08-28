@@ -4,18 +4,18 @@
 "Y","Aves","Passeriformes","Sturnidae","Acridotheres cristatellus","crested-myna",375,"fruit/nectar/pollen",18,318,17.6666666666667,20.8333333333333,"Flying Birds",0.294444444444444,0.0208333333333333
 "N","Mammalia","Artiodactyla","Bovidae","Addax nasomaculatus","addax",348000,"fiber/foliage",32,75360,2355,10875,"Even-toed Ungulates",39.25,10.875
 "Y","Aves","Charadriiformes","Alcidae","Alca torda","razorbill",2424,"meat",12,3827.4,318.95,202,"Flying Birds",5.31583333333333,0.202
-"N","Mammalia","Artiodactyla","Cervidae","Alces alces","moose",5843285.7142,"fiber/foliage",51,131386.285716,2576.20168070588,114574.229690196,"Even-toed Ungulates",42.9366946784314,114.574229690196
+"N","Mammalia","Artiodactyla","Cervidae","Alces alces","moose",5843285.72,"fiber/foliage",51,131386.285716,2576.20168070588,114574.229803922,"Even-toed Ungulates",42.9366946784314,114.574229803922
 "N","Mammalia","Primates","Cercopithecidae","Allenopithecus nigroviridis","Allen‚Äôs swamp monkey",9800,"fiber/foliage",3,4239.9999,1413.3333,3266.66666666667,"Primates",23.555555,3.26666666666667
-"Y","Aves","Anseriformes","Anatidae","Alopochen aegyptiaca","Egyptian goose",NA,"fiber/foliage",70,20274,289.628571428571,NA,"Flying Birds",4.82714285714286,NA
+"Y","Aves","Anseriformes","Anatidae","Alopochen aegyptiaca","Egyptian goose",15540,"fiber/foliage",70,20274,289.628571428571,222,"Flying Birds",4.82714285714286,0.222
 "N","Mammalia","Primates","Atelidae","Alouatta caraya ","black howler monkey",16220,"fiber/foliage",6,10224,1704,2703.33333333333,"Primates",28.4,2.70333333333333
 "N","Mammalia","Primates","Atelidae","Alouatta palliata","mantled howler monkey",36900,"fiber/foliage",12,22788,1899,3075,"Primates",31.65,3.075
 "N","Mammalia","Primates","Atelidae","Alouatta sara","Bolivian red howler monkey",49080,"fiber/foliage",12,29952,2496,4090,"Primates",41.6,4.09
 "Y","Aves","Anseriformes","Anatidae","Anas crecca","Eurasian Teal",720,"fiber/foliage",6,5752.8,958.8,120,"Flying Birds",15.98,0.12
 "Y","Aves","Anseriformes","Anatidae","Anas erthrorhyncha","Red-billed teal",3850,"fiber/foliage",70,12786,182.657142857143,55,"Flying Birds",3.04428571428571,0.055
-"Y","Aves","Anseriformes","Anatidae","Anas platyrhynchos","mallard duck",NA,"fiber/foliage",66,33081.2,501.230303030303,NA,"Flying Birds",8.35383838383838,NA
+"Y","Aves","Anseriformes","Anatidae","Anas platyrhynchos","mallard duck",9260,"fiber/foliage",66,33081.2,501.230303030303,140.30303030303,"Flying Birds",8.35383838383838,0.14030303030303
 "Y","Aves","Anseriformes","Anatidae","Anas platyrhynchos","mallard duck",1120,"meat",6,2772,462,186.666666666667,"Flying Birds",7.7,0.186666666666667
-"Y","Aves","Anseriformes","Anatidae","Anser anser","Goose",NA,"fiber/foliage",18,2952,164,NA,"Flying Birds",2.73333333333333,NA
-"Y","Aves","Anseriformes","Anatidae","Anser anser","Greylag Goose",NA,"fiber/foliage",40,24720,618,NA,"Flying Birds",10.3,NA
+"Y","Aves","Anseriformes","Anatidae","Anser anser","Goose",9900,"fiber/foliage",18,2952,164,550,"Flying Birds",2.73333333333333,0.55
+"Y","Aves","Anseriformes","Anatidae","Anser anser","Greylag Goose",13240,"fiber/foliage",40,24720,618,331,"Flying Birds",10.3,0.331
 "Y","Aves","Anseriformes","Anseranatidae","Anseranas semipalmata","Australian magpie goose",5000,"fiber/foliage",10,3420,342,500,"Flying Birds",5.7,0.5
 "N","Mammalia","Artiodactyla","Bovidae","Antilope cervicapra","blackbuck",52000,"fiber/foliage",10,26700,2670,5200,"Even-toed Ungulates",44.5,5.2
 "N","Aves","Sphenisciformes","Spheniscidae","Aptenodytes patagonicus","king penguin",40950,"meat",15,18300,1220,2730,"Non-Flying Birds",20.3333333333333,2.73
@@ -55,7 +55,7 @@
 "N","Mammalia","Artiodactyla","Cervidae","Capreolus capreolus","roe deer",138900,"fiber/foliage",16,99942,6246.375,8681.25,"Even-toed Ungulates",104.10625,8.68125
 "N","Mammalia","Rodentia","Castoridae","Castor canadensis","North American beaver",28000,"fiber/foliage",16,25800,1612.5,1750,"Rodents",26.875,1.75
 "N","Mammalia","Rodentia","Caviidae","Cavia porcellus","guinea pig",12150,"fiber/foliage",58,66648.6,1149.11379310345,209.48275862069,"Rodents",19.1518965517241,0.20948275862069
-"N","Mammalia","Perissodactyla","Rhinocerotidae","Cerathotherium simum","White Rhino",NA,"fiber/foliage",14,21458,1532.71428571429,NA,"Odd-toed Ungulates",25.5452380952381,NA
+"N","Mammalia","Perissodactyla","Rhinocerotidae","Cerathotherium simum","White Rhino",8900000,"fiber/foliage",14,21458,1532.71428571429,635714.285714286,"Odd-toed Ungulates",25.5452380952381,635.714285714286
 "N","Mammalia","Primates","Cercopithecidae","Cercopithecus ascanius","Red-tailed monkey",8785,"fruit/nectar/pollen",3,4866,1622,2928.33333333333,"Primates",27.0333333333333,2.92833333333333
 "N","Mammalia","Primates","Cercopithecidae","Cercopithecus erythrotis","Red-eared guenon",3585,"fruit/nectar/pollen",1,1602,1602,3585,"Primates",26.7,3.585
 "N","Mammalia","Primates","Cercopithecidae","Cercopithecus lhoesti","L‚ÄôHoest‚Äôs monkey",3550,"fiber/foliage",2,3124,1562,1775,"Primates",26.0333333333333,1.775
@@ -76,7 +76,7 @@
 "N","Mammalia","Artiodactyla","Tayassuidae","Dicotyles tajacu","collared peccary",6450,"unknown",21,38640,1840,307.142857142857,"Even-toed Ungulates",30.6666666666667,0.307142857142857
 "N","Mammalia","Rodentia","Caviidae","Dolichotis patagonum","Patagonian mara",45480,"fiber/foliage",26,26418,1016.07692307692,1749.23076923077,"Rodents",16.9346153846154,1.74923076923077
 "N","Aves","Struthioniformes","Dromaiidae","Dromaius novaehollandiae","emu",99000,"fiber/foliage",6,471,78.5,16500,"Non-Flying Birds",1.30833333333333,16.5
-"N","Aves","Casuariiformes","Casuariidae","Dromaius novaehollandiae","Emu",NA,"fiber/foliage",24,6522,271.75,NA,"Non-Flying Birds",4.52916666666667,NA
+"N","Aves","Casuariiformes","Casuariidae","Dromaius novaehollandiae","Emu",99001,"fiber/foliage",24,6522,271.75,4125.04166666667,"Non-Flying Birds",4.52916666666667,4.12504166666667
 "Y","Aves","Columbiformes","Columbidae","Ducula spilorrhoa","Torres imperial pigeon",445,"fruit/nectar/pollen",4,378,94.5,111.25,"Flying Birds",1.575,0.11125
 "Y","Aves","Passeriformes","Tyrannidae","Elaenia parvirostris","Short Billed Elaenia",32,"fiber/foliage",2,86,43,16,"Flying Birds",0.716666666666667,0.016
 "N","Mammalia","Artiodactyla","Cervidae","Elaphurus davidianus","P√®re David's deer",450000,"fiber/foliage",15,48900,3260,30000,"Even-toed Ungulates",54.3333333333333,30
@@ -111,7 +111,7 @@
 "N","Mammalia","Artiodactyla","Giraffidae","Giraffa camelopardalis","giraffe",7695400,"fiber/foliage",39,88689.6,2274.09230769231,197317.948717949,"Even-toed Ungulates",37.9015384615385,197.317948717949
 "N","Mammalia","Primates","Hominidae","Gorilla gorilla","gorilla",112300,"fruit/nectar/pollen",4,17848.8,4462.2,28075,"Primates",74.37,28.075
 "N","Mammalia","Primates","Hominidae","Gorilla gorilla","Western lowland gorilla",105000,"fruit/nectar/pollen",5,15180,3036,21000,"Primates",50.6,21
-"Y","Aves","Suliformes","Phalacrocoracidae","Gulosus aristotelis","shag",NA,"meat",12,3811.2,317.6,NA,"Flying Birds",5.29333333333333,NA
+"Y","Aves","Suliformes","Phalacrocoracidae","Gulosus aristotelis","shag",5804,"meat",12,3811.2,317.6,483.666666666667,"Flying Birds",5.29333333333333,0.483666666666667
 "N","Mammalia","Primates","Lemuridae","Hapalemur griseus","Eastern lesser bamboo lemur",1050,"fiber/foliage",6,16808.4,2801.4,175,"Primates",46.69,0.175
 "Y","Aves","Columbiformes","Columbidae","Hemiphaga novaeseelandiae","New Zealand pigeons",630,"fruit/nectar/pollen",2,190.8,95.4,315,"Flying Birds",1.59,0.315
 "N","Mammalia","Artiodactyla","Hippopotamidae","Hexaprotodon liberiensis","pygmy hippopotamus",238000,"fiber/foliage",4,16080,4020,59500,"Even-toed Ungulates",67,59.5
@@ -145,19 +145,19 @@
 "N","Mammalia","Primates","Cercopithecidae","Macaca fuscata","Japanese macaque",72800,"fiber/foliage",20,46875,2343.75,3640,"Primates",39.0625,3.64
 "N","Mammalia","Primates","Cercopithecidae","Macaca fuscata","Japanese Macaque",18400,"fruit/nectar/pollen",9,23334,2592.66666666667,2044.44444444444,"Primates",43.2111111111111,2.04444444444444
 "N","Mammalia","Primates","Cercopthecidae","Macaca nemestrina","pig-tailed macaque",7000,"fiber/foliage",5,13,2.6,1400,"Primates",0.0433333333333333,1.4
-"Y","Aves","Procellariiformes","Procellariidae","Macronectes giganteus","Southern Giant Petrel",NA,"meat",12,10872,906,NA,"Flying Birds",15.1,NA
+"Y","Aves","Procellariiformes","Procellariidae","Macronectes giganteus","Southern Giant Petrel",3000,"meat",12,10872,906,250,"Flying Birds",15.1,0.25
 "N","Mammalia","Artiodactyla","Bovidae","Madoqua saltiana phillipsi","Phillip's dik dik",13880,"fiber/foliage",62,114822,1851.96774193548,223.870967741935,"Even-toed Ungulates",30.8661290322581,0.223870967741935
 "Y","Aves","Anseriformes","Anatidae","Marmaronetta angustirostris","Marbled Teal",616,"fiber/foliage",10,9588,958.8,61.6,"Flying Birds",15.98,0.0616
 "N","Mammalia","Rodentia","Sciuridae","Marmota caligata","hoary marmot",4616,"protein",12,19332,1611,384.666666666667,"Rodents",26.85,0.384666666666667
-"N","Mammalia","Carnivora","Mustelidae","Martes melampus","Japanese Marten",NA,"mixed",12,4977.6,414.8,NA,"Carnivora",6.91333333333333,NA
-"Y","Aves","Galliformes","Phasianidae","Meleagris gallopavo","Turkey",NA,"fiber/foliage",18,15552,864,NA,"Flying Birds",14.4,NA
+"N","Mammalia","Carnivora","Mustelidae","Martes melampus","Japanese Marten",5598,"mixed",12,4977.6,414.8,466.5,"Carnivora",6.91333333333333,0.4665
+"Y","Aves","Galliformes","Phasianidae","Meleagris gallopavo","Turkey",19950,"fiber/foliage",18,15552,864,1108.33333333333,"Flying Birds",14.4,1.10833333333333
 "N","Mammalia","Rodentia","Muridae","Meriones unguiculatus","Mongolian gerbils",51.3,"fiber/foliage",11,7227,657,4.66363636363636,"Rodents",10.95,0.00466363636363636
 "N","Mammalia","Rodentia","Cricetidae","Mesocricetus auratus","hamster",105,"fiber/foliage",6,3276,546,17.5,"Rodents",9.1,0.0175
 "N","Mammalia","Rodentia","Cricetidae","Microtus agrestis","short-tailed field vole",57.2,"fiber/foliage",12,3744,312,4.76666666666667,"Rodents",5.2,0.00476666666666667
 "N","Mammalia","Rodentia","Cricetidae","Microtus townsendii","Townsend vole",109.8,"protein",12,10044,837,9.15,"Rodents",13.95,0.00915
 "Y","Aves","Accipitriformes","Accipitridae","Milvus milvus","red kite",1033.5,"meat",2,898.8,449.4,516.75,"Flying Birds",7.49,0.51675
 "N","Mammalia","Carnivora","Phocidae","Mirounga leonina","southern elephant seals",4100000,"meat",6,4242,707,683333.333333333,"Carnivora",11.7833333333333,683.333333333333
-"N","Aves","Galliformes","Cracidae","Mitu salvini","Salvin's curassows",NA,"fruit/nectar/pollen",6,844,140.666666666667,NA,"Non-Flying Birds",2.34444444444444,NA
+"N","Aves","Galliformes","Cracidae","Mitu salvini","Salvin's curassows",9300,"fruit/nectar/pollen",6,844,140.666666666667,1550,"Non-Flying Birds",2.34444444444444,1.55
 "N","Mammalia","Carnivora","Phocidae","Monachus schauinslandi","Hawaiian monk seal",186000,"meat",3,3060,1020,62000,"Carnivora",17,62
 "Y","Aves","Suliformes","Sulidae","Morus capensis","Cape gannet",7800,"meat",15,9450,630,520,"Flying Birds",10.5,0.52
 "N","Mammalia","Rodentia","Muridae","Mus musculus","laboratory mouse",29,"fiber/foliage",6,1440,240,4.83333333333333,"Rodents",4,0.00483333333333333
@@ -210,8 +210,8 @@
 "Y","Mammalia","Chiroptera","Vespertilionidae","Pipistrellus pipistrellus","Common pipistrelle",5.1,"protein",7,1778,254,0.728571428571429,"Bats",4.23333333333333,0.000728571428571429
 "N","Mammalia","Primates","Pitheciidae","Pithecia pithecia","white-faced saki",1712.5,"fiber/foliage",4,6150,1537.5,428.125,"Primates",25.625,0.428125
 "Y","Mammalia","Chiroptera","Vespertilionidae","Plecotus auritus","Brown long-eared bat",6.9,"protein",6,792,132,1.15,"Bats",2.2,0.00115
-"Y","Aves","Anseriformes","Anatidae","Plectopterus gambensis","Spur-winged goose",NA,"fiber/foliage",4,1528,382,NA,"Flying Birds",6.36666666666667,NA
-"Y","Aves","Anseriformes","Anatidae","Plectopterus gambensis","Spur-winged goose",NA,"protein",4,560,140,NA,"Flying Birds",2.33333333333333,NA
+"Y","Aves","Anseriformes","Anatidae","Plectopterus gambensis","Spur-winged goose",3900,"fiber/foliage",4,1528,382,975,"Flying Birds",6.36666666666667,0.975
+"Y","Aves","Anseriformes","Anatidae","Plectopterus gambensis","Spur-winged goose",3900,"protein",4,560,140,975,"Flying Birds",2.33333333333333,0.975
 "N","Mammalia","Primates","Hominidae","Pongo pygmaeus","Bornean orangutan",141400,"fruit/nectar/pollen",6,25002,4167,23566.6666666667,"Primates",69.45,23.5666666666667
 "N","Mammalia","Primates","Hominidae","Pongo pygmaeus","Bornean orangutan",135140,"fiber/foliage",8,1084.8,135.6,16892.5,"Primates",2.26,16.8925
 "N","Mammalia","Carnivora","Procyonidae","Potos flavus","kinkajou",4250,"protein",2,300,150,2125,"Carnivora",2.5,2.125
@@ -229,12 +229,12 @@
 "N","Mammalia","Primates","Cercopithecidae","Pygathrix nemaeus","red-shanked douc",32400,"fiber/foliage",8,24180,3022.5,4050,"Primates",50.375,4.05
 "N","Mammalia","Primates","Cercopithecidae","Pygathrix nemaeus","red-shanked douc langur",3595,"fiber/foliage",3,6108,2036,1198.33333333333,"Primates",33.9333333333333,1.19833333333333
 "N","Aves","Sphenisciformes","Spheniscidae","Pygoscelis papua","gentoo penguin",19500,"meat",15,12930,862,1300,"Non-Flying Birds",14.3666666666667,1.3
-"N","Aves","Sphenisciformes","Spheniscidae","Pygoscelis papua","Gentoo Penguin",NA,"meat",12,5940,495,NA,"Non-Flying Birds",8.25,NA
+"N","Aves","Sphenisciformes","Spheniscidae","Pygoscelis papua","Gentoo Penguin",3000,"meat",12,5940,495,250,"Non-Flying Birds",8.25,0.25
 "Y","Aves","Piciformes","Ramphastidae","Ramphastos pluricinctus","Many-banded arcari",258.5,"fruit/nectar/pollen",1,30,30,258.5,"Flying Birds",0.5,0.2585
 "N","Mammalia","Artiodactyla","Cervidae","Rangifer tarandus","reindeer",1492000,"fiber/foliage",32,89280,2790,46625,"Even-toed Ungulates",46.5,46.625
 "N","Mammalia","Rodentia","Muridae","Rattus norvegicus","common rat",590,"fiber/foliage",12,9072,756,49.1666666666667,"Rodents",12.6,0.0491666666666667
 "N","Aves","Struthioniformes","Rheidae","Rhea americana","greater rhea",72000,"fiber/foliage",15,11310,754,4800,"Non-Flying Birds",12.5666666666667,4.8
-"N","Aves","Palaeognathae","Rheidae","Rhea americana","Greater Rhea",NA,"fiber/foliage",5,3900,780,NA,"Non-Flying Birds",13,NA
+"N","Aves","Palaeognathae","Rheidae","Rhea americana","Greater Rhea",24500,"fiber/foliage",5,3900,780,4900,"Non-Flying Birds",13,4.9
 "N","Mammalia","Perissodactyla","Rhinocerotidae","Rhinoceros unicornis","Indian rinoceros",1950000,"fruit/nectar/pollen",1,4560,4560,1950000,"Odd-toed Ungulates",76,1950
 "N","Mammalia","Primates","Cercopithecidae","Rhinopithecus bieti","Snub-Nosed Monkey",11750,"fruit/nectar/pollen",3,6750,2250,3916.66666666667,"Primates",37.5,3.91666666666667
 "N","Mammalia","Primates","Cercopithecidae","Rhinopithecus bieti","Snub-Nosed Monkey",11750,"fiber/foliage",3,11880,3960,3916.66666666667,"Primates",66,3.91666666666667
@@ -251,10 +251,10 @@
 "Y","Aves","Columbiformes","Columbidae","Spilopelia senegalensis","laughing dove",160.5,"fiber/foliage",6,2043,340.5,26.75,"Flying Birds",5.675,0.02675
 "Y","Aves","Steatornithiformes","Steatornithidae","Steatornis caripensis","oilbird",324,"fruit/nectar/pollen",9,3393,377,36,"Flying Birds",6.28333333333333,0.036
 "Y","Aves","Passeriformes","Thraupidae","Stephanophorus diadematus","Diademed tanager",177,"fiber/foliage",9,147.6,16.4,19.6666666666667,"Flying Birds",0.273333333333333,0.0196666666666667
-"Y","Aves","Charadriiformes","Stercorariidae","Stercorarius skua","great skua",NA,"meat",12,4351.2,362.6,NA,"Flying Birds",6.04333333333333,NA
+"Y","Aves","Charadriiformes","Stercorariidae","Stercorarius skua","great skua",4904,"meat",12,4351.2,362.6,408.666666666667,"Flying Birds",6.04333333333333,0.408666666666667
 "Y","Aves","Columbiformes","Columbidae","Streptopelia semitorquata","red-eyed doe",236,"fiber/foliage",5,2308,461.6,47.2,"Flying Birds",7.69333333333333,0.0472
 "N","Aves","Struthioniformes","Struthionidae","Struthio camelus","common ostrich",327000,"fiber/foliage",18,33444,1858,18166.6666666667,"Non-Flying Birds",30.9666666666667,18.1666666666667
-"N","Aves","Palaeognathae","Struthioniformes","Struthio camelus","Ostrich",NA,"fiber/foliage",14,30000,2142.85714285714,NA,"Non-Flying Birds",35.7142857142857,NA
+"N","Aves","Palaeognathae","Struthioniformes","Struthio camelus","Ostrich",260200,"fiber/foliage",14,30000,2142.85714285714,18585.7142857143,"Non-Flying Birds",35.7142857142857,18.5857142857143
 "Y","Aves","Passeriformes","Sturnidae","Sturnus vulgaris","European Starling",164.5,"fruit/nectar/pollen",10,355,35.5,16.45,"Flying Birds",0.591666666666667,0.01645
 "Y","Aves","Passeriformes","Sturnidae","Sturnus vulgaris","European Starling",85,"protein",5,100,20,17,"Flying Birds",0.333333333333333,0.017
 "N","Mammalia","Artiodactyla","Suidae","Sus scrofa","Wild pig",45000,"unk",1,4200,4200,45000,"Even-toed Ungulates",70,45
