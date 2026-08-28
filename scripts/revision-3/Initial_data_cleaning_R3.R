@@ -61,7 +61,7 @@ dat.plot$N_individuals[dat.plot$N_individuals=="not reported"] <- 1 #assigning 1
 dat.plot$N_individuals[is.na(dat.plot$N_individuals)] <- 1 #assigning 1 individual if #individuals is NA
 dat.plot$N_individuals[dat.plot$N_individuals=="unknown"] <- 1
 dat.plot$N_individuals[dat.plot$N_individuals=="unk"] <- 1
-dat.plot$N_individuals[dat.plot$N_individuals==""] <- 1 #Cara added this
+dat.plot$N_individuals[dat.plot$N_individuals==""] <- 1 #Cara added this 8/28
 unique(dat.plot$N_individuals)
 dat.plot$N_individuals = as.numeric(dat.plot$N_individuals)
 dat.plot$total_transit = dat.plot$transit*dat.plot$N_individuals #multiplying transit time x #individuals
