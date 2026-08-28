@@ -404,8 +404,6 @@ dat.sum.tot2 <- merge(
 )
 #dat.sum.tot2 <- dat.sum.tot2 %>% filter(!is.na(phylo_name) & phylo_name != "")
 
-### NOTE BEFORE SAVING. ONE FOX WILL SHOW UP WITH A POLLEN/FRUIT; MEAT DIET. I MANUALLY CHANGE TO 'MIXED'
-
 write.csv(dat.sum.tot2, "data/revision-3/dat_sum_tot_clean_MRT_R3_v2.csv", row.names = F) #I don't know why there are some NA so manually fixing and re-uploading
 # dat.sum.tot_clean <- read.csv(file = paste0(homewd, "data/dat.sum.tot.csv"), header = T, stringsAsFactors = F )
 #dat.sum.tot_clean <- dat.sum.tot

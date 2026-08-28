@@ -19,9 +19,9 @@ homewd <- "/Users/gavindehnert/Desktop/GitHub_repos/git-transit-time"
 setwd(homewd)
 
 #load the GIT transit data with phylo name
-dat_GIT <- read.csv(file = paste0(homewd, "/data/revision-3/dat_sum_tot_clean_GIT_R3.csv"), header = T, stringsAsFactors = F )
+dat_GIT <- read.csv(file = paste0(homewd, "/data/revision-3/dat_sum_tot_clean_GIT_R3_v2.csv"), header = T, stringsAsFactors = F )
 length(unique(dat_GIT$phylo_name)) #249
-dat_MRT <- read.csv(file = paste0(homewd, "/data/revision-3/dat_sum_tot_clean_MRT_R3.csv"), header = T, stringsAsFactors = F )
+dat_MRT <- read.csv(file = paste0(homewd, "/data/revision-3/dat_sum_tot_clean_MRT_R3_v2.csv"), header = T, stringsAsFactors = F )
 length(unique(dat_MRT$phylo_name)) #233
 
 #remove the two species that don't have masses earlier on - While they have data on diet, it will be
@@ -192,6 +192,12 @@ lambda_gs1
 # LR(lambda=0) : 150.363 
 # P-value (based on LR test) : 1.44423e-34 
 
+#EMILY:
+# Phylogenetic signal lambda : 1.0015 
+# logL(lambda) : -1553.04 
+# LR(lambda=0) : 152.723 
+# P-value (based on LR test) : 4.40419e-35 
+
 #tree$tip.label
 
 contMap(tree,log10(transit_hrs), fsize =0.5)
@@ -264,7 +270,7 @@ contMap(tree,log10(transit_hrs), fsize =0.5)
 GIT <- dat_GIT[c("phylo_name", "transit_hrs", "trial.diet", "re_class", "mass_kg")]
 #GIT <- na.omit(GIT$transit_hrs)
 
-tree <- read.tree(paste0(homewd, "/data/Book3.nwk"))
+tree <- read.tree(paste0(homewd, "/data/revision-3/Book3.nwk"))
 tree_ultra2 <- force.ultrametric(tree, method = "nnls") #no warnings
 is.ultrametric(tree_ultra2)
 
@@ -345,7 +351,7 @@ summary(gls_model_GIT_1)$tTable
 # (Intercept)  1.109235 0.2535446  4.374909 1.702103e-05
 # flyer1      -1.079651 0.1678087 -6.433822 5.197748e-10
 
-
+#EMILY: weird, I get my old numbers
 
 
 # removing correlation structure, as its the same and the lambda=0 breaks the matrix
@@ -374,6 +380,11 @@ AIC(gls_model_GIT_0, gls_model_GIT_1)
 # gls_model_GIT_1  3 -1852.665
 
 #CARA: I get the same as above: gls_model_GIT_1 is much better
+
+#EMILY: weird, now I get this:
+# df       AIC
+# gls_model_GIT_0  3   468.540
+# gls_model_GIT_1  3 -1860.636
 
 # Emily: flyer is a significant term which says that flight is significantly
 # negatively related to GIT transit time.
@@ -405,6 +416,17 @@ summary(gls_model_GIT_1_diet)$tTable
 # trial.dietunkown               0.24261650 0.10004217  2.42514239 1.593273e-02
 
 #CARA: I get the same as above
+
+#EMILY: now I get this
+# Value  Std.Error    t-value      p-value
+# (Intercept)                    1.59335821 0.24736163  6.4414122 5.116891e-10
+# flyer1                        -1.09964106 0.15544590 -7.0741077 1.198727e-11
+# trial.dietfruit/nectar/pollen -0.02306373 0.06461230 -0.3569556 7.213929e-01
+# trial.dietmeat                 0.06709616 0.09139377  0.7341437 4.634733e-01
+# trial.dietmixed               -0.06044453 0.23238596 -0.2601041 7.949740e-01
+# trial.dietprotein              0.08934049 0.04969743  1.7976883 7.329987e-02
+# trial.dietunknown              0.44044834 0.14184424  3.1051550 2.096068e-03
+# trial.dietunkown               0.32749447 0.16064680  2.0385994 4.242595e-02
 
 # Cara: with no phylogenetic effects:
 gls_model_GIT_0_diet <- gls(log_transit_hrs ~ flyer + trial.diet, 
@@ -452,7 +474,12 @@ AIC(gls_model_GIT_0, gls_model_GIT_1, gls_model_GIT_0_diet, gls_model_GIT_1_diet
 # gls_model_GIT_1 is also pretty good. either way, seems like including flight
 # is important even after phylogeny is accounted for
 
-
+#EMILY: now I get this
+# df        AIC
+# gls_model_GIT_0       3   468.5400
+# gls_model_GIT_1       3 -1860.6365
+# gls_model_GIT_0_diet  9   462.2914
+# gls_model_GIT_1_diet  9 -1867.9795
 
 summary(gls_model_GIT_1_diet)$tTable
 # Value  Std.Error     t-value      p-value
@@ -468,6 +495,16 @@ summary(gls_model_GIT_1_diet)$tTable
 # Emily: model gls_model_GIT_1_diet has the best fit.
 # CARA: I get the same table as you. I agree with your conclusion
 
+#EMILY: now I get this
+# Value  Std.Error    t-value      p-value
+# (Intercept)                    1.59335821 0.24736163  6.4414122 5.116891e-10
+# flyer1                        -1.09964106 0.15544590 -7.0741077 1.198727e-11
+# trial.dietfruit/nectar/pollen -0.02306373 0.06461230 -0.3569556 7.213929e-01
+# trial.dietmeat                 0.06709616 0.09139377  0.7341437 4.634733e-01
+# trial.dietmixed               -0.06044453 0.23238596 -0.2601041 7.949740e-01
+# trial.dietprotein              0.08934049 0.04969743  1.7976883 7.329987e-02
+# trial.dietunknown              0.44044834 0.14184424  3.1051550 2.096068e-03
+# trial.dietunkown               0.32749447 0.16064680  2.0385994 4.242595e-02
 
 # Cara: let's try it also as a random effect - here we use the lme function which
 # is also supported in the nlme package. we can compare these since all were fit via ML:
