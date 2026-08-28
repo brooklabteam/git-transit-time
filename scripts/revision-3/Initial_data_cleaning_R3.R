@@ -17,8 +17,8 @@ library(ggforce)
 library(glmmTMB)
 
 #set home directory
-homewd= "/Users/carabrook/Developer/git-transit-time"
-#homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
+#homewd= "/Users/carabrook/Developer/git-transit-time"
+homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
 #homewd <- "/Users/gavindehnert/Desktop/GitHub_repos/git-transit-time"
 setwd(homewd)
 
@@ -234,7 +234,7 @@ dat.sum.tot$mass_kg = as.numeric(dat.sum.tot$avg_mass)/1000
 #than we might otherwise predict -- this is likely due to an effect of temperature that is not
 #reported here.
 
-write.csv(dat.sum.tot, "data/revision-3/dat_sum_tot_clean_GIT_R3.csv") #I don't know why there are some NA so manually fixing and re-uploading
+write.csv(dat.sum.tot, "data/revision-3/dat_sum_tot_clean_GIT_R3.csv")
 # dat.sum.tot_clean <- read.csv(file = paste0(homewd, "data/dat.sum.tot.csv"), header = T, stringsAsFactors = F )
 #dat.sum.tot_clean <- dat.sum.tot
 
@@ -294,8 +294,8 @@ paper.dat
 
 # re_class N_species
 # 1          Amphibia         1
-# 2      Artiodactyla        54
-# 3         Carnivora        17
+# 2      Artiodactyla        55
+# 3         Carnivora        18
 # 4           Cetacea         1
 # 5   Cetartiodactyla         2
 # 6        Chiroptera        13
@@ -303,7 +303,7 @@ paper.dat
 # 8        Dermoptera         1
 # 9     Diprotodontia        14
 # 10     Eulipotyphla         1
-# 11     Flying Birds        68
+# 11     Flying Birds        69
 # 12       Lagomorpha         1
 # 13 Non-Flying Birds         7
 # 14  Peramelemorphia         2
@@ -362,12 +362,12 @@ dat.simp <- ddply(dat.sum.tot2, .(re_class), summarize, N=length(re_class))
 dat.simp
 # re_class  N
 # 1                Bats 13
-# 2           Carnivora 25
-# 3 Even-toed Ungulates 68
-# 4        Flying Birds 81
+# 2           Carnivora 26
+# 3 Even-toed Ungulates 69
+# 4        Flying Birds 82
 # 5    Non-Flying Birds 11
 # 6  Odd-toed Ungulates 15
-# 7            Primates 49
+# 7            Primates 50
 # 8             Rodents 28
 
 #convert transit time to hours
