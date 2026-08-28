@@ -257,7 +257,7 @@ Struthio camelus,N,Aves,Struthioniformes,Struthionidae,common ostrich,327000,fib
 Struthio camelus,N,Aves,Palaeognathae,Struthioniformes,Ostrich,260200,fiber/foliage,14,30000,2142.857143,18585.71429,Non-Flying Birds,35.71428571,18.58571429,Struthio_camelus
 Sturnus vulgaris,Y,Aves,Passeriformes,Sturnidae,European Starling,164.5,fruit/nectar/pollen,10,355,35.5,16.45,Flying Birds,0.591666667,0.01645,Sturnus_vulgaris
 Sturnus vulgaris,Y,Aves,Passeriformes,Sturnidae,European Starling,85,protein,5,100,20,17,Flying Birds,0.333333333,0.017,Sturnus_vulgaris
-Sus scrofa,N,Mammalia,Artiodactyla,Suidae,Wild pig,45000,unk,1,4200,4200,45000,Even-toed Ungulates,70,45,Sus_scrofa
+Sus scrofa,N,Mammalia,Artiodactyla,Suidae,Wild pig,45000,unknown,1,4200,4200,45000,Even-toed Ungulates,70,45,Sus_scrofa
 Syconycteris australis,Y,Mammalia,Chiroptera,Pteropodidae,Common blossum bat,39.4,fruit/nectar/pollen,6,639,106.5,6.566666667,Bats,1.775,0.006566667,Syconycteris_australis
 Sylvia atricapilla,Y,Aves,Passeriformes,Sylviidae,blackcap,15.1,protein,23,1828.5,79.5,0.656521739,Flying Birds,1.325,0.000656522,Sylvia_atricapilla
 Syncerus caffer,N,Mammalia,Artiodactyla,Bovidae,forest buffalo,1135000,fiber/foliage,4,8640,2160,283750,Even-toed Ungulates,36,283.75,Syncerus_caffer
