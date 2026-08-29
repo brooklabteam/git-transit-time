@@ -348,11 +348,19 @@ AIC(gls_model_MRT_0, gls_model_MRT_1, gls_model_MRT_2,
 # gls_model_MRT_1_diet  8 -3345.9899
 # gls_model_MRT_2_diet  8 -2890.6239
 
+#EMILY
+# df        AIC
+# gls_model_MRT_0       3   505.7558
+# gls_model_MRT_1       3 -2607.2022
+# gls_model_MRT_2       3 -2211.8379
+# gls_model_MRT_0_diet  8   495.8800
+# gls_model_MRT_1_diet  8 -2607.1052
+# gls_model_MRT_2_diet  8 -2214.1510
 
 summary(gls_model_MRT_1_diet)$tTable
 
 
-#CARA: I get this
+#CARA: I get this, EMILY SAME
 # Value  Std.Error     t-value      p-value
 # (Intercept)                    1.339701142 0.36806143  3.63988460 0.0003230573
 # flyer1                        -0.635685290 0.18503128 -3.43555586 0.0006780549
@@ -415,7 +423,17 @@ summary(gls_model_MRT_2_diet_re)$tTable
 AIC(gls_model_MRT_0, gls_model_MRT_0_diet, gls_model_MRT_0_diet_re,
     gls_model_MRT_1, gls_model_MRT_1_diet, gls_model_MRT_1_diet_re,
     gls_model_MRT_2, gls_model_MRT_2_diet, gls_model_MRT_2_diet_re)
-
+#EMILY
+# df        AIC
+# gls_model_MRT_0          3   505.7558
+# gls_model_MRT_0_diet     8   495.8800
+# gls_model_MRT_0_diet_re  4   501.8596
+# gls_model_MRT_1          3 -2607.2022
+# gls_model_MRT_1_diet     8 -2607.1052
+# gls_model_MRT_1_diet_re  4 -1536.0665
+# gls_model_MRT_2          3 -2211.8379
+# gls_model_MRT_2_diet     8 -2214.1510
+# gls_model_MRT_2_diet_re  4 -1196.6698
 
 #CARA: I get this
 # df        AIC
@@ -500,6 +518,11 @@ AIC(gls_model_MRT_0_mass, gls_model_MRT_1_mass, gls_model_MRT_2_mass)
 
 #CARA: I agree with conclusion
 
+#EMILY
+# df        AIC
+# gls_model_MRT_0_mass  5   479.5181
+# gls_model_MRT_1_mass  5 -2625.3342
+# gls_model_MRT_2_mass  5 -2219.8868
 
 #CARA: I get this
 # df        AIC
@@ -536,6 +559,10 @@ summary(gls_model_MRT_1_mass_simple)$tTable
 # log10(mass_kg)  0.1698441 0.0382908  4.435637 0.0000130024
 
 AIC(gls_model_MRT_1_mass, gls_model_MRT_1_mass_simple)
+#EMILY
+# df       AIC
+# gls_model_MRT_1_mass         5 -2625.334
+# gls_model_MRT_1_mass_simple  4 -2624.440
 
 #CARA: I get this
 # df       AIC
@@ -571,7 +598,6 @@ summary(gls_model_MRT_1_mass_simple_diet)$tTable
 #CARA: I get this
 # Value  Std.Error    t-value      p-value
 # (Intercept)                    1.172184268 0.35997225  3.2563184 1.263528e-03
-
 # flyer1                        -0.314655089 0.19525832 -1.6114811 1.081702e-01
 # log10(mass_kg)                 0.166595345 0.03943597  4.2244520 3.217123e-05
 # trial.dietfruit/nectar/pollen  0.009095385 0.07988949  0.1138496 9.094364e-01
@@ -597,6 +623,11 @@ summary(gls_model_MRT_1_mass_simple_diet_re)$tTable
 
 # then, compare
 AIC(gls_model_MRT_1_mass_simple, gls_model_MRT_1_mass_simple_diet, gls_model_MRT_1_mass_simple_diet_re)
+#EMILY
+# df       AIC
+# gls_model_MRT_1_mass_simple          4 -2624.440
+# gls_model_MRT_1_mass_simple_diet     9 -2622.901
+# gls_model_MRT_1_mass_simple_diet_re  5 -1542.204
 
 #CARA: I get this
 # df       AIC
@@ -624,6 +655,11 @@ summary(gls_model_MRT_1_mass_simple)$tTable
 
 # Cara: what if we compare our two best fit models so far? 
 AIC(gls_model_MRT_1, gls_model_MRT_1_diet, gls_model_MRT_1_mass_simple)
+#EMILY
+# df       AIC
+# gls_model_MRT_1              3 -2607.202
+# gls_model_MRT_1_diet         8 -2607.105
+# gls_model_MRT_1_mass_simple  4 -2624.440
 
 #CARA: I get this
 # df       AIC
@@ -638,7 +674,7 @@ gls_model_MRT_1_mass_only <- gls(log_MRT_hrs ~ log10(mass_kg),
                                    method = "ML")
 summary(gls_model_MRT_1_mass_only)$tTable
 
-#CARA: I get this
+#CARA: I get this, EMILY SAME
 # Value  Std.Error  t-value      p-value
 # (Intercept)    1.0178135 0.35322361 2.881499 4.249339e-03
 # log10(mass_kg) 0.1930754 0.03499625 5.517032 7.565699e-08
@@ -668,6 +704,12 @@ summary(gls_model_MRT_2_mass_only)$tTable
 # log10(mass_kg) 0.1582657 0.03361975 4.707523 3.867915e-06
 
 AIC(gls_model_MRT_0_mass_only, gls_model_MRT_1_mass_only, gls_model_MRT_2_mass_only)
+
+#EMILY
+# df        AIC
+# gls_model_MRT_0_mass_only  3   535.0061
+# gls_model_MRT_1_mass_only  3 -2624.2350
+# gls_model_MRT_2_mass_only  3 -2220.0579
 
 #CARA: I get this
 # df        AIC
