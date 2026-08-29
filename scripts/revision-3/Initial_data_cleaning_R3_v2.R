@@ -18,7 +18,7 @@ library(glmmTMB)
 
 #set home directory
 #homewd= "/Users/carabrook/Developer/git-transit-time"
-#homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
+homewd= "/Users/katherinemcferrin/Developer/git-transit-time"
 homewd <- "/Users/gavindehnert/Desktop/GitHub_repos/git-transit-time"
 setwd(homewd)
 
@@ -119,7 +119,7 @@ head(dat.sum.tot)
 dat.sum.tot$transit <- dat.sum.tot$total_transit/dat.sum.tot$N_tot
 #dat.sum.tot$MRT <- dat.sum.tot$total_MRT/dat.sum.tot$N_tot
 dat.sum.tot$avg_mass <- dat.sum.tot$sum_mass/dat.sum.tot$N_tot
-nrow(subset(dat.sum.tot, !is.na(transit))) #313. Cara: I get 326
+nrow(subset(dat.sum.tot, !is.na(transit))) #313. Cara: I get 326; Katherine: I got 326 too
 
 
 
