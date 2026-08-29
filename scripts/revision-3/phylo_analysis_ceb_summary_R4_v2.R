@@ -276,7 +276,6 @@ cor_phylo_fixed0 <- corPagel(0, phy = tree_pruned, fixed = TRUE, form = ~phylo_n
 
 
 # Cara: now test the effect of flyer on GIT transit without accounting for mass or diet
-# All text below is from Cara
 
 #with full phylogenetic effects:
 gls_model_GIT_1 <- gls(log_transit_hrs ~ flyer, 
@@ -307,6 +306,10 @@ summary(gls_model_GIT_0)$tTable
 
 
 AIC(gls_model_GIT_0, gls_model_GIT_1)
+#EMILY
+# df      AIC
+# gls_model_GIT_0  3   468.54
+# gls_model_GIT_1  3 -1874.02
 
 #CARA: I get this
 # df       AIC
@@ -332,7 +335,7 @@ gls_model_GIT_1_diet <- gls(log_transit_hrs ~ flyer + trial.diet,
                         correlation = cor_phylo_fixed1,
                         method = "ML")
 summary(gls_model_GIT_1_diet)$tTable
-
+#EMILY SAME
 
 #CARA: I get this
 # Value  Std.Error    t-value      p-value
@@ -365,6 +368,12 @@ summary(gls_model_GIT_0_diet)$tTable
 
 
 AIC(gls_model_GIT_0, gls_model_GIT_1, gls_model_GIT_0_diet, gls_model_GIT_1_diet)
+#EMILY
+# df        AIC
+# gls_model_GIT_0       3   468.5400
+# gls_model_GIT_1       3 -1874.0204
+# gls_model_GIT_0_diet  8   467.0779
+# gls_model_GIT_1_diet  8 -1880.4702
 
 #CARA: I get this
 # df        AIC
@@ -426,7 +435,14 @@ summary(gls_model_GIT_0_diet_re)$tTable
 
 AIC(gls_model_GIT_0, gls_model_GIT_0_diet, gls_model_GIT_0_diet_re,
     gls_model_GIT_1, gls_model_GIT_1_diet, gls_model_GIT_1_diet_re)
-
+#EMILY
+# df        AIC
+# gls_model_GIT_0          3   468.5400
+# gls_model_GIT_0_diet     8   467.0779
+# gls_model_GIT_0_diet_re  4   469.2664
+# gls_model_GIT_1          3 -1874.0204
+# gls_model_GIT_1_diet     8 -1880.4702
+# gls_model_GIT_1_diet_re  4  -500.6376
 
 #CARA: I get this
 # df        AIC
@@ -503,6 +519,11 @@ AIC(gls_model_GIT_0_mass, gls_model_GIT_1_mass)
 # exclusively by mass (e.g. the model with phylogeny AND mass performed better
 # than the model with mass alone)
 
+#EMILY
+# df        AIC
+# gls_model_GIT_0_mass  5   465.6357
+# gls_model_GIT_1_mass  5 -1880.2392
+
 #CARA: I get this
 # df        AIC
 # gls_model_GIT_0_mass  5   465.6357
@@ -537,12 +558,15 @@ summary(gls_model_GIT_1_mass_simple)$tTable
 
 AIC(gls_model_GIT_1_mass, gls_model_GIT_1_mass_simple)
 
+# # EMILY
+# df       AIC
+# gls_model_GIT_1_mass         5 -1880.239
+# gls_model_GIT_1_mass_simple  4 -1880.590
+
 #CARA: I get this
 # df       AIC
 # gls_model_GIT_1_mass         5 -2291.355
 # gls_model_GIT_1_mass_simple  4 -2291.706
-
-# identical
 
 
 
@@ -552,7 +576,7 @@ AIC(gls_model_GIT_1_mass, gls_model_GIT_1_mass_simple)
 summary(gls_model_GIT_1_mass_simple)$tTable
 
 
-#CARA: I get this
+#CARA: I get this, EMILY SAME
 # Value  Std.Error   t-value      p-value
 # (Intercept)     1.63554928 0.23862062  6.854182 4.410320e-11
 # flyer1         -0.95377199 0.16504606 -5.778823 1.963752e-08
@@ -575,7 +599,7 @@ gls_model_GIT_1_mass_simple_diet <- gls(log_transit_hrs ~ flyer + log10(mass_kg)
                                     method = "ML")
 summary(gls_model_GIT_1_mass_simple_diet)$tTable
 
-#CARA: I get this
+#CARA: I get this, EMILY SAME
 # Value  Std.Error    t-value      p-value
 # (Intercept)                    1.68901518 0.23737493  7.1153898 9.306649e-12
 # flyer1                        -0.92282513 0.16445144 -5.6115357 4.804738e-08
@@ -694,6 +718,7 @@ AIC(gls_model_GIT_0_mass_only, gls_model_GIT_1_mass_only)
 # incorporating phylogeny with mass offers a much better fit to the data however!
 # mass is positively correlated with git transit
 
+#EMILY
 # df        AIC
 # gls_model_GIT_0_mass_only  3   610.0041
 # gls_model_GIT_1_mass_only  3 -1850.6741
