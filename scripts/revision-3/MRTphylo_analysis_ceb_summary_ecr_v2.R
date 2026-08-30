@@ -34,26 +34,7 @@ print(no_mass) #0
 # remove them from both datasets
 dat_MRT <- dat_MRT[!dat_MRT[[species_col]] %in% no_mass, ]
 
-#### species counts ####
-#table 1 in the manuscript
 
-length(unique(dat_MRT$genus.species)) #242 unique species for transit time
-tt.pivot <-ddply(dat_MRT, .(re_class), summarise, N_species_transit = length(unique(genus.species)))
-print(tt.pivot)
-# re_class N_species_transit
-# 1                Bats                13
-# 2           Carnivora                18
-# 3 Even-toed Ungulates                55
-# 4        Flying Birds                72
-# 5    Non-Flying Birds                 7
-# 6  Odd-toed Ungulates                10
-# 7            Primates                40
-# 8             Rodents                27
-
-
-#dat_MRT <- subset(dat_MRT, dat_MRT$re_class != "Non-Flying Birds")
-#dat_MRT <- subset(dat_MRT, dat_MRT$re_class != "Reptiles")
-#288
 
 #load the tree - pulled from timetree so should be in principle an ultrametric tree
 tree <- read.tree(file = paste0(homewd, "/data/revision-3/Book3.nwk"))
@@ -96,16 +77,6 @@ lambda_gs2<-phylosig(tree, MRT_hrs,
                      method="lambda",test=TRUE)
 lambda_gs2
 
-#EMILY GETS:
-# SAME NOW
-
-
-#CARA gets:
-# Phylogenetic signal lambda : 0.77132 
-# logL(lambda) : -956.715 
-# LR(lambda=0) : 140.083 
-# P-value (based on LR test) : 2.55322e-32 
-
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
 # Phylogenetic signal lambda : 0.818535 
@@ -114,7 +85,7 @@ lambda_gs2
 # P-value (based on LR test) : 3.63156e-32 
 
 
-############# plotting phylo signal by tree/phenogram ############
+############# Phylogeny ############
 
 
 contMap(tree,log10(MRT_hrs), fsize =0.6)
@@ -122,9 +93,9 @@ contMap(tree,log10(MRT_hrs), fsize =0.6)
 
 
 
-#########################################  MGT. #################################
+#########################################  MRT. #################################
 
-########### MGT data cleaning #######
+########### MRT data cleaning #######
 
 #_________________________________________________________________________________________________________________
 #I think this code runs PGLS and also provides lambda estimates as part of the model
@@ -166,7 +137,7 @@ missing_in_df2
 
 #sort(tree$tip.label)
 
-###################### MGT - model 1 ################
+###################### MRT - model 1 ################
 
 
 # Fit PGLS model
@@ -210,6 +181,7 @@ cor_phylo_fixed0 <- corPagel(0, phy = tree_pruned, fixed = TRUE, form = ~phylo_n
 cor_phylo_fixed2 <- corPagel(lambda_gs2$lambda, phy = tree_pruned, fixed = TRUE, form = ~phylo_name) 
 
 
+##### Flight #####
 
 # Cara: now test the effect of flyer on MRT transit without accounting for mass or diet
 # All text below is from Cara
@@ -220,12 +192,6 @@ gls_model_MRT_1 <- gls(log_MRT_hrs ~ flyer,
                         correlation = cor_phylo_fixed1,
                          method = "ML")
 summary(gls_model_MRT_1)$tTable
-
-#CARA: I get this
-# Value Std.Error   t-value      p-value
-# (Intercept)  1.3267590 0.3702254  3.583652 0.0003964841
-# flyer1      -0.6448687 0.1839075 -3.506483 0.0005249530
-
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
 # Value Std.Error   t-value      p-value
@@ -255,11 +221,6 @@ gls_model_MRT_2 <- gls(log_MRT_hrs ~ flyer,
                         method = "ML")
 summary(gls_model_MRT_2)$tTable
 
-#CARA: I get this:
-# Value Std.Error   t-value      p-value
-# (Intercept)  1.4813660 0.2984518  4.963501 1.174555e-06
-# flyer1      -0.5947408 0.1618582 -3.674455 2.831908e-04
-
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
 # Value Std.Error   t-value      p-value
@@ -272,18 +233,6 @@ AIC(gls_model_MRT_0, gls_model_MRT_1, gls_model_MRT_2)
 # Emily: The model with full brownian phylogenetic effects is the best fit.
 #CARA: I agree with conclusion, though values are different
 
-#CARA: I get this
-# df        AIC
-# gls_model_MRT_0  3   505.7558
-# gls_model_MRT_1  3 -3346.0869
-# gls_model_MRT_2  3 -2888.3107
-
-#EMILY:
-# df        AIC
-# gls_model_MRT_0  3   505.7558
-# gls_model_MRT_1  3 -2607.2022
-# gls_model_MRT_2  3 -2211.8379
-
 #Cara update on 8/29: I now get the same as katherine below
 # #Katherine (8/29)
 # df        AIC
@@ -293,11 +242,6 @@ AIC(gls_model_MRT_0, gls_model_MRT_1, gls_model_MRT_2)
 
 
 summary(gls_model_MRT_1)$tTable
-
-#CARA: I get this, EMILY: same
-# Value Std.Error   t-value      p-value
-# (Intercept)  1.3267590 0.3702254  3.583652 0.0003964841
-# flyer1      -0.6448687 0.1839075 -3.506483 0.0005249530
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
@@ -314,6 +258,7 @@ summary(gls_model_MRT_1)$tTable
 #CARA: I agree with conclusion
 #Katherine (8/29): I also agree with the interpretation
 
+##### Diet #####
 
 # now, let's also account for diet
 # first try as a fixed effect:
@@ -325,16 +270,6 @@ gls_model_MRT_1_diet <- gls(log_MRT_hrs ~ flyer + trial.diet,
                         correlation = cor_phylo_fixed1,
                         method = "ML")
 summary(gls_model_MRT_1_diet)$tTable
-
-#CARA: I get this. EMILY: same
-# Value  Std.Error     t-value      p-value
-# (Intercept)                    1.339701142 0.36806143  3.63988460 0.0003230573
-# flyer1                        -0.635685290 0.18503128 -3.43555586 0.0006780549
-# trial.dietfruit/nectar/pollen -0.016624469 0.08194591 -0.20287126 0.8393784143
-# trial.dietmeat                 0.376447653 0.13121206  2.86900193 0.0044213120
-# trial.dietmixed                0.078159067 0.36760384  0.21261766 0.8317750876
-# trial.dietprotein              0.009424897 0.11618347  0.08112081 0.9354020276
-# trial.dietunknown              0.074813791 0.19385207  0.38593238 0.6998306927
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29): I got different values, although it's not significant fruit/nectar/pollen no longer has a negative association
@@ -378,16 +313,6 @@ gls_model_MRT_2_diet <- gls(log_MRT_hrs ~ flyer + trial.diet,
                         method = "ML")
 summary(gls_model_MRT_2_diet)$tTable
 
-#CARA: I get this: EMILY, same:
-# Value  Std.Error     t-value      p-value
-# (Intercept)                    1.460816049 0.29522260  4.94818498 1.273993e-06
-# flyer1                        -0.591898721 0.16268143 -3.63839141 3.248527e-04
-# trial.dietfruit/nectar/pollen -0.003657727 0.07659246 -0.04775571 9.619439e-01
-# trial.dietmeat                 0.373756371 0.11743144  3.18276235 1.617853e-03
-# trial.dietmixed                0.257646320 0.34784395  0.74069513 4.594797e-01
-# trial.dietprotein              0.027303431 0.10784541  0.25317194 8.003153e-01
-# trial.dietunknown              0.241778753 0.19817459  1.22002905 2.234485e-01
-
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29): I get different values and similar to above, although it's not significant fruit/nectar/pollen no longer has a negative association
 # Value  Std.Error    t-value      p-value
@@ -402,24 +327,6 @@ summary(gls_model_MRT_2_diet)$tTable
 AIC(gls_model_MRT_0, gls_model_MRT_1, gls_model_MRT_2, 
     gls_model_MRT_0_diet, gls_model_MRT_1_diet, gls_model_MRT_2_diet)
 
-#CARA: I get this
-# df        AIC
-# gls_model_MRT_0       3   505.7558
-# gls_model_MRT_1       3 -3346.0869
-# gls_model_MRT_2       3 -2888.3107
-# gls_model_MRT_0_diet  8   495.8800
-# gls_model_MRT_1_diet  8 -3345.9899
-# gls_model_MRT_2_diet  8 -2890.6239
-
-#EMILY
-# df        AIC
-# gls_model_MRT_0       3   505.7558
-# gls_model_MRT_1       3 -2607.2022
-# gls_model_MRT_2       3 -2211.8379
-# gls_model_MRT_0_diet  8   495.8800
-# gls_model_MRT_1_diet  8 -2607.1052
-# gls_model_MRT_2_diet  8 -2214.1510
-
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
 # df        AIC
@@ -432,17 +339,6 @@ AIC(gls_model_MRT_0, gls_model_MRT_1, gls_model_MRT_2,
 
 
 summary(gls_model_MRT_1_diet)$tTable
-
-
-#CARA: I get this, EMILY SAME
-# Value  Std.Error     t-value      p-value
-# (Intercept)                    1.339701142 0.36806143  3.63988460 0.0003230573
-# flyer1                        -0.635685290 0.18503128 -3.43555586 0.0006780549
-# trial.dietfruit/nectar/pollen -0.016624469 0.08194591 -0.20287126 0.8393784143
-# trial.dietmeat                 0.376447653 0.13121206  2.86900193 0.0044213120
-# trial.dietmixed                0.078159067 0.36760384  0.21261766 0.8317750876
-# trial.dietprotein              0.009424897 0.11618347  0.08112081 0.9354020276
-# trial.dietunknown              0.074813791 0.19385207  0.38593238 0.6998306927
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
@@ -473,11 +369,6 @@ gls_model_MRT_1_diet_re <- lme(log_MRT_hrs ~ flyer,
                             data = MRT_pruned,
                             method = "ML")
 summary(gls_model_MRT_1_diet_re)$tTable
-# Value Std.Error  DF   t-value      p-value
-# (Intercept)  1.1716953 0.1924782 289  6.087419 3.641363e-09
-# flyer1      -0.6495386 0.1541441 289 -4.213841 3.359595e-05
-
-#CARA: I get the same
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29): I get slightly diff values
@@ -506,11 +397,6 @@ gls_model_MRT_2_diet_re <- lme(log_MRT_hrs ~ flyer,
                                 data = MRT_pruned,
                                 method = "ML")
 summary(gls_model_MRT_2_diet_re)$tTable
-# Value Std.Error  DF   t-value      p-value
-# (Intercept)  1.2124287 0.1608278 289  7.538674 6.162535e-13
-# flyer1      -0.6536117 0.1356990 289 -4.816628 2.359685e-06
-
-#Cara: I get the same
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine: I got slightly diff values
@@ -521,29 +407,6 @@ summary(gls_model_MRT_2_diet_re)$tTable
 AIC(gls_model_MRT_0, gls_model_MRT_0_diet, gls_model_MRT_0_diet_re,
     gls_model_MRT_1, gls_model_MRT_1_diet, gls_model_MRT_1_diet_re,
     gls_model_MRT_2, gls_model_MRT_2_diet, gls_model_MRT_2_diet_re)
-#EMILY
-# df        AIC
-# gls_model_MRT_0          3   505.7558
-# gls_model_MRT_0_diet     8   495.8800
-# gls_model_MRT_0_diet_re  4   501.8596
-# gls_model_MRT_1          3 -2607.2022
-# gls_model_MRT_1_diet     8 -2607.1052
-# gls_model_MRT_1_diet_re  4 -1536.0665
-# gls_model_MRT_2          3 -2211.8379
-# gls_model_MRT_2_diet     8 -2214.1510
-# gls_model_MRT_2_diet_re  4 -1196.6698
-
-#CARA: I get this
-# df        AIC
-# gls_model_MRT_0          3   505.7558
-# gls_model_MRT_0_diet     8   495.8800
-# gls_model_MRT_0_diet_re  4   501.8596
-# gls_model_MRT_1          3 -3346.0869 *
-# gls_model_MRT_1_diet     8 -3345.9899 *
-# gls_model_MRT_1_diet_re  4 -1557.1889
-# gls_model_MRT_2          3 -2888.3107
-# gls_model_MRT_2_diet     8 -2890.6239
-# gls_model_MRT_2_diet_re  4 -1226.5116
 
 #Cara update on 8/29: I now get the same as katherine below
 # #Katherine (8/29)
@@ -567,12 +430,10 @@ AIC(gls_model_MRT_0, gls_model_MRT_0_diet, gls_model_MRT_0_diet_re,
 #CARA: I agree with conclusion, also, diet prob not necessary to include here
 #Katherine: I agree with the AIC interpretations showing that gls_model_MRT_1 is the best fit
 
-
-###################
-########## model gls_model_MRT_1 is best for reporting.
+# Takeaway: model gls_model_MRT_1 is best for reporting.
 
 
-
+##### Mass #####
 
 # now, let's also consider the effects of mass and, later, mass and diet
  
@@ -582,13 +443,6 @@ gls_model_MRT_1_mass <- gls(log_MRT_hrs ~ log10(mass_kg)*flyer,
                         correlation = cor_phylo_fixed1,
                         method = "ML")
 summary(gls_model_MRT_1_mass)$tTable
-
-#CARA: I get this
-# Value  Std.Error    t-value     p-value
-# (Intercept)            1.1797290 0.36129339  3.2652937 0.001223687
-# log10(mass_kg)         0.1291901 0.04508749  2.8653212 0.004468380
-# flyer1                -0.1506248 0.21140315 -0.7125003 0.476723961
-# log10(mass_kg):flyer1  0.1484832 0.08765610  1.6939289 0.091345117
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29): slightly diff values
@@ -621,13 +475,6 @@ gls_model_MRT_2_mass <- gls(log_MRT_hrs ~ log10(mass_kg)*flyer,
                         method = "ML")
 summary(gls_model_MRT_2_mass)$tTable
 
-#CARA: I get this
-# Value  Std.Error    t-value      p-value
-# (Intercept)            1.37138106 0.29543633  4.6418836 5.222790e-06
-# log10(mass_kg)         0.11114006 0.04403690  2.5237942 1.214005e-02
-# flyer1                -0.26061231 0.19768522 -1.3183196 1.884298e-01
-# log10(mass_kg):flyer1  0.06207325 0.08605438  0.7213259 4.712862e-01
-
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29): I got different values
 # Value  Std.Error    t-value      p-value
@@ -648,18 +495,6 @@ AIC(gls_model_MRT_0_mass, gls_model_MRT_1_mass, gls_model_MRT_2_mass)
 #CARA: I agree with conclusion
 #Katherine (8/29): Also agree with the model conclusions
 
-#EMILY
-# df        AIC
-# gls_model_MRT_0_mass  5   479.5181
-# gls_model_MRT_1_mass  5 -2625.3342
-# gls_model_MRT_2_mass  5 -2219.8868
-
-#CARA: I get this
-# df        AIC
-# gls_model_MRT_0_mass  5   479.5181
-# gls_model_MRT_1_mass  5 -3364.2189
-# gls_model_MRT_2_mass  5 -2896.3597
-
 #Cara update on 8/29: I now get the same as katherine below
 # #Katherine (8/29)
 # df        AIC
@@ -668,13 +503,6 @@ AIC(gls_model_MRT_0_mass, gls_model_MRT_1_mass, gls_model_MRT_2_mass)
 # gls_model_MRT_2_mass  5 -2961.9817
 
 summary(gls_model_MRT_1_mass)$tTable
-
-#CARA: I get this
-# Value  Std.Error    t-value     p-value
-# (Intercept)            1.1797290 0.36129339  3.2652937 0.001223687
-# log10(mass_kg)         0.1291901 0.04508749  2.8653212 0.004468380
-# flyer1                -0.1506248 0.21140315 -0.7125003 0.476723961
-# log10(mass_kg):flyer1  0.1484832 0.08765610  1.6939289 0.091345117
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
@@ -698,12 +526,6 @@ gls_model_MRT_1_mass_simple <- gls(log_MRT_hrs ~ flyer + log10(mass_kg),
                              method = "ML")
 summary(gls_model_MRT_1_mass_simple)$tTable
 
-#CARA: I get this:
-# Value Std.Error   t-value      p-value
-# (Intercept)     1.1366997 0.3615472  3.143987 0.0018376244
-# flyer1         -0.2893619 0.1955137 -1.480009 0.1399453774
-# log10(mass_kg)  0.1698441 0.0382908  4.435637 0.0000130024
-
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
 # Value  Std.Error   t-value      p-value
@@ -712,15 +534,6 @@ summary(gls_model_MRT_1_mass_simple)$tTable
 # log10(mass_kg)  0.1774287 0.03922617  4.523223 8.857194e-06
 
 AIC(gls_model_MRT_1_mass, gls_model_MRT_1_mass_simple)
-#EMILY
-# df       AIC
-# gls_model_MRT_1_mass         5 -2625.334
-# gls_model_MRT_1_mass_simple  4 -2624.440
-
-#CARA: I get this
-# df       AIC
-# gls_model_MRT_1_mass         4 -3363.324
-# gls_model_MRT_1_mass_simple  4 -3363.324
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
@@ -733,12 +546,6 @@ AIC(gls_model_MRT_1_mass, gls_model_MRT_1_mass_simple)
 #Katherine (8/29): No major difference in AIC
 
 summary(gls_model_MRT_1_mass_simple)$tTable
-
-#CARA: I get this
-# Value Std.Error   t-value      p-value
-# (Intercept)     1.1366997 0.3615472  3.143987 0.0018376244
-# flyer1         -0.2893619 0.1955137 -1.480009 0.1399453774
-# log10(mass_kg)  0.1698441 0.0382908  4.435637 0.0000130024
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
@@ -753,6 +560,7 @@ summary(gls_model_MRT_1_mass_simple)$tTable
 
 # now, let's see if adding diet improves this model:
 
+##### Diet #####
 
 # I'll just illustrate with the best fit model
 # first, as a fixed effect
@@ -762,17 +570,6 @@ gls_model_MRT_1_mass_simple_diet <- gls(log_MRT_hrs ~ flyer + log10(mass_kg) +
                                     correlation = cor_phylo_fixed1,
                                     method = "ML")
 summary(gls_model_MRT_1_mass_simple_diet)$tTable
-
-#CARA: I get this
-# Value  Std.Error    t-value      p-value
-# (Intercept)                    1.172184268 0.35997225  3.2563184 1.263528e-03
-# flyer1                        -0.314655089 0.19525832 -1.6114811 1.081702e-01
-# log10(mass_kg)                 0.166595345 0.03943597  4.2244520 3.217123e-05
-# trial.dietfruit/nectar/pollen  0.009095385 0.07988949  0.1138496 9.094364e-01
-# trial.dietmeat                 0.340314443 0.12783378  2.6621638 8.200297e-03
-# trial.dietmixed                0.133017954 0.35757254  0.3720027 7.101644e-01
-# trial.dietprotein              0.114579878 0.11564907  0.9907549 3.226369e-01
-# trial.dietunknown              0.142084836 0.18910942  0.7513366 4.530636e-01
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
@@ -794,12 +591,6 @@ gls_model_MRT_1_mass_simple_diet_re <- lme(log_MRT_hrs ~ flyer + log10(mass_kg),
                                             correlation = cor_phylo_fixed1,
                                             method = "ML")
 summary(gls_model_MRT_1_mass_simple_diet_re)$tTable
-# Value  Std.Error  DF   t-value      p-value
-# (Intercept)     1.11373914 0.19125249 288  5.823397 1.538261e-08
-# flyer1         -0.46896803 0.16488611 288 -2.844194 4.771407e-03
-# log10(mass_kg)  0.09119103 0.03190991 288  2.857765 4.577483e-03
-
-#CARA: I get the same
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29): different values
@@ -810,17 +601,6 @@ summary(gls_model_MRT_1_mass_simple_diet_re)$tTable
 
 # then, compare
 AIC(gls_model_MRT_1_mass_simple, gls_model_MRT_1_mass_simple_diet, gls_model_MRT_1_mass_simple_diet_re)
-#EMILY
-# df       AIC
-# gls_model_MRT_1_mass_simple          4 -2624.440
-# gls_model_MRT_1_mass_simple_diet     9 -2622.901
-# gls_model_MRT_1_mass_simple_diet_re  5 -1542.204
-
-#CARA: I get this
-# df       AIC
-# gls_model_MRT_1_mass_simple          4 -3363.324
-# gls_model_MRT_1_mass_simple_diet     9 -3361.786
-# gls_model_MRT_1_mass_simple_diet_re  5 -1563.326
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29): mass simple is the best fit, without diet
@@ -833,12 +613,6 @@ AIC(gls_model_MRT_1_mass_simple, gls_model_MRT_1_mass_simple_diet, gls_model_MRT
 #CARA: I agree with conclusion
 
 summary(gls_model_MRT_1_mass_simple)$tTable
-
-#CARA: I get this
-# Value Std.Error   t-value      p-value
-# (Intercept)     1.1366997 0.3615472  3.143987 0.0018376244
-# flyer1         -0.2893619 0.1955137 -1.480009 0.1399453774
-# log10(mass_kg)  0.1698441 0.0382908  4.435637 0.0000130024
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29): different values
@@ -855,17 +629,6 @@ summary(gls_model_MRT_1_mass_simple)$tTable
 
 # Cara: what if we compare our two best fit models so far? 
 AIC(gls_model_MRT_1, gls_model_MRT_1_diet, gls_model_MRT_1_mass_simple)
-#EMILY
-# df       AIC
-# gls_model_MRT_1              3 -2607.202
-# gls_model_MRT_1_diet         8 -2607.105
-# gls_model_MRT_1_mass_simple  4 -2624.440
-
-#CARA: I get this
-# df       AIC
-# gls_model_MRT_1              3 -3346.087
-# gls_model_MRT_1_diet         8 -3345.990
-# gls_model_MRT_1_mass_simple  4 -3363.324
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
@@ -875,16 +638,13 @@ AIC(gls_model_MRT_1, gls_model_MRT_1_diet, gls_model_MRT_1_mass_simple)
 # gls_model_MRT_1_mass_simple  4 -3349.350
 
 
+##### Mass Only #####
+
 gls_model_MRT_1_mass_only <- gls(log_MRT_hrs ~ log10(mass_kg), 
                                    data = MRT_pruned, 
                                    correlation = cor_phylo_fixed1,
                                    method = "ML")
 summary(gls_model_MRT_1_mass_only)$tTable
-
-#CARA: I get this, EMILY SAME
-# Value  Std.Error  t-value      p-value
-# (Intercept)    1.0178135 0.35322361 2.881499 4.249339e-03
-# log10(mass_kg) 0.1930754 0.03499625 5.517032 7.565699e-08
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29): I got diff values
@@ -912,11 +672,6 @@ gls_model_MRT_2_mass_only <- gls(log_MRT_hrs ~ log10(mass_kg),
                                  method = "ML")
 summary(gls_model_MRT_2_mass_only)$tTable
 
-#CARA: I get this
-# Value  Std.Error  t-value      p-value
-# (Intercept)    1.2321946 0.28675963 4.296960 2.356533e-05
-# log10(mass_kg) 0.1582657 0.03361975 4.707523 3.867915e-06
-
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine(8/29): here's what I got
 # Value  Std.Error  t-value      p-value
@@ -924,18 +679,6 @@ summary(gls_model_MRT_2_mass_only)$tTable
 # log10(mass_kg) 0.1701549 0.03381435 5.032031 8.466209e-07
 
 AIC(gls_model_MRT_0_mass_only, gls_model_MRT_1_mass_only, gls_model_MRT_2_mass_only)
-
-#EMILY
-# df        AIC
-# gls_model_MRT_0_mass_only  3   535.0061
-# gls_model_MRT_1_mass_only  3 -2624.2350
-# gls_model_MRT_2_mass_only  3 -2220.0579
-
-#CARA: I get this
-# df        AIC
-# gls_model_MRT_0_mass_only  3   535.0061
-# gls_model_MRT_1_mass_only  3 -3363.1197
-# gls_model_MRT_2_mass_only  3 -2896.5308
 
 #Cara update on 8/29: I now get the same as katherine below
 #Katherine (8/29)
