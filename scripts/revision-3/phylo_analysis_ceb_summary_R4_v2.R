@@ -151,11 +151,6 @@ lambda_gs1
 # Cara: a little research suggests that values >1 are pretty rare and since
 # this is basically 1, that seems fine to me
 
-#CARA... I get this: EMILY, same
-# Phylogenetic signal lambda : 1.00145 
-# logL(lambda) : -1552.62 
-# LR(lambda=0) : 152.375 
-# P-value (based on LR test) : 5.24537e-35 
 
 #Cara update on 8/29 - I now get the same as katheirne below
 # Katherine (8/29): I got slightly different values
@@ -316,7 +311,6 @@ summary(gls_model_GIT_1_diet)$tTable
 # Value  Std.Error    t-value      p-value
 # (Intercept)                    1.64782833 0.24213443  6.8054277 6.042347e-11
 # flyer1                        -1.11998426 0.15461364 -7.2437609 4.179902e-12
-# 
 # trial.dietfruit/nectar/pollen -0.10539370 0.07179693 -1.4679416 1.432346e-01
 # trial.dietmeat                -0.02210778 0.09602709 -0.2302244 8.180843e-01
 # trial.dietmixed               -0.17187312 0.23269555 -0.7386180 4.607533e-01
